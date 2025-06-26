@@ -1,0 +1,6 @@
+
+CREATE TABLE IF NOT EXISTS Banan_data{
+    id INTEGER PRIMARY KEY,
+    count INTERGER
+};
+
