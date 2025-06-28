@@ -1,6 +1,6 @@
 
-CREATE TABLE IF NOT EXISTS Banan_data{
+CREATE TABLE IF NOT EXISTS Banana_data(
     id INTEGER PRIMARY KEY,
-    count INTERGER
-};
+    count INTEGER
+);
 
