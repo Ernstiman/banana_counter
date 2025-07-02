@@ -5,6 +5,7 @@ var path = require("path");
 var fs = require("fs");
 const { emitWarning } = require("process");
 const { error } = require("console");
+const session = require('express-session');
 
 var app = express();
 
@@ -20,22 +21,32 @@ sql_init = fs.readFileSync(SQL_PATH, "utf-8");
 data_base.exec(sql_init);
 
 app.use(express.json());
+app.use(session({
+  secret: 'some secret',
+  resave: false,
+  saveUninitialized: false
+}));
 
-app.post("/post", (req, res) => {
+app.post("/api/post", (req, res) => {
   var current_count = req.body.count;
-  var player_id = req.body.id;
-  current_count = Number(current_count);
-  write_to_data_base(player_id);
+  var username = req.body.username;
+  write_to_data_base(username, current_count);
   res.send("job done");
 });
 
-app.get("/count", (req, res) => {
-  let id = Number(req.query.id);
+app.get("/api/me", (req, res) => {
+  console.log(req.session.username)
+  if(req.session.username){
+    res.json(req.session.username)};
+})
+
+app.get("/api/count", (req, res) => {
+  let username = req.query.username;
   data_base.get(
     `
-      SELECT count FROM Banana_data WHERE id = ?
+      SELECT count FROM Banana_data WHERE username = ?
     `,
-    id,
+    username,
     (err, row) => {
       data_base.get(
         `
@@ -46,26 +57,25 @@ app.get("/count", (req, res) => {
           else {
             console.log(child_row.total);
             if (!row) {
-              console.log("hej");
               data_base.run(
                 `
-            INSERT INTO Banana_data (id, count) VALUES (?, 0)
+            INSERT INTO Banana_data (username, count) VALUES (?, 0)
             `,
-                id,
+                username,
                 (err) => {
                   if (err) {
                     console.log(err);
                   } else
                     res.send({
                       count: 0,
-                      total_count: child_row ? child_row.total : _0,
+                      total_count: child_row ? child_row.total : 0,
                     });
                 }
               );
             } else {
               res.send({
                 count: row.count,
-                total_count: child_row ? child_row.total : _0,
+                total_count: child_row ? child_row.total : 0,
               });
             }
           }
@@ -75,16 +85,78 @@ app.get("/count", (req, res) => {
   );
 });
 
+app.post("/api/login/post", (req, res) => {
+  let con = req.query.login === "true";
+  let password = req.body.password;
+  let username = req.body.username;
+  if (con) {
+    check_login(username, password, (exists) => {
+      console.log(exists);
+      if (exists){
+          req.session.username = username;
+         res.json({ success: true });
+          
+        }
+    
+      else res.json({ success: false });
+    });
+  } else {
+    insert_login(username, password, (success) => {
+      res.json({ success });
+    });
+  }
+});
+
 app.use(express.static(WEB_PATH)); //Server my static files (HTML, CSS);
 
 function main() {
   server.listen(PORT);
 }
 
-function write_to_data_base(id) {
+function check_login(username, password, callback) {
+  data_base.get(
+    `
+      SELECT * FROM Banana_data WHERE username = ? AND psw = ?
+    `,
+    [username, password],
+    (err, row) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      if (row) {
+        callback(true);
+      } else {
+        callback(false);
+      }
+    }
+  );
+}
+
+function insert_login(username, password, callback) {
+  check_login(username, password, (exists) => {
+    if (!exists) {
+      data_base.run(
+        `
+          INSERT INTO Banana_data (username, psw) VALUES (?, ?)
+        `,
+        [username, password],
+        (err) => {
+          if (err) {
+            console.log(err);
+            callback(false);
+          } else callback(true);
+        }
+      );
+    }
+    else callback(false)
+  });
+}
+
+function write_to_data_base(username, count) {
   data_base.run(
-    `UPDATE Banana_data SET count = count + 1 WHERE id = ?`,
-    Number(id),
+    `UPDATE Banana_data SET count = ? WHERE username = ?`,
+    [count, username],
     (err) => {
       if (err) console.log(err);
     }
