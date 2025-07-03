@@ -3,6 +3,7 @@
 var players = document.getElementsByClassName("profile");
 var total_count = document.getElementById("total count");
 var submit_banananas_button = document.getElementById("submit button");
+var back_to_login_button = document.getElementById("go back to login")
 
 submit_banananas_button.addEventListener("click", (e) => {
   for (let player of players) {
@@ -21,12 +22,15 @@ for (let player of players) {
   let count = player.querySelector("p");
   add_button.addEventListener("click", (e) => click(e, player, true));
   sub_button.addEventListener("click", (e) => click(e, player, false));
+  back_to_login_button.addEventListener("click", e => {
+    window.location.href = "index.html"
+  })
 }
 
 async function get_username() {
   let res = await fetch("/api/me");
-  let username = await res.json();
-  return username;
+  let data = await res.json();
+  return data.username;
 }
 
 function click(e, obj, add) {

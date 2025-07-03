@@ -3,9 +3,10 @@ var express = require("express");
 var sqlite3 = require("sqlite3");
 var path = require("path");
 var fs = require("fs");
+var util = require("util");
 const { emitWarning } = require("process");
 const { error } = require("console");
-const session = require('express-session');
+const session = require("express-session");
 
 var app = express();
 
@@ -14,31 +15,43 @@ const WEB_PATH = path.join(__dirname, "web");
 const SQL_PATH = path.join(__dirname, "my_sql.sql");
 const PORT = 4747;
 
-var data_base = new sqlite3.Database(DB_PATH);
+var SQL3 = new sqlite3.Database(DB_PATH);
+var data_base = {
+  run: util.promisify(SQL3.run.bind(SQL3)),
+  get: util.promisify(SQL3.get.bind(SQL3)),
+};
 
 var server = http.createServer(app);
 sql_init = fs.readFileSync(SQL_PATH, "utf-8");
 data_base.exec(sql_init);
 
 app.use(express.json());
-app.use(session({
-  secret: 'some secret',
-  resave: false,
-  saveUninitialized: false
-}));
+app.use(
+  session({
+    secret: "some secret",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 app.post("/api/post", (req, res) => {
   var current_count = req.body.count;
   var username = req.body.username;
   write_to_data_base(username, current_count);
-  res.send("job done");
+  res.send("success!");
+});
+
+app.get("/main.html", (req, res, next) => {
+  console.log(req.session.username);
+  if (!req.session.username) {
+    return res.redirect("/index.html");
+  }
+  next();
 });
 
 app.get("/api/me", (req, res) => {
-  console.log(req.session.username)
-  if(req.session.username){
-    res.json(req.session.username)};
-})
+  res.json({ username: req.session.username || null });
+});
 
 app.get("/api/count", (req, res) => {
   let username = req.query.username;
@@ -55,7 +68,6 @@ app.get("/api/count", (req, res) => {
         (err, child_row) => {
           if (err) console.log(err);
           else {
-            console.log(child_row.total);
             if (!row) {
               data_base.run(
                 `
@@ -91,18 +103,20 @@ app.post("/api/login/post", (req, res) => {
   let username = req.body.username;
   if (con) {
     check_login(username, password, (exists) => {
-      console.log(exists);
-      if (exists){
-          req.session.username = username;
-         res.json({ success: true });
-          
-        }
-    
-      else res.json({ success: false });
+      if (exists) {
+        req.session.username = username;
+        res.json({ success: true, message: "you are logged in!" });
+      } else
+        res.json({
+          success: false,
+          message: "Incorrect username or password! ",
+        });
     });
   } else {
     insert_login(username, password, (success) => {
-      res.json({ success });
+      if (!success)
+        res.json({ success: false, message: "This account already exists! " });
+      else res.json({ success: true, message: "Account created! " });
     });
   }
 });
@@ -148,8 +162,7 @@ function insert_login(username, password, callback) {
           } else callback(true);
         }
       );
-    }
-    else callback(false)
+    } else callback(false);
   });
 }
 

@@ -1,7 +1,7 @@
 
 CREATE TABLE IF NOT EXISTS Banana_data(
     id INTEGER PRIMARY KEY,
-    username TEXT,
+    username TEXT UNIQUE,
     count INTEGER,
     psw TEXT
 );
