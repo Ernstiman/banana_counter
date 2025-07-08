@@ -1,30 +1,27 @@
-// var my_button = document.getElementById("banana_button");
-// var current_count = document.getElementById("count");
 var players = document.getElementsByClassName("profile");
 var total_count = document.getElementById("total count");
 var submit_banananas_button = document.getElementById("submit button");
-var back_to_login_button = document.getElementById("go back to login")
+var back_to_login_button = document.getElementById("go back to login");
 
-submit_banananas_button.addEventListener("click", (e) => {
+submit_banananas_button.addEventListener("click", () => {
   for (let player of players) {
-    submit_bananas(e, player);
+    submit_bananas(player);
   }
 });
 
 for (let player of players) {
   get_username().then((username) => {
     player.querySelector(".username").innerHTML = username;
-    let count_elem = player.querySelector('.count');
+    let count_elem = player.querySelector(".count");
     update_banana_count(username, count_elem);
   });
   let sub_button = player.querySelector(".subtract.banana");
   let add_button = player.querySelector(".add.banana");
-  let count = player.querySelector("p");
-  add_button.addEventListener("click", (e) => click(e, player, true));
-  sub_button.addEventListener("click", (e) => click(e, player, false));
-  back_to_login_button.addEventListener("click", e => {
-    window.location.href = "index.html"
-  })
+  add_button.addEventListener("click", () => click(player, true));
+  sub_button.addEventListener("click", () => click(player, false));
+  back_to_login_button.addEventListener("click", () => {
+    window.location.href = "index.html";
+  });
 }
 
 async function get_username() {
@@ -33,14 +30,14 @@ async function get_username() {
   return data.username;
 }
 
-function click(e, obj, add) {
+function click(obj, add) {
   let current_count = obj.querySelector("p").innerHTML;
   if (add) current_count++;
   else current_count--;
   obj.querySelector("p").innerHTML = current_count;
 }
 
-async function submit_bananas(e, obj) {
+async function submit_bananas(obj) {
   let parent_div = obj;
   let id = parent_div.id;
   let username = parent_div.querySelector(".username").innerHTML;

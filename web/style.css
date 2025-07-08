@@ -1,15 +1,65 @@
-
 body {
-      background: #fffbe6;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 2rem;
-      color: #333;
+      background: linear-gradient(135deg, #fffbe7 0%, #ffe066 100%);
+      font-family: 'Baloo 2', 'Comic Sans MS', 'Arial Rounded MT Bold', Arial, sans-serif;
+      color: #5c4300;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3 {
+      color: #e6b800;
+      text-shadow: 1px 2px 0 #fff9c4;
+      font-weight: bold;
+      margin-bottom: 0.5em;
     }
 
     #root {
       max-width: 600px;
       margin: 0 auto;
+    }
+
+    .container, .login-container, .main-container {
+      background: #fffde4;
+      border-radius: 24px;
+      box-shadow: 0 4px 24px 0 #ffe06688;
+      padding: 2em;
+      max-width: 400px;
+      margin: 2em auto;
+      text-align: center;
+    }
+
+    input[type="text"], input[type="password"] {
+      border: 2px solid #ffe066;
+      border-radius: 12px;
+      padding: 0.7em 1em;
+      margin: 0.5em 0;
+      font-size: 1em;
+      background: #fffbe7;
+      color: #5c4300;
+      outline: none;
+      transition: border 0.2s;
+    }
+    input[type="text"]:focus, input[type="password"]:focus {
+      border-color: #e6b800;
+    }
+
+    button, .banana-btn {
+      background: linear-gradient(90deg, #ffe066 60%, #fff200 100%);
+      color: #5c4300;
+      border: none;
+      border-radius: 18px;
+      padding: 0.7em 2em;
+      font-size: 1.1em;
+      font-weight: bold;
+      margin: 1em 0.5em;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #ffe06655;
+      transition: background 0.2s, transform 0.1s;
+    }
+    button:hover, .banana-btn:hover {
+      background: linear-gradient(90deg, #fff200 60%, #ffe066 100%);
+      transform: scale(1.05);
     }
 
     .main.count.container {
@@ -39,11 +89,15 @@ body {
     }
 
     .profile {
-      background: #fffde7;
-      border: 2px solid #fdd835;
-      border-radius: 8px;
-      padding: 15px;
-      box-shadow: 1px 1px 6px rgba(0,0,0,0.1);
+      background: #fffbe7;
+      border: 2px solid #ffe066;
+      border-radius: 18px;
+      margin: 1.5em 0;
+      padding: 1.5em 1em;
+      box-shadow: 0 2px 12px #ffe06644;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .profile h2 {
@@ -56,18 +110,51 @@ body {
       margin: 5px 0 15px;
     }
 
-    .add.banana {
-      background: #fbc02d;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      color: #333;
-      font-size: 1rem;
-      font-weight: bold;
-      transition: background 0.3s;
+    .add.banana, .subtract.banana {
+      font-size: 1.5em;
+      background: #fff200;
+      border: 2px solid #ffe066;
+      border-radius: 50%;
+      width: 2.5em;
+      height: 2.5em;
+      margin: 0.3em;
+      color: #5c4300;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .add.banana:hover, .subtract.banana:hover {
+      background: #ffe066;
+      transform: scale(1.1);
     }
 
-    .add.banana:hover {
-      background: #fdd835;
+    #total\ count, .total-count {
+      background: #ffe066;
+      color: #5c4300;
+      border-radius: 12px;
+      padding: 0.5em 1em;
+      margin: 1em auto;
+      font-size: 1.3em;
+      font-weight: bold;
+      display: inline-block;
+      box-shadow: 0 1px 6px #ffe06655;
+    }
+
+    a, .link {
+      color: #e6b800;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.2s;
+    }
+    a:hover, .link:hover {
+      color: #f7b731;
+      text-decoration: underline;
+    }
+
+    /* Optional: Banana emoji accent */
+    .banana-emoji {
+      font-size: 2em;
+      margin: 0 0.2em;
+      vertical-align: middle;
     }

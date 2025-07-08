@@ -1,8 +1,8 @@
 
-CREATE TABLE IF NOT EXISTS Banana_data(
-    id INTEGER PRIMARY KEY,
-    username TEXT UNIQUE,
-    count INTEGER,
-    psw TEXT
+CREATE DATABASE IF NOT EXISTS Banana_data(
+    id INT AUTO_INCRENMENT PRIMARY KEY,
+    username VARCHAR(255) UNIQUE,
+    count INT,
+    psw VARCHAR(255)
 );
 

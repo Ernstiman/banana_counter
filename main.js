@@ -1,9 +1,9 @@
 var http = require("http");
 var express = require("express");
-var sqlite3 = require("sqlite3");
 var path = require("path");
 var fs = require("fs");
-var util = require("util");
+var mysql = require("mysql2/promise")
+
 const session = require("express-session");
 
 var app = express();
@@ -12,16 +12,28 @@ const DB_PATH = path.join(__dirname, "my_data.db");
 const WEB_PATH = path.join(__dirname, "web");
 const SQL_PATH = path.join(__dirname, "my_sql.sql");
 const PORT = 4747;
-
-var SQL3 = new sqlite3.Database(DB_PATH);
-var data_base = {
-  run: util.promisify(SQL3.run.bind(SQL3)),
-  get: util.promisify(SQL3.get.bind(SQL3)),
-  exec: util.promisify(SQL3.exec.bind(SQL3)),
-};
+const dbConfig = {
+  host: 'localhost',
+  user: 'viktor',
+  password: 'my_sql_pass',
+  database: 'my_data'
+}
+let data_base;
+let pool;
 
 var server = http.createServer(app);
 sql_init = fs.readFileSync(SQL_PATH, "utf-8");
+
+async function main() {
+
+  pool = mysql.createPool(dbConfig);
+
+  await pool.query(sql_init);
+
+  server.listen(PORT);
+
+}
+
 
 app.use(express.json());
 app.use(
@@ -40,7 +52,6 @@ app.post("/api/post", async (req, res) => {
 });
 
 app.get("/main.html", (req, res, next) => {
-  console.log(req.session.username);
   if (!req.session.username) {
     return res.redirect("/index.html");
   }
@@ -53,28 +64,30 @@ app.get("/api/me", (req, res) => {
 
 app.get("/api/count", async (req, res) => {
   let username = req.session.username;
-  let result = await data_base.get(
+  let [result] = await pool.query(
     `
       SELECT count FROM Banana_data WHERE username = ?
     `,
     username
   );
-  let sum_result = await data_base.get(
+  let [sum_result] = await pool.query(
     `
         SELECT SUM(count) AS total FROM Banana_data
         `
   );
   res.send({
-    count: result.count,
-    total_count: sum_result.total,
+    count: result[0].count || 0,
+    total_count: sum_result[0].total || 0,
   });
 });
 
 app.post("/api/login/post", async (req, res) => {
   let con = req.query.login === "true";
-  let password = req.body.password;
+  let password = rövarencrypt(req.body.password);
   let username = req.body.username;
-  if (con) {
+  if (!password) {
+    res.json({ success: false, message: "You need to insert a password! " });
+  } else if (con) {
     let result = await check_login(username, password);
     if (result) {
       req.session.username = username;
@@ -86,7 +99,6 @@ app.post("/api/login/post", async (req, res) => {
       });
   } else {
     let created = await insert_login(username, password);
-    console.log(created);
     if (created) {
       res.json({ success: true, message: "The account has been created! " });
     } else {
@@ -97,38 +109,69 @@ app.post("/api/login/post", async (req, res) => {
 
 app.use(express.static(WEB_PATH)); //Server my static files (HTML, CSS);
 
-async function main() {
-  await data_base.exec(sql_init);
-  server.listen(PORT);
-}
 
 async function check_login(username, password = undefined) {
   let result;
   if (password) {
-    result = await data_base.get(
+    [result] = await pool.query(
       `
         SELECT * FROM Banana_data WHERE username = ? AND psw = ?
       `,
       [username, password]
     );
   } else {
-    result = await data_base.get(
+    [result] = await pool.query(
       `
         SELECT * FROM Banana_data WHERE username = ?
       `,
       [username]
     );
   }
-  if (result) {
-    return true;
+  return result.length > 0;
+}
+
+function rövarencrypt(pass) {
+  let kons = [
+    "q",
+    "w",
+    "r",
+    "t",
+    "p",
+    "s",
+    "d",
+    "f",
+    "g",
+    "h",
+    "j",
+    "k",
+    "l",
+    "z",
+    "x",
+    "c",
+    "v",
+    "b",
+    "n",
+    "m",
+  ];
+  let new_pass = "";
+  let i = 0;
+  console.log(pass);
+  for (let letter of pass) {
+    letter = String(letter);
+    if (kons.includes(letter.toUpperCase()) || kons.includes(letter)) {
+      new_pass += letter + "o" + letter;
+      continue;
+    }
+    new_pass += letter;
+    i++;
   }
-  return false;
+  return new_pass;
 }
 
 async function insert_login(username, password) {
   let exists = await check_login(username);
   if (!exists) {
-    await data_base.run(
+    await pool.query(
       `
           INSERT INTO Banana_data (username, psw, count) VALUES (?, ?, 0)
         `,
@@ -140,7 +183,7 @@ async function insert_login(username, password) {
 }
 
 async function write_to_data_base(username, count) {
-  await data_base.run(`UPDATE Banana_data SET count = ? WHERE username = ?`, [
+  await pool.query(`UPDATE Banana_data SET count = ? WHERE username = ?`, [
     count,
     username,
   ]);
