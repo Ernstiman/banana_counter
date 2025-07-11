@@ -3,6 +3,7 @@ var express = require("express");
 var path = require("path");
 var fs = require("fs");
 var mysql = require("mysql2/promise")
+var cors = require("cors")
 
 const session = require("express-session");
 
@@ -36,6 +37,11 @@ async function main() {
 
 
 app.use(express.json());
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}))
+
 app.use(
   session({
     secret: "some secret",
@@ -44,9 +50,9 @@ app.use(
   })
 );
 
-app.post("/api/post", async (req, res) => {
+app.post("/api/set-count", async (req, res) => {
   let current_count = req.body.count;
-  let username = req.body.username;
+  let username = req.session.username;
   await write_to_data_base(username, current_count);
   res.send("success!");
 });
@@ -62,13 +68,14 @@ app.get("/api/me", (req, res) => {
   res.json({ username: req.session.username });
 });
 
-app.get("/api/count", async (req, res) => {
+app.get("/api/get-count", async (req, res) => {
   let username = req.session.username;
+  console.log(username)
   let [result] = await pool.query(
     `
       SELECT count FROM Banana_data WHERE username = ?
     `,
-    username
+    [username]
   );
   let [sum_result] = await pool.query(
     `
@@ -82,12 +89,13 @@ app.get("/api/count", async (req, res) => {
 });
 
 app.post("/api/login/post", async (req, res) => {
-  let con = req.query.login === "true";
+  let create_account = req.query.create_account === "true";
+  console.log(create_account)
   let password = rövarencrypt(req.body.password);
   let username = req.body.username;
   if (!password) {
     res.json({ success: false, message: "You need to insert a password! " });
-  } else if (con) {
+  } else if (!create_account) {
     let result = await check_login(username, password);
     if (result) {
       req.session.username = username;
@@ -106,8 +114,6 @@ app.post("/api/login/post", async (req, res) => {
     }
   }
 });
-
-app.use(express.static(WEB_PATH)); //Server my static files (HTML, CSS);
 
 
 async function check_login(username, password = undefined) {
@@ -155,7 +161,6 @@ function rövarencrypt(pass) {
   ];
   let new_pass = "";
   let i = 0;
-  console.log(pass);
   for (let letter of pass) {
     letter = String(letter);
     if (kons.includes(letter.toUpperCase()) || kons.includes(letter)) {
