@@ -1,7 +1,7 @@
 var players = document.getElementsByClassName("profile");
-var total_count = document.getElementById("total count");
-var submit_banananas_button = document.getElementById("submit button");
-var back_to_login_button = document.getElementById("go back to login");
+var total_count = document.getElementById("total_count");
+var submit_banananas_button = document.getElementById("submit_button");
+var back_to_login_button = document.getElementById("go_back_to_login");
 
 submit_banananas_button.addEventListener("click", () => {
   for (let player of players) {
@@ -11,12 +11,12 @@ submit_banananas_button.addEventListener("click", () => {
 
 for (let player of players) {
   get_username().then((username) => {
-    player.querySelector(".username").innerHTML = username;
-    let count_elem = player.querySelector(".count");
+    player.querySelector("#username").innerHTML = username;
+    let count_elem = player.querySelector("#count");
     update_banana_count(username, count_elem);
   });
-  let sub_button = player.querySelector(".subtract.banana");
-  let add_button = player.querySelector(".add.banana");
+  let sub_button = player.querySelector("#subtract_banana");
+  let add_button = player.querySelector("#add_banana");
   add_button.addEventListener("click", () => click(player, true));
   sub_button.addEventListener("click", () => click(player, false));
   back_to_login_button.addEventListener("click", () => {
@@ -40,7 +40,7 @@ function click(obj, add) {
 async function submit_bananas(obj) {
   let parent_div = obj;
   let id = parent_div.id;
-  let username = parent_div.querySelector(".username").innerHTML;
+  let username = parent_div.querySelector("#username").innerHTML;
   let count = parent_div.querySelector("p").innerHTML;
 
   await fetch("/api/post", {

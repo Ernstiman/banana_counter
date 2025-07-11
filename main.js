@@ -15,7 +15,7 @@ const PORT = 4747;
 const dbConfig = {
   host: 'localhost',
   user: 'viktor',
-  password: 'my_sql_pass',
+  password: 'MY_sql_pass!123',
   database: 'my_data'
 }
 let data_base;
