@@ -4,5 +4,8 @@ CREATE TABLE IF NOT EXISTS Banana_data(
     username VARCHAR(255) UNIQUE,
     count INT,
     psw VARCHAR(255)
+
 );
+
+
 
