@@ -9,6 +9,11 @@ const {
   get_counts_from_users,
   get_all_users,
   remove_follower,
+  select_banana_history,
+  insert_banana_history,
+  select_friend_requests,
+  select_friend_requests,
+  insert_friend_requests,
 } = require("./db.js");
 const { rövarencrypt } = require("./utils.js");
 var http = require("http");
@@ -23,21 +28,25 @@ var app = express();
 
 const BANANA_DATA_SQL_PATH = path.join(__dirname, "Banana_data.sql");
 const FOLLOWERS_SQL_PATH = path.join(__dirname, "Followers.sql");
-const BANANA_HISTORY_SQL_PATH = path.join(__dirname, "Banana_history.sql")
+const BANANA_HISTORY_SQL_PATH = path.join(__dirname, "Banana_history.sql");
+const FRIEND_REQUESTS_SQL_PATH = path.join(__dirname, "Friend_requests.sql")
 const PORT = 4747;
 
 var server = http.createServer(app);
 banana_data_init = fs.readFileSync(BANANA_DATA_SQL_PATH, "utf-8");
 followers_init = fs.readFileSync(FOLLOWERS_SQL_PATH, "utf-8");
 banana_history_init = fs.readFileSync(BANANA_HISTORY_SQL_PATH, "utf-8");
+friend_requests_init = fs.readFileSync(FRIEND_REQUESTS_SQL_PATH, "utf-8");
 
 async function main() {
   await pool.query(banana_data_init);
 
   await pool.query(followers_init);
 
-  await pool.query(banana_history_init)
-  
+  await pool.query(banana_history_init);
+
+  await pool.query(friend_requests_init);
+
   server.listen(PORT);
 }
 
@@ -107,14 +116,59 @@ app.get("/api/get-user-count", async (req, res) => {
 
 app.get("/api/get-follower", async (req, res) => {
   const username = req.session.username;
-  let followed_data = [];
+  let following_data = [];
   let follower_data = [];
 
   try {
     const followers = await get_follower(username);
-    followed_data = await get_counts_from_users(followers.followed);
+    following_data = await get_counts_from_users(followers.followed);
     follower_data = await get_counts_from_users(followers.follower);
-    res.json({ followed_data, follower_data });
+    res.json({ following_data, follower_data });
+  } catch (err) {
+    error(err, res);
+  }
+});
+
+app.get("/api/get-friend-requests", async (req, res) => {
+  const username = req.query.username;
+  try{
+    let friend_requests = await select_friend_requests(username);
+    res.json({friend_requests});
+  }
+  catch(err){
+    error(err, res);
+  }
+})
+
+app.post("/api/post-friend-requests", async (req, res) => {
+  const {sender, receiver} = req.body;
+  if(await insert_friend_requests(sender, receiver)){
+    res.json("Friend request has been inserted! ")
+  }
+  else{
+    res.json("Something went wrong when inserting friend request! ");
+  }
+})
+
+app.post("/api/get-banana-history", async (req, res) => {
+  const users = req.body.users;
+  try{
+    let banana_history = await select_banana_history(users);
+    res.json({banana_history});
+  }
+  catch(err){
+    error(err, res);
+  }
+})
+
+
+app.post("/api/post-banana-history", async (req, res) => {
+  const amount = req.body.amount;
+  const username = req.session.username;
+
+  try {
+    await insert_banana_history(amount, username);
+    res.json("Done!");
   } catch (err) {
     error(err, res);
   }

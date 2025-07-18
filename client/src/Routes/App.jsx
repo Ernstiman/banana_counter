@@ -1,11 +1,10 @@
 
 import {BrowserRouter as Router,Routes,Route,Navigate} from 'react-router-dom';
 import Login from './Login_Page.jsx';
-import React, { useState } from "react";
 import HomePage from './Home_Page.jsx';
 import UserPage from "./User_Page.jsx";
-import Header from "../Header.jsx";
-import {UserContextProvider, useUser} from '../UserContextProvider.jsx';
+import Header from "../components/Header.jsx";
+import {UserContextProvider, useUser} from '../context/UserContextProvider.jsx';
 import RedirectOnRoot from './Redirect_On_Root.jsx';
 
 

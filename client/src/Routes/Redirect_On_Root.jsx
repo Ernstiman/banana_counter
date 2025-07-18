@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom"
-import { useUser } from "../UserContextProvider"
+import { useUser } from "../context/UserContextProvider"
 import { useEffect, useState } from "react";
 
 export default function RedirectOnRoot(){

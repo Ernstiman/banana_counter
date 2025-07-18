@@ -12,7 +12,6 @@ export default function FindUsers(){
       )
       const data = await response.json();
       setUsers(data);
-
    }
 
    useEffect(() => {

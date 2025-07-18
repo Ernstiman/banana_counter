@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { useUser } from "./UserContextProvider"
+import { useUser } from "../context/UserContextProvider"
 import { LogOut } from "./Buttons"
 
 export default function Header(){

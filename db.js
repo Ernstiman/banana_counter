@@ -112,6 +112,49 @@ async function remove_follower(follower, followed){
     )}
 }
 
+async function insert_banana_history(amount, username){
+    if(username && amount){
+      await pool.query("INSERT INTO Banana_history (username, amount) VALUES (?, ?)",
+        [username, amount]
+      )
+    }
+}
+
+async function select_banana_history(users){
+  const VALUES = users.map(() => "?").join(",");
+  if(users.length > 0){
+    const [result] = await pool.query(`SELECT timestamp, amount, username FROM Banana_history WHERE username IN (${VALUES}) ORDER BY timestamp DESC;`,
+      users
+    )
+    return result
+  }
+  return
+  
+}
+
+async function select_friend_requests(username){
+  if(!username) return null
+    [result] = await pool.query("SELECT receiver FROM Friend_requests WHERE sender = ?",
+      [username]
+    )
+    return result.map(user => user.receiver);
+}
+
+async function insert_friend_requests(sender, receiver){
+  try{
+  await pool.query("INSERT INTO Friend_requests (sender, receiver) VALUES (?, ?)",
+    [sender, receiver]
+  )
+  return true
+}
+  catch(err){
+    console.log("Something went wrong when trying to insert friend request: Error:", err)
+    return false
+  }
+}
+
+
+
 const mysql = require("mysql2/promise");
 
 const dbConfig = {
@@ -133,5 +176,9 @@ module.exports = {
   add_follower,
   get_follower,
   get_counts_from_users,
-  remove_follower
+  remove_follower,
+  insert_banana_history,
+  select_banana_history,
+  select_friend_requests,
+  insert_friend_requests
 };

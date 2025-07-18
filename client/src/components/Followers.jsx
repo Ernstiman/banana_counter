@@ -1,21 +1,21 @@
-import { useContext, useEffect, useState } from "react"
-import { useUser } from "./UserContextProvider"
+
+import { useUser } from "../context/UserContextProvider"
 import { UserNav } from "./Navs";
+import useGetUserData from "../hooks/useGetUserData";
+
 
 export default function Followers(){
 
-    const {username, fetch_followers, followers, followed} = useUser();
+    const {followers, following} = useUser();
+    const {loading} = useGetUserData()
 
-    useEffect(() => {
-        fetch_followers();
-    }, [])
-    
-    return (
+    if(!loading){
+    return ( 
         <div className="followers-root-container">
             <div className="followed-container">
             <h1>Following</h1>
             <ul className="followed">
-                {followed && followed.map(user => (
+                {following && following.map(user => (
                     <li key = {user.username} value={user.username}>
                         <UserNav targetUsername={user.username}/>
                         <p>Count: {user.count}</p>
@@ -36,4 +36,8 @@ export default function Followers(){
             </div>
         </div>
     )
+}
+return (
+    <p>Loading...</p>
+)
 }

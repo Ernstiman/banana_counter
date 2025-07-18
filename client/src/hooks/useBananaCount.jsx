@@ -1,38 +1,27 @@
 import { useEffect } from "react";
-import { useUser } from "../UserContextProvider";
+import { useUser } from "../context/UserContextProvider";
+import { fetch_banana_count, post_banana_count } from "../api/api";
 
 export default function useBananaCount(){
 
-    const {count, setCount, totalCount, setTotalCount} = useUser()
+    const {setCount, setTotalCount, count} = useUser()
 
-    async function fetchBananaCount() {
-        const response = await fetch(`http://localhost:4747/api/get-count`,
-            {
-                credentials: "include"
-            }
-        );
-        const data = await response.json();
-        setCount(data.count);
-        setTotalCount(data.total_count);
+    async function get_count(){
+        const {count, total_count} = await fetch_banana_count()
+        setCount(count);
+        setTotalCount(total_count);
     }
 
-     function setBananaCount(added_count){
+    async function change_count(added_count){
         added_count = added_count > 0 ? added_count : 0
-        fetch("http://localhost:4747/api/set-count", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ count: count + added_count}),
-            credentials: "include"
-        })
-        .then(() => fetchBananaCount())
+        await post_banana_count(count + added_count)
+        await get_count()
     }
 
     useEffect(() => {
-        fetchBananaCount()
+        get_count()
     }, []
 )
 
-    return {banana_count : count, total_banana_count: totalCount, setBananaCount }
+    return {change_count}
 }
