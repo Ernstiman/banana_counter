@@ -14,7 +14,14 @@ export default function Header(){
             {username && (<div className="header__right">
                 <span className="header__user">{username}</span>
                 <div className="header__actions">
-                    <LogOut />
+                    
+                    <Link to="/search" className="search__link">
+                       <img src="/img/search-icon.png" alt="search" className="search-icon"/>
+                    </Link>
+                    <Link to="/friend-requests" className="friend-request-link">
+                        <img src="/img/friend-request-icon.png" alt="friend-request" className="friend-request-icon" />
+                    </Link>
+                    <LogOut/>
                 </div>
             </div>)}
         </header>

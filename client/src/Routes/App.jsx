@@ -6,6 +6,8 @@ import UserPage from "./User_Page.jsx";
 import Header from "../components/Header.jsx";
 import {UserContextProvider, useUser} from '../context/UserContextProvider.jsx';
 import RedirectOnRoot from './Redirect_On_Root.jsx';
+import Search from './Search.jsx';
+import FriendRequestPage from './Friend_Request_Page.jsx';
 
 export default function App(){
   return (
@@ -15,7 +17,9 @@ export default function App(){
       <Routes>
         <Route path = "/login" element={<Login />} />
         <Route path = "/home-page" element={<HomePage />} />
-        <Route path = "/user/:userUsername" element={<UserPage/>}></Route>
+        <Route path = "/user/:userUsername"element={<UserPage/>}></Route>
+        <Route path = "/search" element={<Search/>}></Route>
+        <Route path = "/friend-requests" element={<FriendRequestPage/>}></Route>
         <Route path = "/" element={<RedirectOnRoot/>}/>
       </Routes>
     </UserContextProvider>

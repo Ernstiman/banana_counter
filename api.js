@@ -26,10 +26,10 @@ const session = require("express-session");
 
 var app = express();
 
-const BANANA_DATA_SQL_PATH = path.join(__dirname, "Banana_data.sql");
-const FOLLOWERS_SQL_PATH = path.join(__dirname, "Followers.sql");
-const BANANA_HISTORY_SQL_PATH = path.join(__dirname, "Banana_history.sql");
-const FRIEND_REQUESTS_SQL_PATH = path.join(__dirname, "Friend_requests.sql")
+const BANANA_DATA_SQL_PATH = path.join(__dirname, "./sql/Banana_data.sql");
+const FOLLOWERS_SQL_PATH = path.join(__dirname, "./sql/Followers.sql");
+const BANANA_HISTORY_SQL_PATH = path.join(__dirname, "./sql/Banana_history.sql");
+const FRIEND_REQUESTS_SQL_PATH = path.join(__dirname, "./sql/Friend_requests.sql")
 const PORT = 4747;
 
 var server = http.createServer(app);

@@ -32,10 +32,9 @@ export default function HomePage() {
                     </div>
                 </div>
             </div>
-            <FindUsers/>
+            
             <Followers/>
             <BananaHistory users={following}>Banana Activity: </BananaHistory>  
-            <ListFriendRequests/>
         </div>
     )
 }
