@@ -13,20 +13,26 @@ export default function LoginPage() {
     return(
         <div className="login-container">
             <div className="login-form">
-                <h2>Login</h2>
+                <h2 className="login-title">Login</h2>
                 <form onSubmit={(e) => login(e, subUsername, subPass, createAccount)}>
-                    <div>
-                        <label htmlFor="username">Username:</label>
-                        <input type="text" id="username" name="username" value={subUsername} onChange={(e) => setSubUsername(e.target.value)} />
+                    <div className="login-field">
+                        <label htmlFor="username" className="login-label">Username:</label>
+                        <input type="text" id="username" name="username" className="login-input"
+                            value={subUsername} onChange={(e) => setSubUsername(e.target.value)} />
                     </div>
-                    <div>
-                        <label htmlFor="password">Password:</label>
-                        <input type="password" id="password" name="password" value={subPass} onChange={(e) => setSubPass(e.target.value)} />
-                        <label htmlFor="create-account">Create account</label>
-                        <input type="checkbox" id="create-account" checked={createAccount} onChange={(e) => setCreateAccount(e.target.checked)} />
+                    <div className="login-field">
+                        <label htmlFor="password" className="login-label">Password:</label>
+                        <input type="password" id="password" name="password" className="login-input"
+                            value={subPass} onChange={(e) => setSubPass(e.target.value)} />
                     </div>
-                    <button type="submit">Login</button>
+                    <div className="login-checkbox-field">
+                        <input type="checkbox" id="create-account" checked={createAccount}
+                            onChange={(e) => setCreateAccount(e.target.checked)} />
+                        <label htmlFor="create-account" className="login-checkbox-label">Create account</label>
+                    </div>
+                    <button type="submit" className="login-button">Login</button>
                 </form>
             </div>
         </div>
-    )}
+    )
+}

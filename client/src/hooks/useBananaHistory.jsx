@@ -1,22 +1,25 @@
 import { useEffect, useState } from "react";
 import { useUser } from "../context/UserContextProvider";
 import { fetch_banana_history } from "../api/api";
+import BananaHistory from "../components/Banana_History";
 
-export default function useBananaHistory(users){   
-    const [usersHistory, setUsersHistory] = useState([]);
-    const [loading, setLoading] = useState(false);
+
+export default function useGetBananaHistory(users){   
+    const [bananaHistory, setBananaHistory] = useState([]);
+    const [loadingBananaHistory, setLoadingBananaHistory] = useState(false);
     
-    async function get_banana_history(){
-        let banana_history = await fetch_banana_history(users);
-        setUsersHistory(banana_history);
-    }
-
     useEffect(() => {
-        setLoading(true)
+        setLoadingBananaHistory(true)
         if(users && users.length > 0){
-             get_banana_history()
-             .then(setLoading(false))}
+             fetch_banana_history(users)
+             .then((banana_history) => {
+                setBananaHistory(banana_history)})
+            }
+        setTimeout(() => {
+            setLoadingBananaHistory(false)
+        }, 2000);
+        
     }, [users])
 
-    return {usersHistory, loading}
+    return {bananaHistory, loadingBananaHistory}
 }

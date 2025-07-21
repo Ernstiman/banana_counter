@@ -26,20 +26,29 @@ export default function FindUsers(){
 
    return (
       <div className="add-users-container">
-         <label htmlFor="select-users">Select User</label>
-         <input 
-         id= "select-users"
-         type="text"
-         placeholder="Find a user"
-         value={search_term}
-         onChange={e => setSearchTerm(e.target.value)} />
-         {search_term && <ul>{filtered.map(user => (
-            
-            <li key={user.username}>
-               <UserNav targetUsername = {user.username}/>
-            
-            </li>
-         ))}</ul>}
+         <label htmlFor="select-users" className="add-users-label">Find User</label>
+         <input
+            id="select-users"
+            type="text"
+            className="add-users-input"
+            placeholder="Type a username..."
+            value={search_term}
+            onChange={e => setSearchTerm(e.target.value)}
+            autoComplete="off"
+         />
+         {search_term && (
+            <ul className="add-users-list scroll-list">
+               {filtered.length > 0 ? (
+                  filtered.map(user => (
+                     <li key={user.username} className="add-users-list-item">
+                        <UserNav targetUsername={user.username} />
+                     </li>
+                  ))
+               ) : (
+                  <li className="add-users-list-item no-user">No users found</li>
+               )}
+            </ul>
+         )}
       </div>
-   )
+   );
 }

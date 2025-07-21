@@ -7,18 +7,15 @@ import Header from "../components/Header.jsx";
 import {UserContextProvider, useUser} from '../context/UserContextProvider.jsx';
 import RedirectOnRoot from './Redirect_On_Root.jsx';
 
-
 export default function App(){
   return (
-  
 <Router>  
    <UserContextProvider>
-    
       <Header/>
       <Routes>
         <Route path = "/login" element={<Login />} />
         <Route path = "/home-page" element={<HomePage />} />
-        <Route path = "/user/:username" element={<UserPage/>}></Route>
+        <Route path = "/user/:userUsername" element={<UserPage/>}></Route>
         <Route path = "/" element={<RedirectOnRoot/>}/>
       </Routes>
     </UserContextProvider>

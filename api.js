@@ -12,8 +12,8 @@ const {
   select_banana_history,
   insert_banana_history,
   select_friend_requests,
-  select_friend_requests,
   insert_friend_requests,
+  remove_friend_requests,
 } = require("./db.js");
 const { rövarencrypt } = require("./utils.js");
 var http = require("http");
@@ -142,11 +142,22 @@ app.get("/api/get-friend-requests", async (req, res) => {
 
 app.post("/api/post-friend-requests", async (req, res) => {
   const {sender, receiver} = req.body;
-  if(await insert_friend_requests(sender, receiver)){
+  const insert = req.query.insert === "true";
+  if(insert){
+    if(await insert_friend_requests(sender, receiver)){
     res.json("Friend request has been inserted! ")
   }
   else{
     res.json("Something went wrong when inserting friend request! ");
+  }
+  }
+  else{
+    if(await remove_friend_requests(sender, receiver)){
+      res.json("Friend request has been removed! ")
+    }
+    else{
+      res.json("Something went wrong when removing friend request! ")
+    }
   }
 })
 
@@ -182,11 +193,11 @@ app.post("/api/logout", async (req, res) => {
 });
 
 app.post("/api/set-follower", async (req, res) => {
-  const follower = req.session.username;
-  const followed = req.body.followed;
+  const following = req.session.username;
+  const follower = req.body.follower;
 
   try {
-    await add_follower(follower, followed);
+    await add_follower(follower, following);
     res.json("Done");
   } catch (err) {
     error(err, res);
@@ -248,7 +259,8 @@ app.post("/api/login/post", async (req, res) => {
 });
 
 function error(err, res) {
-  return res.status(500).json({ error: err });
+  console.log(err)
+  return res.status(500).json("Something went wrong");
 }
 
 main();

@@ -2,17 +2,20 @@ import React, { useContext } from "react";
 import { createContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import {BananaLoader} from "../components/Loaders";
 
 
 
 const UserContext = React.createContext();
 export function UserContextProvider({children}){
+    const navigator = useNavigate()
     const [username, setUsername] = useState("");
     const [count, setCount] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
     const [followers, setFollowers] = useState([]);
     const [following, setFollowing] = useState([]);
+    const [loading, setLoading] = useState(false)
     let location = useLocation();
 
     useEffect(() =>{
@@ -20,11 +23,23 @@ export function UserContextProvider({children}){
             fetch("http://localhost:4747/api/me",
                 {credentials: "include"}
             ).then(res => res.json())
-            .then(data => setUsername(data.username))
+            .then(data => {
+                if(data.username){
+                setUsername(data.username)}
+                else{
+                    navigator("/login")
+                }})
             .catch(err => console.log(err))
         }
     }, [location.pathname]);
+
+    useEffect(() => {
+        setLoading(true)
+        setTimeout(() => {setLoading(false)}, 1000);
+    }, [location])
     
+    if(loading) return <BananaLoader/>
+
     return ( 
         <UserContext.Provider value={{username, setUsername, 
         count, setCount, 

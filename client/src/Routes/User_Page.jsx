@@ -1,39 +1,48 @@
 import { useParams } from "react-router-dom";
-import { AddUserButton, RemoveUserButton } from "../components/Buttons";
+import { RemoveUserButton, SendFriendRequestButton } from "../components/Buttons";
 import { useUser } from "../context/UserContextProvider";
 import { useEffect, useState } from "react";
-import { fetch_followers, fetch_user_data } from "../api/api";
-import useGetUserData from "../hooks/useGetUserData";
+import { fetch_user_data } from "../api/api";
 import BananaHistory from "../components/Banana_History";
+import useGetFriendRequests from "../hooks/useGetFriendRequests";
+import useGetUserFollowers from "../hooks/useGetUserFollowers";
 
 export default function UserPage(){
-    const {username} = useParams()
+    const {userUsername} = useParams()
     const [count, setCount] = useState(0);
-    const {following, setFollowing} = useUser();
+    const {following, username} = useUser();
     const [follows, setFollows] = useState(false);
-    const {loading} = useGetUserData();
+    const [pendingFriendRequest, setPendingFriendRequest] = useState(false)
+    const {friendRequests, setFriendRequests} = useGetFriendRequests(userUsername);
+    useGetUserFollowers()
 
     useEffect(()=>{
-            if(!loading){
-            setFollows(following.map(user => user.username).includes(username))}}
+
+            setFollows(following.map(user => user.username).includes(userUsername))}
         ,[following])
  
+
     useEffect(() => {
-         fetch_user_data(username).then((count) => setCount(count))
-    }, [])
+                    setPendingFriendRequest(friendRequests.includes(username))
+    }, [friendRequests])
+
+    useEffect(() => {
+         fetch_user_data(userUsername).then((count) => setCount(count))
+    }, [userUsername])
     return (
         <div className="user-container">
-            <h1>{username}</h1>
+            <h1>{userUsername}</h1>
             <h2>Banana count: {count}</h2>
 
-            {!follows ? 
-            <AddUserButton targetUsername={username}/>
+            {follows ? 
+            <RemoveUserButton targetUsername={userUsername}/>
             :
-            <RemoveUserButton targetUsername={username}/>}
-
-            {following.map(user => user.username).includes(username) 
-            && <BananaHistory users={[{username}]}>{username}'s Banana Activity</BananaHistory>}
-            
+            pendingFriendRequest ? 
+            <p>Friend request has been sent</p>
+            :
+            <SendFriendRequestButton targetUsername={userUsername} setFriendRequests={setFriendRequests}/>
+            }
+            {follows && <BananaHistory users={[{username: userUsername}]}>{userUsername}'s Banana Activity</BananaHistory>}
         </div>
     )
 }

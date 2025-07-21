@@ -133,11 +133,12 @@ async function select_banana_history(users){
 }
 
 async function select_friend_requests(username){
-  if(!username) return null
-    [result] = await pool.query("SELECT receiver FROM Friend_requests WHERE sender = ?",
+ 
+  if(!username) return []
+  let [result] = await pool.query("SELECT sender FROM Friend_requests WHERE receiver = ?",
       [username]
     )
-    return result.map(user => user.receiver);
+    return result.map(user => user.sender);
 }
 
 async function insert_friend_requests(sender, receiver){
@@ -149,6 +150,19 @@ async function insert_friend_requests(sender, receiver){
 }
   catch(err){
     console.log("Something went wrong when trying to insert friend request: Error:", err)
+    return false
+  }
+}
+
+async function remove_friend_requests(sender, receiver){
+  try{
+    await pool.query("DELETE FROM Friend_requests WHERE sender = ? AND receiver = ?",
+      [sender, receiver]
+    )
+    return true
+  }
+  catch(err){
+    console.log("Something went wrong when trying to remove friend request:", err);
     return false
   }
 }
@@ -180,5 +194,6 @@ module.exports = {
   insert_banana_history,
   select_banana_history,
   select_friend_requests,
-  insert_friend_requests
+  insert_friend_requests,
+  remove_friend_requests
 };

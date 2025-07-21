@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import useBananaHistory from "../hooks/useBananaHistory";
 import { useUser } from "../context/UserContextProvider";
+import useGetBananaHistory from "../hooks/useBananaHistory";
+import { NormalLoader } from "./Loaders";
 
 function setTime(timestamp){
     return new Date(timestamp).toLocaleTimeString("en-US", {
@@ -20,20 +22,33 @@ function setDate(timestamp){
     })
 }
 
-export default function BananaHistory({users, children}){
-    const {usersHistory, loading} = useBananaHistory(users);
+export default function BananaHistory({users, children}) {
+    const { bananaHistory, loadingBananaHistory } = useGetBananaHistory(users);
 
-    if (!loading) return (
+    if (loadingBananaHistory) return (
+    <div className="banana-history-container">
+        <NormalLoader />
+    </div>)
+    return (
         <div className="banana-history-container">
             <h1>{children}</h1>
-            <ul>    
-                {usersHistory && usersHistory.map((user, i) => (
-                    <li key={i}>{user.username} ate {user.amount} bananas on {setDate(user.timestamp)} at {setTime(user.timestamp)}</li>
-                ))}
+            <ul className="banana-history-list scroll-list">
+                {bananaHistory && bananaHistory.length > 0 ? (
+                    bananaHistory.map((entry, i) => (
+                        <li key={i} className="banana-history-item">
+                            <span className="banana-history-username">{entry.username}</span>
+                            <span className="banana-history-action">
+                                ate <strong>{entry.amount}</strong> bananas
+                            </span>
+                            <span className="banana-history-date">
+                                on {setDate(entry.timestamp)} at {setTime(entry.timestamp)}
+                            </span>
+                        </li>
+                    ))
+                ) : (
+                    <li className="banana-history-item no-history">No banana history found.</li>
+                )}
             </ul>
         </div>
-    )
-    return (
-        <p>Loading...</p>
-    )
+    );
 }

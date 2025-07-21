@@ -1,32 +1,41 @@
 
 import { useUser } from "../context/UserContextProvider.jsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FindUsers from "../components/Find_Users.jsx";
 import Followers from "../components/Followers.jsx";
-import useBananaCount from "../hooks/useBananaCount.jsx";
+import useBananaCount from "../hooks/useGetBananaCount.jsx";
 import BananaHistory from "../components/Banana_History.jsx";
-import { post_banana_history } from "../api/api.js";
+import ListFriendRequests from "../components/List_Friend_Requests.jsx";
+import { AddBananaButton, SubtractBananaButton, SubmitBananasButton } from "../components/Buttons.jsx";
+import BananaCount from "../components/Banana_Count.jsx";
 
 
 export default function HomePage() {
-    const {username, count, totalCount, following} = useUser();
+    const {username, following} = useUser();
     const [addedCount, setAddedCount] = useState(0);
-    const {change_count} = useBananaCount();
+    
 
     return (
         <div className="app-container">
             <div className="user-data-container">
-            <h1>Welcome to the Banana Counter {username}!</h1>
-            <h2 className="count">The total banana count is: {totalCount}</h2>
-            <h2 className="count">Your current banana count is: {count}</h2>
-            {addedCount != 0 && (<h2>{addedCount} added bananas</h2>)}
-            <button onClick={() => setAddedCount(addedCount + 1)}>Add Banana</button>
-            <button onClick={() => setAddedCount(addedCount - 1 > 0 ? addedCount - 1 : 0) }>Remove Banana</button>
-            {addedCount != 0 && (<button onClick={() => {setAddedCount(0); change_count(addedCount); post_banana_history(addedCount)}}>Submit bananas</button>)}
+                <BananaCount/>
+                <div className="change-count-container">
+                    <div className="banana-buttons-group">
+                        <AddBananaButton addedCount={addedCount} setAddedCount={setAddedCount}/>
+                        <div className="added-bananas-text">
+                            {addedCount !== 0 && (
+                                <h2>{addedCount} added bananas</h2>
+                            )}
+                        </div>
+                        <SubtractBananaButton addedCount={addedCount} setAddedCount={setAddedCount}/>
+                        <SubmitBananasButton addedCount={addedCount} setAddedCount={setAddedCount}/>
+                    </div>
+                </div>
             </div>
-                <FindUsers/>
-                <Followers/>
-                <BananaHistory users={following}>Banana Activity: </BananaHistory>
-                
+            <FindUsers/>
+            <Followers/>
+            <BananaHistory users={following}>Banana Activity: </BananaHistory>  
+            <ListFriendRequests/>
         </div>
-    )}
+    )
+}
