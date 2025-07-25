@@ -20,7 +20,7 @@ export function UserContextProvider({children}){
 
     useEffect(() =>{
         if(!username){
-            fetch("http://localhost:4747/api/me",
+            fetch("http://localhost:4747/api/auth/me",
                 {credentials: "include"}
             ).then(res => res.json())
             .then(data => {

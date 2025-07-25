@@ -1,5 +1,5 @@
 
-import { AcceptFriendRequestButton, DeclineFriendRequestButton } from "./Buttons"
+import {AcceptFriendRequestButton, DeclineFriendRequestButton } from "./Buttons"
 
 export default function FriendRequest({sender, setFriendRequests}){
     return (

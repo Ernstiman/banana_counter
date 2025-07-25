@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { RemoveUserButton, SendFriendRequestButton } from "../components/Buttons";
 import { useUser } from "../context/UserContextProvider";
 import { useEffect, useState } from "react";
-import { fetch_user_data } from "../api/api";
+import { fetch_banana_count, follow } from "../api/api";
 import BananaHistory from "../components/Banana_History";
 import useGetFriendRequests from "../hooks/useGetFriendRequests";
 import useGetUserFollowers from "../hooks/useGetUserFollowers";
@@ -16,9 +16,9 @@ export default function UserPage(){
     const {friendRequests, setFriendRequests} = useGetFriendRequests(userUsername);
     useGetUserFollowers()
 
-    useEffect(()=>{
 
-            setFollows(following.map(user => user.username).includes(userUsername))}
+    useEffect(()=>{
+            setFollows(following.includes(userUsername))}
         ,[following])
  
 
@@ -27,7 +27,8 @@ export default function UserPage(){
     }, [friendRequests])
 
     useEffect(() => {
-         fetch_user_data(userUsername).then((count) => setCount(count))
+         fetch_banana_count([userUsername]).then((count) => {
+            setCount(count.count[0].count)})
     }, [userUsername])
     return (
         <div className="user-container">

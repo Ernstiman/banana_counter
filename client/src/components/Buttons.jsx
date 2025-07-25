@@ -1,18 +1,19 @@
 
 import { useNavigate } from "react-router-dom";
-import { remove_user, add_user, fetch_followers, post_friend_requests, post_banana_count, post_banana_history, fetch_banana_count } from "../api/api";
+import { fetch_followers, post_friend_requests, post_banana_count, post_banana_history, fetch_banana_count, follow, unfollow, fetch_following } from "../api/api";
 import { useUser } from "../context/UserContextProvider";
-import { fetch_friend_requests } from "../api/api";
+import { fetch_friend_requests, remove_friend_requests } from "../api/api";
+
 
 
 export function AcceptFriendRequestButton({targetUsername, setFriendRequests}){
     const {setFollowers, username} = useUser()
     
    async function add(targetUsername){
-        await add_user(targetUsername)
-        await fetch_followers().then(data => {
-            setFollowers(data.follower_data)})
-        await post_friend_requests(targetUsername, username, false);
+        await follow(targetUsername)
+        await fetch_followers(targetUsername).then(data => {
+            setFollowers(data.followers)})
+        await remove_friend_requests(targetUsername, username);
         setFriendRequests(await fetch_friend_requests(username));
     }
 
@@ -26,8 +27,8 @@ export function AcceptFriendRequestButton({targetUsername, setFriendRequests}){
 export function RemoveUserButton({targetUsername}){
     const {setFollowing} = useUser()
     async function remove(targetUsername){
-        await remove_user(targetUsername)
-        await fetch_followers().then(data => setFollowing(data.following_data))
+        await unfollow(targetUsername)
+        await fetch_following(targetUsername).then(data => setFollowing(data.following))
 
     }
     return(
@@ -40,7 +41,7 @@ export function RemoveUserButton({targetUsername}){
 export function LogOut(){
     const navigate = useNavigate()
     async function logOut(){
-        await fetch("http://localhost:4747/api/logout",{
+        await fetch("http://localhost:4747/api/auth/logout",{
             method: "POST",
             headers: {"Content-Type": "application/json"},
             credentials: "include"
@@ -56,7 +57,7 @@ export function LogOut(){
 export function DeclineFriendRequestButton({targetUsername, setFriendRequests}){
     const {username} = useUser()
     return (
-        <button className="decline-friend-request-button" onClick={() => {post_friend_requests(targetUsername, username, false)
+        <button className="decline-friend-request-button" onClick={() => {remove_friend_requests(targetUsername, username)
             .then(() => fetch_friend_requests(username))
             .then(data => setFriendRequests(data));}}>Decline</button>
 
@@ -66,7 +67,7 @@ export function DeclineFriendRequestButton({targetUsername, setFriendRequests}){
 export function SendFriendRequestButton({targetUsername, setFriendRequests}){
     const {username} = useUser();
     async function click(){
-        await post_friend_requests(username, targetUsername, true)
+        await post_friend_requests(username, targetUsername)
         setFriendRequests(await fetch_friend_requests(targetUsername));
 
     }
@@ -96,15 +97,15 @@ export function SubtractBananaButton({addedCount, setAddedCount}){
 }
 
 export function SubmitBananasButton({addedCount, setAddedCount}){
-    const {count, setCount, setTotalCount} = useUser()
+    const {count, setCount, setTotalCount, username} = useUser()
     async function click(){
         setAddedCount(0);
         await post_banana_count(count + addedCount);
         await post_banana_history(addedCount);
-        await fetch_banana_count()
+        await fetch_banana_count([username])
         .then(({count, total_count}) => {
-            setCount(count);
-            setTotalCount(total_count);
+            setCount(count[0].count);
+            setTotalCount(total_count[0].total_count);
         })
         .catch(err => console.log(err));
     }

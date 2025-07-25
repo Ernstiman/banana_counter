@@ -1,15 +1,23 @@
 import { useUser } from "../context/UserContextProvider";
 
-export async function fetch_followers() {
-  const response = await fetch("http://localhost:4747/api/get-follower", {
+export async function fetch_followers(username) {
+  const followersResponse = await fetch(`http://localhost:4747/api/followers/${username}/followers`, {
     credentials: "include",
   });
-  const { following_data, follower_data } = await response.json();
-  return { following_data, follower_data };
+  const { followers } = await followersResponse.json();
+  return { followers };
 }
 
-export async function add_user(targetUsername) {
-  await fetch("http://localhost:4747/api/set-follower", {
+export async function fetch_following(username) {
+  const followingResponse = await fetch(`http://localhost:4747/api/followers/${username}/following`, {
+    credentials: "include",
+  });
+  const { following } = await followingResponse.json();
+  return { following };
+};
+
+export async function follow(targetUsername) {
+  await fetch("http://localhost:4747/api/followers/follow", {
     credentials: "include",
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -17,46 +25,42 @@ export async function add_user(targetUsername) {
   });
 }
 
-export async function remove_user(targetUsername) {
-  await fetch("http://localhost:4747/api/remove-follower", {
+export async function unfollow(targetUsername) {
+  await fetch("http://localhost:4747/api/followers/unfollow", {
     credentials: "include",
-    method: "POST",
+    method: "DELETE",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ followed: targetUsername }),
+    body: JSON.stringify({ unfollowing: targetUsername }),
   });
 }
 
-export async function fetch_user_data(targetUsername) {
-  const response = await fetch(
-    `http://localhost:4747/api/get-user-count?username=${targetUsername}`
-  );
-  const data = await response.json();
-
-  return data.count;
-}
-
-export async function fetch_banana_count() {
-  const response = await fetch(`http://localhost:4747/api/get-count`, {
-    credentials: "include",
+export async function fetch_banana_count(users) {
+  const response = await fetch("http://localhost:4747/api/bananas/get-bananas", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({users})
   });
   const { count, total_count } = await response.json();
+  
 
   return { count, total_count };
 }
 
 export async function post_banana_count(count) {
-  await fetch("http://localhost:4747/api/set-count", {
+  await fetch("http://localhost:4747/api/bananas/post-bananas", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ count }),
-    credentials: "include",
+    credentials: "include"
   });
 }
 
 export async function post_banana_history(amount) {
-  await fetch("http://localhost:4747/api/post-banana-history", {
+  await fetch("http://localhost:4747/api/banana-history/post-history", {
     method: "POST",
     credentials: "include",
     headers: { "Content-Type": "application/json" },
@@ -65,7 +69,7 @@ export async function post_banana_history(amount) {
 }
 
 export async function fetch_banana_history(following) {
-  let response = await fetch("http://localhost:4747/api/get-banana-history", {
+  let response = await fetch("http://localhost:4747/api/banana-history/get-history", {
     method: "POST",
     credentials: "include",
     headers: { "Content-Type": "application/json" },
@@ -76,9 +80,11 @@ export async function fetch_banana_history(following) {
   return banana_history;
 }
 
-export async function post_login(username, password, createAccount) {
+export async function post_login(username, password, create_account = false) {
+  let url = create_account ? "/create-account" : "/login"
+  
   const req = await fetch(
-    `http://localhost:4747/api/login/post?create_account=${createAccount}`,
+    `http://localhost:4747/api/auth${url}`,
     {
       method: "POST",
       headers: {
@@ -93,9 +99,10 @@ export async function post_login(username, password, createAccount) {
   return { success, message };
 }
 
-export async function post_friend_requests(sender, receiver, insert) {
+export async function post_friend_requests(sender, receiver) {
+
   await fetch(
-    `http://localhost:4747/api/post-friend-requests?insert=${insert}`,
+    `http://localhost:4747/api/friend-requests/send-requests`,
     {
       method: "POST",
       headers: {
@@ -106,10 +113,34 @@ export async function post_friend_requests(sender, receiver, insert) {
   );
 }
 
+export async function remove_friend_requests(sender, receiver) {
+  await fetch(
+    `http://localhost:4747/api/friend-requests/remove-requests`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ sender, receiver }),
+    }
+  );
+
+}
+
 export async function fetch_friend_requests(username) {
   let data = await fetch(
-    `http://localhost:4747/api/get-friend-requests?username=${username}`
+    `http://localhost:4747/api/friend-requests/get-requests?username=${username}`
   );
   let { friend_requests } = await data.json();
   return friend_requests;
 }
+
+export async function fetch_all_users(){
+      const response = await fetch("http://localhost:4747/api/users/get-users",
+         {credentials: "include"}
+      )
+      const data = await response.json();
+      return data;
+      
+   }
+

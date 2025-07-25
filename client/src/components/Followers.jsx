@@ -20,10 +20,10 @@ export default function Followers() {
             <div className="followed-container">
                 <h2>Following</h2>
                 <ul className="followed-list scroll-list">
-                    {following && following.map(user => (
-                        <li key={user.username} className="follow-list-item">
-                            <UserNav targetUsername={user.username} />
-                            <span className="follow-count">🍌 {user.count}</span>
+                    {following && following.map((user, i) => (
+                        <li key={i} className="follow-list-item">
+                            <UserNav targetUsername={user} />
+                            {/* <span className="follow-count">🍌 {user.count}</span> */}
                         </li>
                     ))}
                 </ul>
@@ -31,10 +31,10 @@ export default function Followers() {
             <div className="followers-container">
                 <h2>Followers</h2>
                 <ul className="followers-list scroll-list">
-                    {followers && followers.map(user => (
-                        <li key={user.username} className="follow-list-item">
-                            <UserNav targetUsername={user.username} />
-                            <span className="follow-count">🍌 {user.count}</span>
+                    {followers && followers.map((user, i) => (
+                        <li key={i} className="follow-list-item">
+                            <UserNav targetUsername={user} />
+                            {/* <span className="follow-count">🍌 {user.count}</span> */}
                         </li>
                     ))}
                 </ul>

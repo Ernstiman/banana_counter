@@ -1,7 +1,4 @@
 async function insert_login(username, password) {
-  let exists = await check_login(username);
-
-  if (!exists) {
     await pool.query(
       `
 
@@ -11,40 +8,24 @@ async function insert_login(username, password) {
 
       [username, password]
     );
-
-    return true;
   }
 
-  return false;
-}
-
-async function write_to_data_base(username, count) {
+async function set_banana_count(username, count) {
   await pool.query(`UPDATE Banana_data SET count = ? WHERE username = ?`, [
     count,
-
     username,
   ]);
 }
 
-async function check_login(username, password = undefined) {
-  let result;
-  if (password) {
-    [result] = await pool.query(
+async function check_login(username, password) {
+    let [result] = await pool.query(
       `
         SELECT * FROM Banana_data WHERE username = ? AND psw = ?
       `,
       [username, password]
     );
-  } else {
-    [result] = await pool.query(
-      `
-        SELECT * FROM Banana_data WHERE username = ?
-      `,
-      [username]
-    );
+    return result.length > 0;
   }
-  return result.length > 0;
-}
 
 async function get_all_users(username) {
   const [users] = await pool.query(
@@ -54,120 +35,95 @@ async function get_all_users(username) {
   return users ? users : undefined;
 }
 
-async function get_count(username) {
-  const [result] = await pool.query(
-    "SELECT count AS count FROM Banana_data WHERE username = ?",
-    [username]
-  );
-  const [total] = await pool.query(
-    "SELECT SUM(count) AS total FROM Banana_data"
-  );
-  return {
-    count: result[0] ? result[0].count : 0,
-    total_count: total[0] ? total[0].total : 0,
-  };
-}
-
 async function add_follower(follower, followed) {
-  try {
     const [result] = await pool.query(
       "INSERT INTO Followers(follower, followed) VALUES (?, ?)",
       [follower, followed]
     );
-  } catch (err) {}
 }
 
-async function get_follower(username) {
-  let [followed] = await pool.query(
-    "SELECT followed FROM Followers WHERE follower = ?",
-    [username]
-  );
-  let [follower] = await pool.query(
+async function get_followers(username) {
+  let [followers] = await pool.query(
     "SELECT follower FROM Followers WHERE followed = ?",
     [username]
   );
-  followed = followed.map((user) => user.followed);
-  follower = follower.map((user) => user.follower);
+  followers = followers.map((user) => user.follower);
 
-  return { followed, follower };
+  return { followers };
 }
 
-async function get_counts_from_users(users) {
+async function get_following(username) {
+  let [result] = await pool.query(
+    "SELECT followed FROM Followers WHERE follower = ?",
+    [username]
+  );
+  return {following: result.map((user) => user.followed)}};
+
+async function get_count(users) {
+  let count = [];
+  console.log(users)
   if (users.length > 0) {
     const placeholders = users.map(() => "?").join(",");
-    const [counts] = await pool.query(
+     [count] = await pool.query(
       `SELECT username, count FROM Banana_data WHERE username IN (${placeholders})`,
       users
     );
-
-    return counts;
   }
-  return [];
+  const [total_count] = await pool.query(
+    "SELECT SUM(count) AS total_count FROM Banana_data"
+  );
+  return {count, total_count}
 }
 
-async function remove_follower(follower, followed){
-    if(follower && followed){
-    await pool.query("DELETE FROM Followers WHERE follower = ? AND followed = ?",
-        [follower, followed]
-    )}
+async function remove_follower(follower, followed) {
+  if (follower && followed) {
+    await pool.query(
+      "DELETE FROM Followers WHERE follower = ? AND followed = ?",
+      [follower, followed]
+    );
+  }
 }
 
-async function insert_banana_history(amount, username){
-    if(username && amount){
-      await pool.query("INSERT INTO Banana_history (username, amount) VALUES (?, ?)",
-        [username, amount]
-      )
-    }
-}
+async function insert_banana_history(amount, username) {
+    await pool.query(
+      "INSERT INTO Banana_history (username, amount) VALUES (?, ?)",
+      [username, amount]
+    );
+  }
 
-async function select_banana_history(users){
+async function select_banana_history(users) {
   const VALUES = users.map(() => "?").join(",");
-  if(users.length > 0){
-    const [result] = await pool.query(`SELECT timestamp, amount, username FROM Banana_history WHERE username IN (${VALUES}) ORDER BY timestamp DESC;`,
+  if (users.length > 0) {
+    const [result] = await pool.query(
+      `SELECT timestamp, amount, username FROM Banana_history WHERE username IN (${VALUES}) ORDER BY timestamp DESC;`,
       users
-    )
-    return result
+    );
+    return result;
   }
-  return
-  
+  return;
 }
 
-async function select_friend_requests(username){
- 
-  if(!username) return []
-  let [result] = await pool.query("SELECT sender FROM Friend_requests WHERE receiver = ?",
-      [username]
-    )
-    return result.map(user => user.sender);
+async function select_friend_requests(username) {
+  let [result] = await pool.query(
+    "SELECT sender FROM Friend_requests WHERE receiver = ?",
+    [username]
+  );
+  return result.map((user) => user.sender);
 }
 
-async function insert_friend_requests(sender, receiver){
-  try{
-  await pool.query("INSERT INTO Friend_requests (sender, receiver) VALUES (?, ?)",
-    [sender, receiver]
-  )
-  return true
-}
-  catch(err){
-    console.log("Something went wrong when trying to insert friend request: Error:", err)
-    return false
-  }
-}
-
-async function remove_friend_requests(sender, receiver){
-  try{
-    await pool.query("DELETE FROM Friend_requests WHERE sender = ? AND receiver = ?",
+async function insert_friend_requests(sender, receiver) {
+    await pool.query(
+      "INSERT INTO Friend_requests (sender, receiver) VALUES (?, ?)",
       [sender, receiver]
-    )
-    return true
-  }
-  catch(err){
-    console.log("Something went wrong when trying to remove friend request:", err);
-    return false
-  }
+    );
 }
 
-
+async function remove_friend_requests(sender, receiver) {
+  await pool.query(
+    "DELETE FROM Friend_requests WHERE sender = ? AND receiver = ?",
+    [sender, receiver]
+  );
+}
 
 const mysql = require("mysql2/promise");
 
@@ -183,17 +139,17 @@ const pool = mysql.createPool(dbConfig);
 module.exports = {
   pool,
   insert_login,
-  write_to_data_base,
+  set_banana_count,
   check_login,
   get_all_users,
   get_count,
   add_follower,
-  get_follower,
-  get_counts_from_users,
+  get_followers,
   remove_follower,
   insert_banana_history,
   select_banana_history,
   select_friend_requests,
   insert_friend_requests,
-  remove_friend_requests
+  remove_friend_requests,
+  get_following
 };

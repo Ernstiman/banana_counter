@@ -36,4 +36,9 @@ function rövarencrypt(pass) {
   return new_pass;
 }
 
-module.exports = {rövarencrypt}
+function error(err, res) {
+  console.log(err)
+  return res.status(500).json("Something went wrong err: ", err);
+}
+
+module.exports = {rövarencrypt, error}

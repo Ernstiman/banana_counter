@@ -8,17 +8,18 @@ import BananaHistory from "../components/Banana_History.jsx";
 import ListFriendRequests from "../components/List_Friend_Requests.jsx";
 import { AddBananaButton, SubtractBananaButton, SubmitBananasButton } from "../components/Buttons.jsx";
 import BananaCount from "../components/Banana_Count.jsx";
+import useGetBananaCount from "../hooks/useGetBananaCount.jsx";
 
 
 export default function HomePage() {
+
     const {username, following} = useUser();
     const [addedCount, setAddedCount] = useState(0);
-    
 
     return (
         <div className="app-container">
             <div className="user-data-container">
-                <BananaCount/>
+                <BananaCount />
                 <div className="change-count-container">
                     <div className="banana-buttons-group">
                         <AddBananaButton addedCount={addedCount} setAddedCount={setAddedCount}/>

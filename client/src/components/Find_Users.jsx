@@ -1,21 +1,17 @@
 import { useEffect, useState } from "react"
 import { UserNav } from "./Navs";
+import { fetch_all_users } from "../api/api";
 export default function FindUsers(){
  
    const [users, setUsers] = useState([]);
    const [search_term, setSearchTerm] = useState("")
    const [filtered, setFiltered] = useState([])
-
-   async function fetch_all_users(){
-      const response = await fetch("http://localhost:4747/api/get-users",
-         {credentials: "include"}
-      )
-      const data = await response.json();
-      setUsers(data);
-   }
+   
+   
 
    useEffect(() => {
       fetch_all_users()
+      .then(data => setUsers(data))
 
    }, [])
 
