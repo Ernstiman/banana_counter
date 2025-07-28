@@ -3,7 +3,8 @@ CREATE TABLE IF NOT EXISTS Banana_data(
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) UNIQUE,
     count INT,
-    psw VARCHAR(255)
+    psw VARCHAR(255),
+    email VARCHAR(255) UNIQUE
 
 );
 

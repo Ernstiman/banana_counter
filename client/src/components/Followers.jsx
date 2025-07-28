@@ -8,6 +8,7 @@ import { NormalLoader } from "./Loaders";
 export default function Followers() {
     const { followers, following } = useUser();
     const { loadingUserFollowers } = useGetUserFollowers();
+    console.log(followers, following, "followers, following")
 
     if (loadingUserFollowers) {
         return (
@@ -22,8 +23,8 @@ export default function Followers() {
                 <ul className="followed-list scroll-list">
                     {following && following.map((user, i) => (
                         <li key={i} className="follow-list-item">
-                            <UserNav targetUsername={user} />
-                            {/* <span className="follow-count">🍌 {user.count}</span> */}
+                            <UserNav targetUsername={user.username} />
+                            <span className="follow-count">🍌 {user.count}</span>
                         </li>
                     ))}
                 </ul>
@@ -33,8 +34,8 @@ export default function Followers() {
                 <ul className="followers-list scroll-list">
                     {followers && followers.map((user, i) => (
                         <li key={i} className="follow-list-item">
-                            <UserNav targetUsername={user} />
-                            {/* <span className="follow-count">🍌 {user.count}</span> */}
+                            <UserNav targetUsername={user.username} />
+                            <span className="follow-count">🍌 {user.count}</span>
                         </li>
                     ))}
                 </ul>

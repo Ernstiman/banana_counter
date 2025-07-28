@@ -27,8 +27,8 @@ export default function UserPage(){
     }, [friendRequests])
 
     useEffect(() => {
-         fetch_banana_count([userUsername]).then((count) => {
-            setCount(count.count[0].count)})
+         fetch_banana_count([userUsername]).then(({count}) => {
+            setCount(count)})
     }, [userUsername])
     return (
         <div className="user-container">

@@ -16,10 +16,13 @@ export function UserContextProvider({children}){
     const [followers, setFollowers] = useState([]);
     const [following, setFollowing] = useState([]);
     const [loading, setLoading] = useState(false)
+    const [email, setEmail] = useState()
     let location = useLocation();
 
     useEffect(() =>{
-        if(!username){
+        const publicPaths = ["/login", "/change-password"]
+        const isPublic = publicPaths.some(path => location.pathname.startsWith(path));
+        if(!username && !isPublic){
             fetch("http://localhost:4747/api/auth/me",
                 {credentials: "include"}
             ).then(res => res.json())
@@ -47,7 +50,9 @@ export function UserContextProvider({children}){
         followers, 
         following,
         setFollowers,
-        setFollowing}}>
+        setFollowing,
+        email,
+        setEmail}}>
             {children}
         </UserContext.Provider>
     )

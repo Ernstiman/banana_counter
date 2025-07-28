@@ -8,6 +8,7 @@ import {UserContextProvider, useUser} from '../context/UserContextProvider.jsx';
 import RedirectOnRoot from './Redirect_On_Root.jsx';
 import Search from './Search.jsx';
 import FriendRequestPage from './Friend_Request_Page.jsx';
+import ChangePassWord from './ChangePasswordPage.jsx';
 
 export default function App(){
   return (
@@ -20,6 +21,7 @@ export default function App(){
         <Route path = "/user/:userUsername"element={<UserPage/>}></Route>
         <Route path = "/search" element={<Search/>}></Route>
         <Route path = "/friend-requests" element={<FriendRequestPage/>}></Route>
+        <Route path = "/change-password/:token" element={<ChangePassWord/>}></Route>
         <Route path = "/" element={<RedirectOnRoot/>}/>
       </Routes>
     </UserContextProvider>

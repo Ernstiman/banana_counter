@@ -461,6 +461,185 @@ body, html {
     align-items: center;
 }
 
+.change-password-container {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f7fafc;
+}
+
+.change-password-container form {
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  min-width: 320px;
+}
+
+.change-password-container label {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.change-password-container .password-input {
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 1.2rem;
+  font-size: 1rem;
+}
+
+.change-password-container button[type="submit"] {
+  background: #ffd600;
+  color: #222;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7rem 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.change-password-container button[type="submit"]:hover {
+  background: #ffe066;
+}
+
+.create-account-field {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.login-label {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 0.2rem;
+}
+
+.login-input,
+.email-input {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #f9f9f9;
+  transition: border 0.2s;
+}
+
+.login-input:focus,
+.email-input:focus {
+  border: 1.5px solid #ffd600;
+  outline: none;
+}
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f7fafc;
+}
+
+.login-form {
+  background: #fff;
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  min-width: 340px;
+}
+
+.login-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #222;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"],
+.login-form input[type="email"] {
+  width: 100%;
+  padding: 0.7rem;
+  margin-bottom: 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #f9f9f9;
+  transition: border 0.2s;
+}
+
+.login-form input[type="text"]:focus,
+.login-form input[type="password"]:focus,
+.login-form input[type="email"]:focus {
+  border: 1.5px solid #ffd600;
+  outline: none;
+}
+
+.login-checkbox-field {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.login-checkbox-label {
+  margin-left: 0.5rem;
+  font-size: 1rem;
+  color: #444;
+}
+
+.login-button {
+  background: #ffd600;
+  color: #222;
+  border: none;
+  border-radius: 6px;
+  padding: 0.8rem 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s;
+}
+
+.login-button:hover {
+  background: #ffe066;
+}
+
+.login-form span {
+  display: block;
+  margin: 0.5rem 0 1rem 0;
+  color: #0074d9;
+  cursor: pointer;
+  text-align: right;
+  font-size: 0.98rem;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.login-form span:hover {
+  color: #005fa3;
+}
+
+/* Optional: Style for the ForgotPassword component */
+.forgot-password-container {
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  min-width: 340px;
+  text-align: center;
+}
+
 h1, h2, h3 {
     font-weight: 600;
     margin: 0.5em 0;

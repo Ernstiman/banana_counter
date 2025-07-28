@@ -1,12 +1,12 @@
-async function insert_login(username, password) {
+async function insert_login(username, password, email) {
     await pool.query(
       `
 
-          INSERT INTO Banana_data (username, psw, count) VALUES (?, ?, 0)
+          INSERT INTO Banana_data (username, psw, email, count) VALUES (?, ?, ?, 0)
 
         `,
 
-      [username, password]
+      [username, password, email]
     );
   }
 
@@ -36,7 +36,7 @@ async function get_all_users(username) {
 }
 
 async function add_follower(follower, followed) {
-    const [result] = await pool.query(
+    await pool.query(
       "INSERT INTO Followers(follower, followed) VALUES (?, ?)",
       [follower, followed]
     );
@@ -48,7 +48,6 @@ async function get_followers(username) {
     [username]
   );
   followers = followers.map((user) => user.follower);
-
   return { followers };
 }
 
@@ -59,20 +58,20 @@ async function get_following(username) {
   );
   return {following: result.map((user) => user.followed)}};
 
-async function get_count(users) {
-  let count = [];
-  console.log(users)
-  if (users.length > 0) {
+async function getUserData(users) {
+  if (!users || users.length === 0) return [];
     const placeholders = users.map(() => "?").join(",");
-     [count] = await pool.query(
+     let [userData] = await pool.query(
       `SELECT username, count FROM Banana_data WHERE username IN (${placeholders})`,
       users
-    );
-  }
-  const [total_count] = await pool.query(
-    "SELECT SUM(count) AS total_count FROM Banana_data"
-  );
-  return {count, total_count}
+    )
+
+  return userData;
+}
+
+async function getTotalCount() {
+  const [result] = await pool.query("SELECT SUM(count) AS totalCount FROM Banana_data");
+  return result[0].totalCount;
 }
 
 async function remove_follower(follower, followed) {
@@ -125,12 +124,42 @@ async function remove_friend_requests(sender, receiver) {
   );
 }
 
+async function changePassword(email, newPassword) {
+  await pool.query(
+    "UPDATE Banana_data SET psw = ? WHERE email = ?",
+    [newPassword, email]
+  );
+}
+
+async function insertPasswordReset(email, token, expire) {
+  console.log(email, token, expire, "insertPasswordReset");
+  await pool.query(
+    "INSERT INTO Password_resets (email, token, expire) VALUES (?, ?, ?)",
+    [email, token, expire]
+  );
+}
+
+async function getPasswordReset(token){
+  const [result] = await pool.query(
+    "SELECT email FROM Password_resets WHERE token = ? AND expire > NOW()",
+    [token]
+  );
+  return result[0] ? result[0].email : null;
+}
+
+async function deletePasswordReset(email) {
+  await pool.query(
+    "DELETE FROM Password_resets WHERE email = ?",
+    [email]
+  );
+}
+
 const mysql = require("mysql2/promise");
 
 const dbConfig = {
   host: "localhost",
   user: "viktor",
-  password: "MY_sql_pass!123",
+  password: process.env.MYSQL_PASS,
   database: "my_data",
 };
 
@@ -142,7 +171,6 @@ module.exports = {
   set_banana_count,
   check_login,
   get_all_users,
-  get_count,
   add_follower,
   get_followers,
   remove_follower,
@@ -151,5 +179,12 @@ module.exports = {
   select_friend_requests,
   insert_friend_requests,
   remove_friend_requests,
-  get_following
+  get_following,
+  changePassword,
+  getUserData,
+  getTotalCount,
+  insertPasswordReset,
+  getPasswordReset,
+  deletePasswordReset
 };
+

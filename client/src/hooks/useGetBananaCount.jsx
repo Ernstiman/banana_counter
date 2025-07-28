@@ -12,10 +12,9 @@ export default function useGetBananaCount(){
         if(username){
         setLoadingCount(true);
         fetch_banana_count([username])
-        .then(({count, total_count}) => {
-            console.log(total_count[0], count[0])
-            setCount(count[0].count);
-            setTotalCount(total_count[0].total_count)
+        .then(({count, totalCount}) => {
+            setCount(count);
+            setTotalCount(totalCount)
         })
         .catch(err => console.log(err))
         .finally(() => setLoadingCount(false))

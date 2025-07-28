@@ -8,7 +8,6 @@ export default function BananaCount(){
     const {loadingCount} = useGetBananaCount();
 
     const {totalCount, count} = useUser()
-    console.log(totalCount, count)
 
 
    

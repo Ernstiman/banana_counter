@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const {
   pool
 } = require("./db.js");
@@ -14,6 +16,8 @@ const bananaHistoryRoutes = require("./routes/bananaHistory.js");
 const usersRoutes = require("./routes/users.js");
 
 
+
+
 const session = require("express-session");
 
 var app = express();
@@ -22,6 +26,7 @@ const BANANA_DATA_SQL_PATH = path.join(__dirname, "./sql/Banana_data.sql");
 const FOLLOWERS_SQL_PATH = path.join(__dirname, "./sql/Followers.sql");
 const BANANA_HISTORY_SQL_PATH = path.join(__dirname, "./sql/Banana_history.sql");
 const FRIEND_REQUESTS_SQL_PATH = path.join(__dirname, "./sql/Friend_requests.sql")
+const PASSWORD_RESETS_SQL_PATH = path.join(__dirname, "./sql/Password_resets.sql");
 const PORT = 4747;
 
 var server = http.createServer(app);
@@ -29,6 +34,7 @@ banana_data_init = fs.readFileSync(BANANA_DATA_SQL_PATH, "utf-8");
 followers_init = fs.readFileSync(FOLLOWERS_SQL_PATH, "utf-8");
 banana_history_init = fs.readFileSync(BANANA_HISTORY_SQL_PATH, "utf-8");
 friend_requests_init = fs.readFileSync(FRIEND_REQUESTS_SQL_PATH, "utf-8");
+password_resets_init = fs.readFileSync(PASSWORD_RESETS_SQL_PATH, "utf-8");
 
 async function main() {
   await pool.query(banana_data_init);
@@ -38,6 +44,8 @@ async function main() {
   await pool.query(banana_history_init);
 
   await pool.query(friend_requests_init);
+
+  await pool.query(password_resets_init);
 
   server.listen(PORT);
 }

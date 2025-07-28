@@ -4,16 +4,16 @@ export async function fetch_followers(username) {
   const followersResponse = await fetch(`http://localhost:4747/api/followers/${username}/followers`, {
     credentials: "include",
   });
-  const { followers } = await followersResponse.json();
-  return { followers };
+  const { userData } = await followersResponse.json();
+  return { userData };
 }
 
 export async function fetch_following(username) {
   const followingResponse = await fetch(`http://localhost:4747/api/followers/${username}/following`, {
     credentials: "include",
   });
-  const { following } = await followingResponse.json();
-  return { following };
+  const { userData } = await followingResponse.json();
+  return { userData };
 };
 
 export async function follow(targetUsername) {
@@ -42,11 +42,12 @@ export async function fetch_banana_count(users) {
     },
     body: JSON.stringify({users})
   });
-  const { count, total_count } = await response.json();
-  
+  const { count, totalCount } = await response.json();
 
-  return { count, total_count };
+  return { count, totalCount };
 }
+
+
 
 export async function post_banana_count(count) {
   await fetch("http://localhost:4747/api/bananas/post-bananas", {
@@ -80,7 +81,7 @@ export async function fetch_banana_history(following) {
   return banana_history;
 }
 
-export async function post_login(username, password, create_account = false) {
+export async function post_login(username, password, email, create_account = false) {
   let url = create_account ? "/create-account" : "/login"
   
   const req = await fetch(
@@ -90,7 +91,7 @@ export async function post_login(username, password, create_account = false) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username, password, email}),
       credentials: "include",
     }
   );
@@ -144,3 +145,32 @@ export async function fetch_all_users(){
       
    }
 
+export async function putNewPassword(email, newPassword) {
+  const response =await fetch("http://localhost:4747/api/auth/change-password", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, newPassword }),
+  });
+  const data = await response.json();
+  return data;
+}
+
+export async function postResetPasswordLink(email) {
+  await fetch("http://localhost:4747/api/auth/forgot-password-link", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
+  });
+}
+
+export async function fetchPasswordReset(token) {
+  const response = await fetch(`http://localhost:4747/api/auth/get-reset-password?token=${token}`, {
+    method: "GET",
+  });
+  const {success, email, message} = await response.json();
+  return {success, email, message};
+}

@@ -103,12 +103,12 @@ export function SubmitBananasButton({addedCount, setAddedCount}){
         await post_banana_count(count + addedCount);
         await post_banana_history(addedCount);
         await fetch_banana_count([username])
-        .then(({count, total_count}) => {
-            setCount(count[0].count);
-            setTotalCount(total_count[0].total_count);
+        .then(({count, totalCount}) => {
+            setCount(count);
+            setTotalCount(totalCount);
         })
         .catch(err => console.log(err));
-    }
+    }       
     return (
         <>
         {addedCount > 0 && (<button className="submit-banana-button"onClick={click}>Submit Bananas</button>)}  

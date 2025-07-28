@@ -11,11 +11,11 @@ export default function useGetUserFollowers(){
         if(username){
         setLoadingUserFollowers(true);
         
-        fetch_followers(username).then(({followers}) => {
-            setFollowers(followers)
+        fetch_followers(username).then(({userData}) => {
+            setFollowers(userData)
         })
-        .then(fetch_following(username).then(({following}) => {
-            setFollowing(following);
+        .then(fetch_following(username).then(({userData}) => {
+            setFollowing(userData);
         }))
         .catch(() => console.log("Something went wrong when fetching followers"))
         .finally(() => {

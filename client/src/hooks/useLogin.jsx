@@ -6,13 +6,14 @@ import { post_login } from "../api/api";
 export default function useLogin(){
 
     const navigate = useNavigate();
-    const {setUsername} = useUser();
+    const {setUsername, setEmail} = useUser();
 
-    async function login(event, username, password, createAccount) {
+    async function login(event, username, password, email, createAccount) {
         event.preventDefault();
-        const {success, message} = await post_login(username, password, createAccount)
+        const {success, message} = await post_login(username, password, email, createAccount)
         if (success && ! createAccount) {
             setUsername(username)
+            setEmail(email)
             navigate("/home-page");
         }
         else{

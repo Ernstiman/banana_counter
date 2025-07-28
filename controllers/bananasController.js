@@ -1,5 +1,5 @@
 const {error} = require("../utils")
-const {get_count, set_banana_count} = require("../db")
+const {getUserData, set_banana_count, getTotalCount} = require("../db");
 
 
 exports.getBananaCount = async (req, res) => {
@@ -7,9 +7,12 @@ exports.getBananaCount = async (req, res) => {
     const {users} = req.body
 
     try{
-        let {count, total_count} = await get_count(users);
+        let userData = await getUserData(users);
+        let totalCount = await getTotalCount();
+        console.log(totalCount, userData, "getBananaCount");
         return res.json({
-            count: count ? count : 0, total_count : total_count ? total_count : 0
+            count: userData[0].count ? userData[0].count : 0,
+            totalCount: totalCount ? totalCount : 0
         })
     }
 
@@ -17,6 +20,8 @@ exports.getBananaCount = async (req, res) => {
         error(err, res);
     }
 }
+
+
 
 exports.postBananaCount = async (req, res) => {
     const {count} = req.body;
