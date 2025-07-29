@@ -56,16 +56,20 @@ async function main() {
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://frontend.vercel.app",
     credentials: true,
   })
 );
 
 app.use(
   session({
-    secret: "some secret",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      secure: true,
+      sameSite: "none",
+    }
   })
 );
 
