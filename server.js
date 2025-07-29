@@ -56,7 +56,7 @@ async function main() {
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://frontend.vercel.app",
+    origin: "https://banana-counter-ay92m2gtw-viktors-projects-16c18943.vercel.app",
     credentials: true,
   })
 );
