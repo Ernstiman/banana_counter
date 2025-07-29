@@ -7,11 +7,13 @@ export default function ChangePassWord(){
     const { token } = useParams();
     const [validToken, setValidToken] = useState(false);
     const [subEmail, setSubEMail] = useState("");
+    const [changed, setChanged] = useState(false)
 
     async function handleChangePassword(event){
         event.preventDefault();
         const data = await putNewPassword(subEmail, newPassword);
         alert(data.message);
+        setChanged(true)
     }
 
     useEffect(() => {
@@ -30,7 +32,7 @@ export default function ChangePassWord(){
 
     return (
         <div className="change-password-container">
-            <form onSubmit={handleChangePassword}>
+            {!changed && (<form onSubmit={handleChangePassword}>
                 <label htmlFor="password">Enter new password</label>
                 <input
                     type="text"
@@ -41,7 +43,8 @@ export default function ChangePassWord(){
                     onChange={e => setNewPassword(e.target.value)}
                 />
                 <button type="submit">Change Password</button>
-            </form>
+            </form>)}
+            {changed && (<p>Password has been changed!</p>)}
         </div>
     )
 }

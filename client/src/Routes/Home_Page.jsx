@@ -9,12 +9,16 @@ import ListFriendRequests from "../components/List_Friend_Requests.jsx";
 import { AddBananaButton, SubtractBananaButton, SubmitBananasButton } from "../components/Buttons.jsx";
 import BananaCount from "../components/Banana_Count.jsx";
 import useGetBananaCount from "../hooks/useGetBananaCount.jsx";
+import useRegisterServiceWorker from "../hooks/useRegisterServiceWorker.jsx";
+import useAskNotificationPermission from "../hooks/useAskNotificationPermission.jsx";
 
 
 export default function HomePage() {
 
     const {username, following} = useUser();
     const [addedCount, setAddedCount] = useState(0);
+    useRegisterServiceWorker()
+    useAskNotificationPermission()
 
     return (
         <div className="app-container">

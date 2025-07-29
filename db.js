@@ -132,7 +132,6 @@ async function changePassword(email, newPassword) {
 }
 
 async function insertPasswordReset(email, token, expire) {
-  console.log(email, token, expire, "insertPasswordReset");
   await pool.query(
     "INSERT INTO Password_resets (email, token, expire) VALUES (?, ?, ?)",
     [email, token, expire]
@@ -152,6 +151,21 @@ async function deletePasswordReset(email) {
     "DELETE FROM Password_resets WHERE email = ?",
     [email]
   );
+}
+
+async function insertNotificationSubscription(userId, endPoint, p256dh, auth) {
+  await pool.query(
+    "INSERT INTO notification_subscriptions (user_id, end_point, p256dh, auth) VALUES (?, ?, ?, ?)",
+    [userId, endPoint, p256dh, auth]
+  );
+}
+
+async function selectSubscriptions(userID){
+  const [result] = await pool.query(
+    "SELECT * FROM notification_subscriptions WHERE user_id = ?",
+    [userID]
+  )
+  return result[0]
 }
 
 const mysql = require("mysql2/promise");
@@ -185,6 +199,8 @@ module.exports = {
   getTotalCount,
   insertPasswordReset,
   getPasswordReset,
-  deletePasswordReset
+  deletePasswordReset,
+  insertNotificationSubscription,
+  selectSubscriptions
 };
 

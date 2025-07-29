@@ -16,9 +16,9 @@ export default function UserPage(){
     const {friendRequests, setFriendRequests} = useGetFriendRequests(userUsername);
     useGetUserFollowers()
 
-
+    
     useEffect(()=>{
-            setFollows(following.includes(userUsername))}
+            setFollows(following.map(user => user.username).includes(userUsername))}
         ,[following])
  
 

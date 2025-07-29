@@ -174,3 +174,28 @@ export async function fetchPasswordReset(token) {
   const {success, email, message} = await response.json();
   return {success, email, message};
 }
+
+export async function postNotificationSubscription(subscription, user_id){
+  await fetch("http://localhost:4747/api/push-notifications/subscribe", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({...subscription.toJSON(), user_id}),    });
+}
+
+export async function getPublicVapidKey(){
+  const res = await fetch("http://localhost:4747/api/push-notifications/get-public-vapid-key");
+  const key = await res.json();
+  return key
+}
+
+export async function postNotification(username, amount, followers){
+    await fetch("http://localhost:4747/api/push-notifications/send", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, amount, followers }),
+    });
+}

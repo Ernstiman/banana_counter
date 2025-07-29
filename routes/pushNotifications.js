@@ -1,0 +1,10 @@
+
+const express = require("express");
+const router = express.Router();
+const pushNotificationsController = require("../controllers/pushNotificationsController");
+
+router.post("/subscribe", pushNotificationsController.subscribe);
+router.post("/send", pushNotificationsController.send);
+router.get("/get-public-vapid-key", pushNotificationsController.getPublicVapidKey);
+
+module.exports = router;

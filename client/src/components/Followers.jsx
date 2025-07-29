@@ -8,7 +8,6 @@ import { NormalLoader } from "./Loaders";
 export default function Followers() {
     const { followers, following } = useUser();
     const { loadingUserFollowers } = useGetUserFollowers();
-    console.log(followers, following, "followers, following")
 
     if (loadingUserFollowers) {
         return (
