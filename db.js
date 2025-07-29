@@ -171,10 +171,10 @@ async function selectSubscriptions(userID){
 const mysql = require("mysql2/promise");
 
 const dbConfig = {
-  host: process.env.DB_HOST || "localhost",
-  user: process.env.DB_USER || "root",
-  password: process.env.MYSQL_PASS,
-  database: process.env.DB_NAME || "my_data",
+  host: process.env.MYSQLHOST || "localhost",
+  user: process.env.MYSQLUSER|| "root",
+  password: process.env.MYSQLPASSWORD,
+  database: process.env.MYSQLDATABASE || "my_data",
 };
 
 const pool = mysql.createPool(dbConfig);
