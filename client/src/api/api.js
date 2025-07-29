@@ -2,7 +2,7 @@ import { useUser } from "../context/UserContextProvider";
 
 
 const BASE_URL = import.meta.env.PROD
-? 'https://backend.onrender.com'
+? 'https://bananacounter-production.up.railway.app'
 : 'http://localhost:4747'
 
 export async function fetch_followers(username) {

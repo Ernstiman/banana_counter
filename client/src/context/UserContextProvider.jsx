@@ -23,7 +23,7 @@ export function UserContextProvider({children}){
         const publicPaths = ["/login", "/change-password"]
         const isPublic = publicPaths.some(path => location.pathname.startsWith(path));
         if(!username && !isPublic){
-            fetch("https://backend.onrender.com/api/auth/me",
+            fetch("https://bananacounter-production.up.railway.app/api/auth/me",
                 {credentials: "include"}
             ).then(res => res.json())
             .then(data => {
