@@ -174,7 +174,7 @@ const dbConfig = {
   host: process.env.MYSQLHOST || "localhost",
   user: process.env.MYSQLUSER|| "root",
   password: process.env.MYSQLPASSWORD,
-  database: process.env.MYSQLDATABASE || "my_data",
+  database: process.env.MYSQL_DATABASE || "my_data",
 };
 
 const pool = mysql.createPool(dbConfig);
