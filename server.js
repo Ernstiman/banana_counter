@@ -59,6 +59,7 @@ app.use(
     origin: [
     'http://localhost:5173',
     'https://banana-counter.vercel.app',
+    'https://banana-counter-gdgtym0lb.vercel.app' 
   ],
     credentials: true,
   })
