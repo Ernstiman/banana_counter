@@ -165,7 +165,7 @@ async function selectSubscriptions(userID){
     "SELECT * FROM notification_subscriptions WHERE user_id = ?",
     [userID]
   )
-  return result[0]
+  return {endPoint: result[0].end_point, keys: {p256dh: result[0].p256dh, auth: result[0].auth}};
 }
 
 const mysql = require("mysql2/promise");
