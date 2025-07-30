@@ -31,13 +31,21 @@ exports.send = async (req, res) => {
         let sub = await selectSubscriptions(follower);
         console.log(sub, "sub");
         if(sub){
+            try{
             webPush.sendNotification(sub, JSON.stringify({
                 title: "Banana Alert! ",
                 body: message
             }))
         }
 
+        catch(err){
+            if(err.statusCode === 410){
+                await deleteNotificationSubscription(sub.endpoint);
+            }
+        }
     }
+}
+
     res.json({success: true, message: "Notifications has been sent!"})
 }
     catch(err){

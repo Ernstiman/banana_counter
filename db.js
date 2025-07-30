@@ -168,6 +168,13 @@ async function selectSubscriptions(userID){
   return {endpoint: result[0].end_point, keys: {p256dh: result[0].p256dh, auth: result[0].auth}};
 }
 
+async function deleteNotificationSubscription(endPoint) {
+  await pool.query(
+    "DELETE FROM notification_subscriptions WHERE end_point = ?",
+    [endPoint]
+  );
+}
+
 const mysql = require("mysql2/promise");
 
 const dbConfig = {
