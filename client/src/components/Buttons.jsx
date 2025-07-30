@@ -41,7 +41,7 @@ export function RemoveUserButton({targetUsername}){
 export function LogOut(){
     const navigate = useNavigate()
     async function logOut(){
-        await fetch("http://localhost:4747/api/auth/logout",{
+        await fetch("https://bananacounter-production.up.railway.app/api/auth/logout",{
             method: "POST",
             headers: {"Content-Type": "application/json"},
             credentials: "include"
@@ -102,7 +102,8 @@ export function SubmitBananasButton({addedCount, setAddedCount}){
         setAddedCount(0);
         await post_banana_count(count + addedCount);
         await post_banana_history(addedCount);
-        await fetch_banana_count([username])
+        await fetch_banana_count([username])        // await postNotification(username, addedCount, [{username}])
+
         .then(({count, totalCount}) => {
             setCount(count);
             setTotalCount(totalCount);
