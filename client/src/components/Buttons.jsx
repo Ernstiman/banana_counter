@@ -108,7 +108,7 @@ export function SubmitBananasButton({addedCount, setAddedCount}){
             setTotalCount(totalCount);
         })
         .catch(err => console.log(err));
-        await postNotification(username, addedCount, [{username}])
+        // await postNotification(username, addedCount, [{username}])
     }       
     return (
         <>

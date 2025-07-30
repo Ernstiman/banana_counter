@@ -17,8 +17,8 @@ export default function HomePage() {
 
     const {username, following} = useUser();
     const [addedCount, setAddedCount] = useState(0);
-    useRegisterServiceWorker()
-    useAskNotificationPermission()
+    // useRegisterServiceWorker()
+    // useAskNotificationPermission()
 
     return (
         <div className="app-container">
