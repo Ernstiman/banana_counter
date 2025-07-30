@@ -186,7 +186,8 @@ export async function postNotificationSubscription(subscription, user_id){
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({user_id, endpoint: subscription.endpoint, keys: subscription.keys}),});
+    body: JSON.stringify({user_id, endpoint: subscription.endpoint, keys: subscription.keys}),
+  });
 }
 
 export async function getPublicVapidKey(){

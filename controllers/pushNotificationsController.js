@@ -10,7 +10,12 @@ webPush.setVapidDetails(
 
 exports.subscribe = async (req, res) => {
     const {user_id, endpoint, keys} = req.body;
+     if (!endpoint || !keys || !keys.p256dh || !keys.auth) {
+        return res.status(400).json({ error: "Invalid subscription format" });
+    }
+
     const {p256dh, auth} = keys
+
     try{
         await insertNotificationSubscription(user_id, endpoint, p256dh, auth)
         res.json({success: true, message: "Subscription has been saved"})
