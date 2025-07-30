@@ -208,6 +208,7 @@ module.exports = {
   getPasswordReset,
   deletePasswordReset,
   insertNotificationSubscription,
-  selectSubscriptions
+  selectSubscriptions,
+  deleteNotificationSubscription
 };
 

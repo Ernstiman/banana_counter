@@ -1,5 +1,5 @@
 const webPush = require("web-push");
-const { insertNotificationSubscription, selectSubscriptions } = require("../db");
+const { insertNotificationSubscription, selectSubscriptions, deleteNotificationSubscription } = require("../db");
 const {error} = require("../utils.js")
 
 webPush.setVapidDetails(
