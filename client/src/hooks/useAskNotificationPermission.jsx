@@ -17,7 +17,7 @@ export default function useAskNotificationPermission(){
         })  
 
         console.log(subscription, "subscription");
-        console.log(subscription?.keys, "keys")
+        console.log(subscription?.toJSON().keys, "keys")
 key
         await postNotificationSubscription(subscription, username)
     }
