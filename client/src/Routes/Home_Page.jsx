@@ -17,7 +17,7 @@ export default function HomePage() {
 
     const {username, following} = useUser();
     const [addedCount, setAddedCount] = useState(0);
-    // useRegisterServiceWorker()
+    useRegisterServiceWorker()
     // useAskNotificationPermission()
 
     return (
