@@ -1,5 +1,6 @@
 
 self.addEventListener('push', function(event) {
+    console.log('Push event received:', event);
     const data = event.data ? event.data.json() : {};
     const title = data.title || 'Banana Pealers!';
     const options = {
