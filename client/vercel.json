@@ -1,6 +1,9 @@
 
 {
     "rewrites": [
-        {"source": "/(.*)", "destination": "/"}
+        {"source": "/api(.*)", 
+        "destination": "https://bananacounter-production.up.railway.app/api$1"},
+        {"source": "/(.*)",
+        "destination": "https://bananacounter-production.up.railway.app/$1"}
     ]
 }
