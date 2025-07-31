@@ -8,7 +8,6 @@ export default function useAskNotificationPermission(){
         const key = await getPublicVapidKey()
         const registration = await navigator.serviceWorker.ready;
 
-        console.log(key, "key")
         const subscription = await registration.pushManager.subscribe({
             userVisibleOnly: true,
             applicationServerKey: key

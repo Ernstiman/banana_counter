@@ -18,7 +18,6 @@ exports.postLogin = async (req, res) => {
             if (err) {
                 return res.json({ success: false, message: "Failed to save session" });
             }
-            console.log(req.session.username, "session");
             return res.json({success: true, message: "you are logged in"})
         });
         
@@ -44,10 +43,8 @@ exports.createAccount = async (req, res) => {
 
 exports.getAccountDetails = async (req, res) => {
     const username = req.session.username;
-    console.log(username, "username in getAccountDetails");
-    console.log(req.session, "session in getAccountDetails");
-    console.log(req.sessionID, "sessionID in getAccountDetails");
     
+
     res.json({username})
 }
 

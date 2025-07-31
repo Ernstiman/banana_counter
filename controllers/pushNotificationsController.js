@@ -10,6 +10,7 @@ webPush.setVapidDetails(
 
 exports.subscribe = async (req, res) => {
     const {user_id, endpoint, keys} = req.body;
+    console.log(user_id, endpoint, keys, "user_id, endpoint, keys in subscribe")
      if (!endpoint || !keys || !keys.p256dh || !keys.auth) {
         return res.status(400).json({ error: "Invalid subscription format" });
     }
@@ -34,7 +35,6 @@ exports.send = async (req, res) => {
     try{
     for (let follower of followers){
         let sub = await selectSubscriptions(follower);
-        console.log(sub, "sub");
         if(sub){
             try{
             webPush.sendNotification(sub, JSON.stringify({
