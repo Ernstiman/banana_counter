@@ -41,7 +41,7 @@ export function RemoveUserButton({targetUsername}){
 export function LogOut(){
     const navigate = useNavigate()
     async function logOut(){
-        await fetch("api/auth/logout",{
+        await fetch("/api/auth/logout",{
             method: "POST",
             headers: {"Content-Type": "application/json"},
             credentials: "include"

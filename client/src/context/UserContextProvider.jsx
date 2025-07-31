@@ -23,7 +23,7 @@ export function UserContextProvider({children}){
         const publicPaths = ["/login", "/change-password"]
         const isPublic = publicPaths.some(path => location.pathname.startsWith(path));
         if(!username && !isPublic){
-            fetch("api/auth/me",
+            fetch("/api/auth/me",
                 {credentials: "include"}
             ).then(res => res.json())
             .then(data => {
