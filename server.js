@@ -80,7 +80,7 @@ app.use(
       name: "connect.sid",
       path: "/",
       secure: true,
-      sameSite: "none",
+      sameSite: "lax",
       maxAge: 1000 * 60 * 60 * 24 * 7
     }
   })
