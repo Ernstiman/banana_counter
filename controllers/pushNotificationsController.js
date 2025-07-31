@@ -33,7 +33,9 @@ exports.send = async (req, res) => {
     let message = `${username} just ate ${amount} ${bananaTense}!`
     try{
     for (let follower of followers){
-        let sub = await selectSubscriptions(follower);
+        let sub_array = await selectSubscriptions(follower);
+        for (let sub of sub_array){
+            sub = {endpoint: sub.endpoint, keys: {p256dh: sub.keys.p256dh, auth: sub.keys.auth}}
         if(sub){
             try{
             console.log("Sending notification to", follower);
@@ -49,6 +51,7 @@ exports.send = async (req, res) => {
                 await deleteNotificationSubscription(sub.endpoint);
             }
         }
+    }
     }
 }
 

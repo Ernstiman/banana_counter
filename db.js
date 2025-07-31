@@ -165,7 +165,7 @@ async function selectSubscriptions(userID){
     "SELECT * FROM notification_subscriptions WHERE user_id = ?",
     [userID]
   )
-  return {endpoint: result[0].end_point, keys: {p256dh: result[0].p256dh, auth: result[0].auth}};
+  return {endpoint: result.end_point, keys: {p256dh: result[0].p256dh, auth: result[0].auth}};
 }
 
 async function deleteNotificationSubscription(endPoint) {
