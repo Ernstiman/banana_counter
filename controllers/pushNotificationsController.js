@@ -35,6 +35,7 @@ exports.send = async (req, res) => {
     for (let follower of followers){
         let sub_array = await selectSubscriptions(follower);
         for (let sub of sub_array){
+            console.log(sub, "sub in send")
             sub = {endpoint: sub.endpoint, keys: {p256dh: sub.keys.p256dh, auth: sub.keys.auth}}
         if(sub){
             try{
