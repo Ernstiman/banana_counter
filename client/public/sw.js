@@ -5,6 +5,12 @@ self.addEventListener('push', function(event) {
     const title = data.title || 'Banana Pealers!';
     const options = {
         body: data.body || 'You have a new notification.',
+        icon: '/icon-192.png',
+        badge: '/icon-192.png',
+        vibrate: [200, 100, 200],
+        data: {
+            url: data.url || '/'
+        }
     };
 
     event.waitUntil(
