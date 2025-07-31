@@ -17,7 +17,7 @@ const friendRequestsRoutes = require("./routes/friendRequests.js");
 const bananaHistoryRoutes = require("./routes/bananaHistory.js");
 const usersRoutes = require("./routes/users.js");
 const pushNotificationRoutes = require("./routes/pushNotifications.js")
-const session = require("express-mysql-session");
+const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
 
 var app = express();
