@@ -56,10 +56,11 @@ async function main() {
 app.use(express.json());
 app.use(
   cors({
-    origin: true,
+    origin: "https://banana-counter.vercel.app",
     credentials: true,
   })
 );
+app.set("trust proxy", 1); // trust first proxy
 
 app.use(
   session({
