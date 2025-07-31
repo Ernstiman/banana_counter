@@ -58,7 +58,7 @@ const sessionStore = new MySQLStore({
   host: process.env.MYSQLHOST || "localhost",
   user: process.env.MYSQLUSER || "root",
   password: process.env.MYSQLPASSWORD || "",
-  database: process.env.MYSQLDATABASE || "banana_counter",
+  database: process.env.MYSQL_DATABASE || "my_data",
 })
 
 app.use(express.json());
