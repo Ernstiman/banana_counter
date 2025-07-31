@@ -60,6 +60,6 @@ exports.send = async (req, res) => {
 
 exports.getPublicVapidKey = async (req, res) => {
     const key = process.env.PUBLIC_VAPID_KEY    
-    res.json(key)
-    
+    res.json({key});
+
 }

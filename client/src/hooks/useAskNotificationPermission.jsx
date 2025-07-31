@@ -6,17 +6,19 @@ export default function useAskNotificationPermission(){
     const {username} = useUser()
     async function subscribeUser(){
         const key = await getPublicVapidKey()
+        console.log(key,"key")
         const converted_key = urlBase64ToUint8Array(key);
+        console.log(converted_key, "converted_key")
         const registration = await navigator.serviceWorker.ready;
 
         const subscription = await registration.pushManager.subscribe({
             userVisibleOnly: true,
-            applicationServerKey: converted_key
+            applicationServerKey: key
         })  
 
         console.log(subscription, "subscription");
         console.log(subscription?.keys, "keys")
-
+key
         await postNotificationSubscription(subscription, username)
     }
 

@@ -189,7 +189,7 @@ export async function postNotificationSubscription(subscription, user_id){
 
 export async function getPublicVapidKey(){
   const res = await fetch(`${BASE_URL}/api/push-notifications/get-public-vapid-key`);
-  const key = await res.json();
+  const {key} = await res.json();
   return key
 }
 
