@@ -56,12 +56,7 @@ async function main() {
 app.use(express.json());
 app.use(
   cors({
-    origin: [
-    'http://localhost:5173',
-    'https://banana-counter.vercel.app',
-    'https://banana-counter-gdgtym0lb.vercel.app',
-    'https://banana-counter-elqcgyxzs-viktors-projects-16c18943.vercel.app'
-  ],
+    origin: true,
     credentials: true,
   })
 );
