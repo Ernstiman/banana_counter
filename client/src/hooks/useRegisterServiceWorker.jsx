@@ -9,5 +9,8 @@ export default function useRegisterServiceWorker(){
             .then((registration) => console.log("Service worker has been registered!: ", registration))
             .catch((err => console.log("Service worker registration failed", err)))
         }
+        else{
+            console.log("service worker did not work")
+        }
     }, [])
 }
