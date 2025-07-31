@@ -17,7 +17,8 @@ const friendRequestsRoutes = require("./routes/friendRequests.js");
 const bananaHistoryRoutes = require("./routes/bananaHistory.js");
 const usersRoutes = require("./routes/users.js");
 const pushNotificationRoutes = require("./routes/pushNotifications.js")
-const session = require("express-session");
+const session = require("express-mysql-session");
+const MySQLStore = require("express-mysql-session");
 
 var app = express();
 
@@ -53,6 +54,13 @@ async function main() {
   server.listen(PORT);
 }
 
+const sessionStore = new MySQLStore({
+  host: process.env.MYSQLHOST || "localhost",
+  user: process.env.MYSQLUSER || "root",
+  password: process.env.MYSQLPASSWORD || "",
+  database: process.env.MYSQLDATABASE || "banana_counter",
+})
+
 app.use(express.json());
 app.use(
   cors({
@@ -65,6 +73,7 @@ app.set("trust proxy", 1); // trust first proxy
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
+    store: sessionStore,
     resave: false,
     saveUninitialized: false,
     cookie: {
