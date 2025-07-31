@@ -14,7 +14,7 @@ exports.postLogin = async (req, res) => {
         if(await check_login(username, password)){
         
         req.session.username = username;
-        req.session.save(err => {
+        return req.session.save(err => {
             if (err) {
                 return res.json({ success: false, message: "Failed to save session" });
             }
@@ -22,8 +22,6 @@ exports.postLogin = async (req, res) => {
             return res.json({success: true, message: "you are logged in"})
         });
         
-        
-
     }
     throw new Error("Login failed");
 }
