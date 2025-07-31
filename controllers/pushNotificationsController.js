@@ -36,7 +36,7 @@ exports.send = async (req, res) => {
         let sub_array = await selectSubscriptions(follower);
         for (let sub of sub_array){
             console.log(sub, "sub in send")
-            sub = {endpoint: sub.endpoint, keys: {p256dh: sub.keys.p256dh, auth: sub.keys.auth}}
+            sub = {endpoint: sub.endpoint, keys: {p256dh: sub.p256dh, auth: sub.auth}}
         if(sub){
             try{
             console.log("Sending notification to", follower);
