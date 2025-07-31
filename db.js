@@ -165,6 +165,7 @@ async function selectSubscriptions(userID){
     "SELECT * FROM notification_subscriptions WHERE user_id = ?",
     [userID]
   )
+  console.log(result, "result in selectSubscriptions")
   return result;
 }
 
