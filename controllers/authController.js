@@ -12,8 +12,9 @@ exports.postLogin = async (req, res) => {
     
     try {
         if(await check_login(username, password)){
-        console.log(req.session, "session");
+        
         req.session.username = username;
+        console.log(req.session, "session");
         return res.json({success: true, message: "you are logged in"})
         
 
