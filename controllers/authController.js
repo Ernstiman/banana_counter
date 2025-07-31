@@ -45,6 +45,9 @@ exports.createAccount = async (req, res) => {
 exports.getAccountDetails = async (req, res) => {
     const username = req.session.username;
     console.log(username, "username in getAccountDetails");
+    console.log(req.session, "session in getAccountDetails");
+    console.log(req.sessionID, "sessionID in getAccountDetails");
+    
     res.json({username})
 }
 
