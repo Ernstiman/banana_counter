@@ -1,9 +1,7 @@
 import { useUser } from "../context/UserContextProvider";
 
 
-const BASE_URL = import.meta.env.PROD
-? ''
-: 'http://localhost:4747'
+const BASE_URL = ""
 
 export async function fetch_followers(username) {
   const followersResponse = await fetch(`${BASE_URL}/api/followers/${username}/followers`, {
