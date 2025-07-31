@@ -77,6 +77,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
+      name: "connect.sid",
+      path: "/",
       secure: true,
       sameSite: "none",
       maxAge: 1000 * 60 * 60 * 24 * 7
