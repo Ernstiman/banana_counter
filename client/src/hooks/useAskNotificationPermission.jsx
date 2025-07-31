@@ -13,7 +13,7 @@ export default function useAskNotificationPermission(){
 
         const subscription = await registration.pushManager.subscribe({
             userVisibleOnly: true,
-            applicationServerKey: key
+            applicationServerKey: converted_key
         })  
 
         console.log(subscription, "subscription");
