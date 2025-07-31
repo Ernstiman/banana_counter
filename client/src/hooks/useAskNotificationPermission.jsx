@@ -37,6 +37,7 @@ key
 }
 
     useEffect(()=> {
+        if(username){
         if(Notification.permission !== "granted"){
             Notification.requestPermission()
             .then((permission) => {
@@ -49,5 +50,6 @@ key
         else{
             subscribeUser()
         }
-    }, [])
+    }
+    }, [username])
 }
