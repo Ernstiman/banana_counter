@@ -6,6 +6,6 @@ const pushNotificationsController = require("../controllers/pushNotificationsCon
 router.post("/subscribe", pushNotificationsController.subscribe);
 router.post("/send", pushNotificationsController.sendBananaNotification);
 router.get("/get-public-vapid-key", pushNotificationsController.getPublicVapidKey);
-router.post("send-friend-request", pushNotificationsController.sendFriendRequestNotification)
+router.post("/send-friend-request", pushNotificationsController.sendFriendRequestNotification)
 
 module.exports = router;
