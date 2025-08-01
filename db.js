@@ -83,10 +83,10 @@ async function remove_follower(follower, followed) {
   }
 }
 
-async function insert_banana_history(amount, username) {
+async function insert_banana_history(amount, username, caption) {
     await pool.query(
-      "INSERT INTO Banana_history (username, amount) VALUES (?, ?)",
-      [username, amount]
+      "INSERT INTO Banana_history (username, amount, caption) VALUES (?, ?, ?)",
+      [username, amount, caption]
     );
   }
 
@@ -94,7 +94,7 @@ async function select_banana_history(users) {
   const VALUES = users.map(() => "?").join(",");
   if (users.length > 0) {
     const [result] = await pool.query(
-      `SELECT timestamp, amount, username FROM Banana_history WHERE username IN (${VALUES}) ORDER BY timestamp DESC;`,
+      `SELECT timestamp, amount, username, caption FROM Banana_history WHERE username IN (${VALUES}) ORDER BY timestamp DESC;`,
       users
     );
     return result;

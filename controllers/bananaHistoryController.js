@@ -6,11 +6,11 @@ const {
 } = require("../db");
 
 exports.postBananaHistory = async (req, res) => {
-    const { amount } = req.body;
+    const { amount, caption } = req.body;
     const username = req.session.username;
     
     try {
-        await insert_banana_history(amount, username);
+        await insert_banana_history(amount, username, caption);
         res.json("Done!");
     } catch (err) {
         error(err, res);

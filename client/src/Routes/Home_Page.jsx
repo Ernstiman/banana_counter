@@ -11,11 +11,13 @@ import BananaCount from "../components/Banana_Count.jsx";
 import useGetBananaCount from "../hooks/useGetBananaCount.jsx";
 import useRegisterServiceWorker from "../hooks/useRegisterServiceWorker.jsx";
 import useAskNotificationPermission from "../hooks/useAskNotificationPermission.jsx";
+import SubmitBananas from "../components/SubmitBananas.jsx";
 
 
 export default function HomePage() {
     const {username, following} = useUser();
-    const [addedCount, setAddedCount] = useState(0);
+    const {submit, setSubmit} = useState(false);
+    
     useRegisterServiceWorker()
     useAskNotificationPermission()
 
@@ -23,18 +25,11 @@ export default function HomePage() {
         <div className="app-container">
             <div className="user-data-container">
                 <BananaCount />
-                <div className="change-count-container">
-                    <div className="banana-buttons-group">
-                        <AddBananaButton addedCount={addedCount} setAddedCount={setAddedCount}/>
-                        <div className="added-bananas-text">
-                            {addedCount !== 0 && (
-                                <h2>{addedCount} added bananas</h2>
-                            )}
-                        </div>
-                        <SubtractBananaButton addedCount={addedCount} setAddedCount={setAddedCount}/>
-                        <SubmitBananasButton addedCount={addedCount} setAddedCount={setAddedCount}/>
-                    </div>
-                </div>
+            </div>
+
+            <span onClick={ () => setSubmit(true)}>Post Banana Activity</span>
+            <div className="submit-bananas-container">
+                {submit && (<SubmitBananas/>)}
             </div>
             
             <Followers/>

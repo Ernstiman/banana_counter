@@ -43,6 +43,7 @@ export default function BananaHistory({users, children}) {
                             <span className="banana-history-date">
                                 on {setDate(entry.timestamp)} at {setTime(entry.timestamp)}
                             </span>
+                            
                         </li>
                     ))
                 ) : (

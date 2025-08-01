@@ -63,12 +63,12 @@ export async function post_banana_count(count) {
   });
 }
 
-export async function post_banana_history(amount) {
+export async function post_banana_history(amount, caption) {
   await fetch(`${BASE_URL}/api/banana-history/post-history`, {
     method: "POST",
     credentials: "include",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ amount }),
+    body: JSON.stringify({ amount, caption }),
   });
 }
 
