@@ -17,6 +17,7 @@ exports.subscribe = async (req, res) => {
     const {p256dh, auth} = keys
 
     try{
+        await deleteNotificationSubscription(endpoint);
         await insertNotificationSubscription(user_id, endpoint, p256dh, auth)
         res.json({success: true, message: "Subscription has been saved"})
     } 
