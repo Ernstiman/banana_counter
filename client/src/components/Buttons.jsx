@@ -109,6 +109,7 @@ export function SubmitBananasButton({addedCount, setAddedCount}){
             setTotalCount(totalCount);
         })
         .catch(err => console.log(err));
+        console.log(followers, "followers in SubmitBananasButton");
         await postNotification(username, addedCount, followers)
     }       
     return (
