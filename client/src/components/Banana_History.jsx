@@ -40,10 +40,12 @@ export default function BananaHistory({users, children}) {
                             <span className="banana-history-action">
                                 ate <strong>{entry.amount}</strong> bananas
                             </span>
+                            <span className="banana-history-caption">{entry.caption}</span>
                             <span className="banana-history-date">
                                 on {setDate(entry.timestamp)} at {setTime(entry.timestamp)}
                             </span>
                             
+
                         </li>
                     ))
                 ) : (
