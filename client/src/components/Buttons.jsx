@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { fetch_followers, post_friend_requests, post_banana_count, post_banana_history, fetch_banana_count, follow, unfollow, fetch_following, postNotification } from "../api/api";
 import { useUser } from "../context/UserContextProvider";
 import { fetch_friend_requests, remove_friend_requests } from "../api/api";
+import useGetUserFollowers from "../hooks/useGetUserFollowers";
 
 
 
@@ -98,6 +99,7 @@ export function SubtractBananaButton({addedCount, setAddedCount}){
 
 export function SubmitBananasButton({addedCount, setAddedCount}){
     const {count, setCount, setTotalCount, username, followers} = useUser()
+    const {laodingUserFollowers} = useGetUserFollowers()
     async function click(){
         setAddedCount(0);
         await post_banana_count(count + addedCount);
@@ -112,9 +114,9 @@ export function SubmitBananasButton({addedCount, setAddedCount}){
         console.log(followers, "followers in SubmitBananasButton");
         await postNotification(username, addedCount, followers)
     }       
-    return (
+    return ( 
         <>
-        {addedCount > 0 && (<button className="submit-banana-button"onClick={click}>Submit Bananas</button>)}  
+        {addedCount > 0 && !laodingUserFollowers(<button className="submit-banana-button"onClick={click}>Submit Bananas</button>)}  
         </>)
 }
 
