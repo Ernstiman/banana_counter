@@ -40,7 +40,8 @@ exports.sendBananaNotification = async (req, res) => {
             try{
             webPush.sendNotification(sub, JSON.stringify({
                 title: "Banana Alert! ",
-                body: message
+                body: message,
+                url: `https://banana-counter.vercel.app/user/${username}`
             }))
         }
 
