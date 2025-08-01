@@ -29,6 +29,7 @@ exports.subscribe = async (req, res) => {
 
 exports.send = async (req, res) => {
     let {followers, username, amount} = req.body;
+    console.log("Sending notification to followers:", followers);
     followers = followers.map(user => user.username);
     let bananaTense = amount === 1 ? "banana" : "bananas"
     let message = `${username} just ate ${amount} ${bananaTense}!`
