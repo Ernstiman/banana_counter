@@ -161,7 +161,7 @@ async function insertNotificationSubscription(userId, endPoint, p256dh, auth) {
 }
 
 async function selectSubscriptions(userID){
-  const [result] = await pool.query(
+  let [result] = await pool.query(
     "SELECT * FROM notification_subscriptions WHERE user_id = ?",
     [userID]
   )
