@@ -29,7 +29,7 @@ export function RemoveUserButton({targetUsername}){
     const {setFollowing} = useUser()
     async function remove(targetUsername){
         await unfollow(targetUsername)
-        await fetch_following(targetUsername).then(data => setFollowing(data.following))
+        await fetch_following(targetUsername).then(({userData}) => setFollowing(userData))
 
     }
     return(
