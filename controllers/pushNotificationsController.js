@@ -35,12 +35,10 @@ exports.send = async (req, res) => {
     for (let follower of followers){
         let sub_array = await selectSubscriptions(follower);
         for (let sub of sub_array){
-            console.log(sub, "sub in send")
             sub = {endpoint: sub.end_point, keys: {p256dh: sub.p256dh, auth: sub.auth}}
         if(sub){
             try{
             console.log("Sending notification to", follower);
-            console.log(sub, "sub")
             webPush.sendNotification(sub, JSON.stringify({
                 title: "Banana Alert! ",
                 body: message
