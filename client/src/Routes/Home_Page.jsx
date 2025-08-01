@@ -27,7 +27,7 @@ export default function HomePage() {
                 <BananaCount />
             </div>
 
-            <span onClick={ () => setSubmit(true)}>Post Banana Activity</span>
+            {!submit && (<span className="post-banan-activity" onClick={ () => setSubmit(true)}>Post Banana Activity</span>)}
             <div className="submit-bananas-container">
                 {submit && (<SubmitBananas setSubmit={setSubmit}/>)}
             </div>
