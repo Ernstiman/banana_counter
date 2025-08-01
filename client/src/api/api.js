@@ -193,12 +193,22 @@ export async function getPublicVapidKey(){
   return key
 }
 
-export async function postNotification(username, amount, followers){
+export async function postBananaNotification(username, amount, followers){
     await fetch(`${BASE_URL}/api/push-notifications/send`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({ username, amount, followers }),
+    });
+}
+
+export async function postFriendRequestNotification(targetUsername) {
+    await fetch(`${BASE_URL}/api/push-notifications/send-friend-request`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ targetUsername }),
     });
 }

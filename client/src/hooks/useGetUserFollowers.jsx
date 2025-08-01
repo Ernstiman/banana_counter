@@ -19,8 +19,7 @@ export default function useGetUserFollowers(){
         }))
         .catch(() => console.log("Something went wrong when fetching followers"))
         .finally(() => {
-            setTimeout(() => setLoadingUserFollowers(false), 1000)
-            });
+            setLoadingUserFollowers(false)})
         }
 
     }, [username])

@@ -1,6 +1,6 @@
 
 import { useNavigate } from "react-router-dom";
-import { fetch_followers, post_friend_requests, post_banana_count, post_banana_history, fetch_banana_count, follow, unfollow, fetch_following, postNotification } from "../api/api";
+import { fetch_followers, post_friend_requests, post_banana_count, post_banana_history, fetch_banana_count, follow, unfollow, fetch_following, postBananaNotification, postFriendRequestNotification } from "../api/api";
 import { useUser } from "../context/UserContextProvider";
 import { fetch_friend_requests, remove_friend_requests } from "../api/api";
 import useGetUserFollowers from "../hooks/useGetUserFollowers";
@@ -70,6 +70,8 @@ export function SendFriendRequestButton({targetUsername, setFriendRequests}){
     async function click(){
         await post_friend_requests(username, targetUsername)
         setFriendRequests(await fetch_friend_requests(targetUsername));
+        await postFriendRequestNotification(targetUsername);
+
 
     }
     return (
@@ -111,7 +113,7 @@ export function SubmitBananasButton({addedCount, setAddedCount}){
             setTotalCount(totalCount);
         })
         .catch(err => console.log(err));
-        await postNotification(username, addedCount, followers)
+        await postBananaNotification(username, addedCount, followers)
     }       
     return ( 
         <>

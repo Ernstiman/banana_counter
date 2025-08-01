@@ -27,9 +27,8 @@ exports.subscribe = async (req, res) => {
 }
 
 
-exports.send = async (req, res) => {
+exports.sendBananaNotification = async (req, res) => {
     let {followers, username, amount} = req.body;
-    console.log("Sending notification to followers:", followers);
     followers = followers.map(user => user.username);
     let bananaTense = amount === 1 ? "banana" : "bananas"
     let message = `${username} just ate ${amount} ${bananaTense}!`
@@ -37,10 +36,8 @@ exports.send = async (req, res) => {
     for (let follower of followers){
         let sub_array = await selectSubscriptions(follower);
         for (let sub of sub_array){
-            sub = {endpoint: sub.end_point, keys: {p256dh: sub.p256dh, auth: sub.auth}}
         if(sub){
             try{
-            console.log("Sending notification to", follower);
             webPush.sendNotification(sub, JSON.stringify({
                 title: "Banana Alert! ",
                 body: message
@@ -61,6 +58,24 @@ exports.send = async (req, res) => {
     catch(err){
         error(err, res)
 }
+}
+
+exports.sendFriendRequestNotification = async (req, res) => {
+    const targetUsername = req.body.targetUsername;
+    const username = req.sessions.username;
+    const message = `${username} has sent you a friend request!`
+    try{
+        let sub_array = await selectSubscriptions(targetUsername);
+        for (let sub of sub_array){
+            webPush.sendNotification(sub, JSON.stringify({
+                title: "Banana Alert! ",
+                body: message
+            }))
+        }
+    }
+    catch(err){
+        error(err, res);
+    }
 }
 
 exports.getPublicVapidKey = async (req, res) => {
