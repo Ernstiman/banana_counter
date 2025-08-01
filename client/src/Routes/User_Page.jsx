@@ -19,6 +19,7 @@ export default function UserPage(){
     
     useEffect(()=>{
         if(following){
+            console.log(following, "following in UserPage")
             setFollows(following.map(user => user.username).includes(userUsername))
         }
     }
