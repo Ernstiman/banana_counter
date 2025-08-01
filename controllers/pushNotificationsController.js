@@ -69,7 +69,9 @@ exports.sendFriendRequestNotification = async (req, res) => {
         for (let sub of sub_array){
             webPush.sendNotification(sub, JSON.stringify({
                 title: "Banana Alert! ",
-                body: message
+                body: message,
+                url: "https://banana-counter.vercel.app/friend-requests"
+
             }))
         }
 
