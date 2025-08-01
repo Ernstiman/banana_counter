@@ -99,7 +99,7 @@ export function SubtractBananaButton({addedCount, setAddedCount}){
 
 export function SubmitBananasButton({addedCount, setAddedCount}){
     const {count, setCount, setTotalCount, username, followers} = useUser()
-    const {laodingUserFollowers} = useGetUserFollowers()
+    const {loadingUserFollowers} = useGetUserFollowers()
     async function click(){
         setAddedCount(0);
         await post_banana_count(count + addedCount);
@@ -111,12 +111,11 @@ export function SubmitBananasButton({addedCount, setAddedCount}){
             setTotalCount(totalCount);
         })
         .catch(err => console.log(err));
-        console.log(followers, "followers in SubmitBananasButton");
         await postNotification(username, addedCount, followers)
     }       
     return ( 
         <>
-        {addedCount > 0 && !laodingUserFollowers(<button className="submit-banana-button"onClick={click}>Submit Bananas</button>)}  
+        {addedCount > 0 && !loadingUserFollowers && (<button className="submit-banana-button"onClick={click}>Submit Bananas</button>)}  
         </>)
 }
 
