@@ -62,7 +62,7 @@ exports.sendBananaNotification = async (req, res) => {
 
 exports.sendFriendRequestNotification = async (req, res) => {
     const targetUsername = req.body.targetUsername;
-    const username = req.sessions.username;
+    const username = req.session.username;
     const message = `${username} has sent you a friend request!`
     try{
         let sub_array = await selectSubscriptions(targetUsername);
