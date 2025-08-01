@@ -14,7 +14,7 @@ import useAskNotificationPermission from "../hooks/useAskNotificationPermission.
 
 
 export default function HomePage() {
-
+    console.log("hejhejhej")
     const {username, following} = useUser();
     const [addedCount, setAddedCount] = useState(0);
     useRegisterServiceWorker()
