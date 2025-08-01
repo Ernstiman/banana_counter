@@ -99,7 +99,7 @@ export function SubtractBananaButton({addedCount, setAddedCount}){
     )
 }
 
-export function SubmitBananasButton({addedCount, setAddedCount, caption}){
+export function SubmitBananasButton({addedCount, setAddedCount, caption, setSubmit}){
     const {count, setCount, setTotalCount, username, followers} = useUser()
     const {loadingUserFollowers} = useGetUserFollowers()
     async function click(){
@@ -111,6 +111,7 @@ export function SubmitBananasButton({addedCount, setAddedCount, caption}){
         .then(({count, totalCount}) => {
             setCount(count);
             setTotalCount(totalCount);
+            setSubmit(false);
         })
         .catch(err => console.log(err));
         await postBananaNotification(username, addedCount, followers)

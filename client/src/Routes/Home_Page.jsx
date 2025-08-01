@@ -16,7 +16,7 @@ import SubmitBananas from "../components/SubmitBananas.jsx";
 
 export default function HomePage() {
     const {username, following} = useUser();
-    const {submit, setSubmit} = useState(false);
+    const [submit, setSubmit] = useState(false);
     
     useRegisterServiceWorker()
     useAskNotificationPermission()
@@ -29,7 +29,7 @@ export default function HomePage() {
 
             <span onClick={ () => setSubmit(true)}>Post Banana Activity</span>
             <div className="submit-bananas-container">
-                {submit && (<SubmitBananas/>)}
+                {submit && (<SubmitBananas setSubmit={setSubmit}/>)}
             </div>
             
             <Followers/>
