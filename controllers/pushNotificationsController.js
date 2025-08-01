@@ -72,10 +72,13 @@ exports.sendFriendRequestNotification = async (req, res) => {
                 body: message
             }))
         }
+
+        res.json({success: true, message: "Notifications has been sent! "})
     }
     catch(err){
         error(err, res);
     }
+
 }
 
 exports.getPublicVapidKey = async (req, res) => {
