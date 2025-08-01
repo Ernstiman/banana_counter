@@ -165,9 +165,9 @@ async function selectSubscriptions(userID){
     "SELECT * FROM notification_subscriptions WHERE user_id = ?",
     [userID]
   )
-  result = result.map(sub => ({end_point : sub.end_point, keys: {
+  const subsciptions = result.map(sub => ({endpoint : sub.end_point, keys: {
     p256dh: sub.p256dh, auth: sub.auth}}))
-  return result;
+  return subsciptions;
 }
 
 async function deleteNotificationSubscription(endPoint) {
