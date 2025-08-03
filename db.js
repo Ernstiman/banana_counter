@@ -1,3 +1,5 @@
+const {URL} = require("url");
+
 async function insert_login(username, password, email) {
     await pool.query(
       `
@@ -178,18 +180,24 @@ async function deleteNotificationSubscription(endPoint) {
 }
 
 const mysql = require("mysql2/promise");
-let dbConfig;
-if(process.env.DATABASE_URL){
-   dbConfig = process.env.DATABASE_URL;
-}
 
-else{
-   dbConfig = {
-    host: process.env.MYSQLHOST || "localhost",
-    user: process.env.MYSQLUSER|| "root",
-    password: process.env.MYSQLPASSWORD,
-  database: process.env.MYSQL_DATABASE || "my_data",
-}};
+const dbUrl = new URL(process.env.DATABASE_URL);
+const dbConfig = {
+  host: dbUrl.hostname,
+  user: dbUrl.username,
+  password: dbUrl.password,
+  database: dbUrl.pathname.slice(1), // Remove leading slash
+};
+
+// else{
+//    dbConfig = {
+//     host: process.env.MYSQLHOST || "localhost",
+//     user: process.env.MYSQLUSER|| "root",
+//     password: process.env.MYSQLPASSWORD,
+//   database: process.env.MYSQL_DATABASE || "my_data",
+// }};
+
+console.log(process.env.DATABASE_URL, "db");
 
 const pool = mysql.createPool(dbConfig);
 

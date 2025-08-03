@@ -9,6 +9,7 @@ var express = require("express");
 var path = require("path");
 var fs = require("fs");
 var cors = require("cors");
+var {ULR} = require("url");
 
 const authRoutes = require("./routes/auth.js");
 const bananasRoutes = require("./routes/bananas.js")
@@ -54,17 +55,22 @@ async function main() {
   server.listen(PORT);
 }
 
-const sessionStore = new MySQLStore({
-  host: process.env.MYSQLHOST || "localhost",
-  user: process.env.MYSQLUSER || "root",
-  password: process.env.MYSQLPASSWORD || "",
-  database: process.env.MYSQL_DATABASE || "my_data",
-})
+const dbUrl = new URL(process.env.DATABASE_URL);
+const dbConfig = {
+  host: dbUrl.hostname,
+  user: dbUrl.username,
+  password: dbUrl.password,
+  database: dbUrl.pathname.slice(1), // Remove leading slash   
+}; 
+
+const sessionStore = new MySQLStore(dbConfig)
 
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://banana-counter.vercel.app",
+    origin: ["https://banana-counter.vercel.app",
+      "http://localhost:5173",
+    ],
     credentials: true,
   })
 );
@@ -79,8 +85,8 @@ app.use(
     cookie: {
       name: "connect.sid",
       path: "/",
-      secure: true,
-      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       maxAge: 1000 * 60 * 60 * 24 * 7
     }
   })
