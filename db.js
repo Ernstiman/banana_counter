@@ -182,6 +182,7 @@ async function deleteNotificationSubscription(endPoint) {
 const mysql = require("mysql2/promise");
 
 const dbUrl = new URL(process.env.DATABASE_URL);
+console.log(dbUrl, "db");
 const dbConfig = {
   host: dbUrl.hostname,
   user: dbUrl.username,

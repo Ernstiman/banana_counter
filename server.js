@@ -9,7 +9,7 @@ var express = require("express");
 var path = require("path");
 var fs = require("fs");
 var cors = require("cors");
-var {ULR} = require("url");
+var {URL} = require("url");
 
 const authRoutes = require("./routes/auth.js");
 const bananasRoutes = require("./routes/bananas.js")
@@ -56,6 +56,7 @@ async function main() {
 }
 
 const dbUrl = new URL(process.env.DATABASE_URL);
+console.log(dbUrl, "dbUrl");
 const dbConfig = {
   host: dbUrl.hostname,
   user: dbUrl.username,
