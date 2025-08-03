@@ -12,12 +12,14 @@ import useGetBananaCount from "../hooks/useGetBananaCount.jsx";
 import useRegisterServiceWorker from "../hooks/useRegisterServiceWorker.jsx";
 import useAskNotificationPermission from "../hooks/useAskNotificationPermission.jsx";
 import SubmitBananas from "../components/SubmitBananas.jsx";
+import useGetUserFollowers from "../hooks/useGetUserFollowers.jsx";
 
 
 export default function HomePage() {
     const {username, following} = useUser();
     const [submit, setSubmit] = useState(false);
-    
+
+    const {loadingUserFollowers} = useGetUserFollowers()
     useRegisterServiceWorker()
     useEffect(() => {
         if(Notification.permission === "default"){
