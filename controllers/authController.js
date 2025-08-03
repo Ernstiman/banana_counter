@@ -90,7 +90,7 @@ exports.forgotPasswordLink = async (req, res) => {
             from: 'viktor@ekastigen.net',
             to: email,
             subject: 'Password Reset',
-            text: `Here is your password reset link: http://localhost:5173/change-password/${token}`
+            text: `Here is your password reset link: https://banana-counter.vercel.app/change-password/${token}`
         };
 
         await transporter.sendMail(mailOptions);

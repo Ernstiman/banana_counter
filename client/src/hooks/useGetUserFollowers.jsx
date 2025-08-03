@@ -21,7 +21,7 @@ export default function useGetUserFollowers(){
         .finally(() => {
             setLoadingUserFollowers(false)})
         }
-
+        
     }, [username])
 
     return {loadingUserFollowers}
