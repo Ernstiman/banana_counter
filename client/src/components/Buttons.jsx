@@ -1,6 +1,6 @@
 
 import { useNavigate } from "react-router-dom";
-import { fetch_followers, post_friend_requests, post_banana_count, post_banana_history, fetch_banana_count, follow, unfollow, fetch_following, postBananaNotification, postFriendRequestNotification } from "../api/api";
+import { fetch_followers, post_friend_requests, post_banana_count, post_banana_history, fetch_banana_count, follow, unfollow, fetch_following, postBananaNotification, postFriendRequestNotification, removeNotificationSubscription } from "../api/api";
 import { useUser } from "../context/UserContextProvider";
 import { fetch_friend_requests, remove_friend_requests } from "../api/api";
 import useGetUserFollowers from "../hooks/useGetUserFollowers";
@@ -42,6 +42,14 @@ export function RemoveUserButton({targetUsername}){
 export function LogOut(){
     const navigate = useNavigate()
     async function logOut(){
+        
+        const registration = await navigator.serviceWorker.ready;
+        let subscription = await registration.pushManager.getSubscription();
+        if(subscription){
+            await subscription.unsubscribe();
+            await removeNotificationSubscription(subscription.endpoint);
+        }
+
         await fetch("/api/auth/logout",{
             method: "POST",
             headers: {"Content-Type": "application/json"},

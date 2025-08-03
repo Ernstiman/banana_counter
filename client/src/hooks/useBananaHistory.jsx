@@ -15,10 +15,7 @@ export default function useGetBananaHistory(users){
              .then((banana_history) => {
                 setBananaHistory(banana_history)})
             }
-        setTimeout(() => {
-            setLoadingBananaHistory(false)
-        }, 2000);
-        
+            setLoadingBananaHistory(false)   
     }, [users])
 
     return {bananaHistory, loadingBananaHistory}

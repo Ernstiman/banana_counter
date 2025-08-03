@@ -48,7 +48,12 @@ export default function NotificationToggle(){
             setNotifications(true)
     }}
     return (
-        <span className="notification-checkbox" onClick={click}>{notifications ? "Notifications on" : "Notifications of"}</span>
+        <span className="notification-checkbox" onClick={click}>{
+            notifications ?
+            <img src="/img/notification-on.png" alt="notification-on" className="notification-img-icon" />
+            :
+            <img src="/img/notification-off.png" alt="notification-off" className="notification-img-icon " />
+        }</span>
     )
 
 

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import { createContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -19,6 +19,7 @@ export function UserContextProvider({children}){
     const [email, setEmail] = useState()
     let location = useLocation();
 
+    
     useEffect(() =>{
         const publicPaths = ["/login", "/change-password"]
         const isPublic = publicPaths.some(path => location.pathname.startsWith(path));
