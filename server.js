@@ -9,7 +9,6 @@ var express = require("express");
 var path = require("path");
 var fs = require("fs");
 var cors = require("cors");
-var {URL} = require("url");
 
 const authRoutes = require("./routes/auth.js");
 const bananasRoutes = require("./routes/bananas.js")
@@ -55,16 +54,12 @@ async function main() {
   server.listen(PORT);
 }
 
-const dbUrl = new URL(process.env.DATABASE_URL);
-console.log(dbUrl, "dbUrl");
-const dbConfig = {
-  host: dbUrl.hostname,
-  user: dbUrl.username,
-  password: dbUrl.password,
-  database: dbUrl.pathname.slice(1), // Remove leading slash   
-}; 
-
-const sessionStore = new MySQLStore(dbConfig)
+const sessionStore = new MySQLStore({
+  host: process.env.MYSQLHOST || "localhost",
+  user: process.env.MYSQLUSER || "viktor",
+  password: process.env.MYSQLPASSWORD || process.env.MYSQL_PASS,
+  database: process.env.MYSQL_DATABASE || "my_data",
+})
 
 app.use(express.json());
 app.use(
