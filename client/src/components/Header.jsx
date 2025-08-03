@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom"
 import { useUser } from "../context/UserContextProvider"
 import { LogOut } from "./Buttons"
+import { CurrentUserNav } from "./Navs"
+import NotificationToggle from "./NotificationToggle"
 
 export default function Header(){
     const {username} = useUser()
@@ -12,7 +14,7 @@ export default function Header(){
                 </Link>
             </div>
             {username && (<div className="header__right">
-                <span className="header__user">{username}</span>
+                <CurrentUserNav/>
                 <div className="header__actions">
                     
                     <Link to="/search" className="search__link">
@@ -22,6 +24,7 @@ export default function Header(){
                         <img src="/img/friend-request-icon.png" alt="friend-request" className="friend-request-icon" />
                     </Link>
                     <LogOut/>
+                    <NotificationToggle/>
                 </div>
             </div>)}
         </header>

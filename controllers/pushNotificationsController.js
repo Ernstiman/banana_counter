@@ -84,6 +84,17 @@ exports.sendFriendRequestNotification = async (req, res) => {
 
 }
 
+exports.deleteSubscription = async (req, res) => {
+    const {endpoint} = req.body;
+    try{
+        await deleteNotificationSubscription(endpoint);
+        res.json({success: true, message: "Subscription has been deleted"})
+    }
+    catch(err){
+        error(err, res);
+    }
+}
+
 exports.getPublicVapidKey = async (req, res) => {
     const key = process.env.PUBLIC_VAPID_KEY    
     res.json({key});

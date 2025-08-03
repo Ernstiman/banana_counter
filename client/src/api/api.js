@@ -46,7 +46,6 @@ export async function fetch_banana_count(users) {
     body: JSON.stringify({users})
   });
   const { count, totalCount } = await response.json();
-
   return { count, totalCount };
 }
 
@@ -191,6 +190,17 @@ export async function getPublicVapidKey(){
   const res = await fetch(`${BASE_URL}/api/push-notifications/get-public-vapid-key`);
   const {key} = await res.json();
   return key
+}
+
+export async function removeNotificationSubscription(endPoint){
+
+  await fetch(`${BASE_URL}/api/push-notifications/delete`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ endpoint: endPoint }),
+  });
 }
 
 export async function postBananaNotification(username, amount, followers){

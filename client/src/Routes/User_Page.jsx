@@ -6,6 +6,7 @@ import { fetch_banana_count, follow } from "../api/api";
 import BananaHistory from "../components/Banana_History";
 import useGetFriendRequests from "../hooks/useGetFriendRequests";
 import useGetUserFollowers from "../hooks/useGetUserFollowers";
+import { useMemo } from "react";
 
 export default function UserPage(){
     const {userUsername} = useParams()
@@ -16,6 +17,10 @@ export default function UserPage(){
     const {friendRequests, setFriendRequests} = useGetFriendRequests(userUsername);
     useGetUserFollowers()
 
+
+    const memoUsername = useMemo(() => {
+        return [{username: userUsername}]
+    }, [userUsername]);
     
     useEffect(()=>{
         if(following){
@@ -23,7 +28,7 @@ export default function UserPage(){
             setFollows(following.map(user => user.username).includes(userUsername))
         }
     }
-        ,[following])
+        ,[following, username])
  
 
     useEffect(() => {
@@ -34,6 +39,7 @@ export default function UserPage(){
          fetch_banana_count([userUsername]).then(({count}) => {
             setCount(count)})
     }, [userUsername])
+
     return (
         <div className="user-container">
             <h1>{userUsername}</h1>
@@ -47,7 +53,7 @@ export default function UserPage(){
             :
             <SendFriendRequestButton targetUsername={userUsername} setFriendRequests={setFriendRequests}/>
             }
-            {follows && <BananaHistory users={[{username: userUsername}]}>{userUsername}'s Banana Activity</BananaHistory>}
+            {follows && <BananaHistory users={memoUsername}>{userUsername}'s Banana Activity</BananaHistory>}
         </div>
     )
 }

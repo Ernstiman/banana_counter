@@ -26,14 +26,13 @@ export default function HomePage() {
             <div className="user-data-container">
                 <BananaCount />
             </div>
-
+            <BananaHistory users={following}>Banana Activity: </BananaHistory>  
             {!submit && (<span className="post-banan-activity" onClick={ () => setSubmit(true)}>Post Banana Activity</span>)}
             <div className="submit-bananas-container">
                 {submit && (<SubmitBananas setSubmit={setSubmit}/>)}
             </div>
+
             
-            <Followers/>
-            <BananaHistory users={following}>Banana Activity: </BananaHistory>  
         </div>
     )
 }

@@ -23,5 +23,5 @@ export default function useGetBananaCount(){
     )
 
 
-    return {loadingCount, bananaCount}
+    return {loadingCount}
 }

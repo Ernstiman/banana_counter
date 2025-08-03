@@ -9,6 +9,7 @@ import RedirectOnRoot from './Redirect_On_Root.jsx';
 import Search from './Search.jsx';
 import FriendRequestPage from './Friend_Request_Page.jsx';
 import ChangePassWord from './ChangePasswordPage.jsx';
+import CurrentUserPage from './CurrentUserPage.jsx';
 
 export default function App(){
   return (
@@ -22,6 +23,7 @@ export default function App(){
         <Route path = "/search" element={<Search/>}></Route>
         <Route path = "/friend-requests" element={<FriendRequestPage/>}></Route>
         <Route path = "/change-password/:token" element={<ChangePassWord/>}></Route>
+        <Route path = "/current-user" element={<CurrentUserPage/>}></Route>
         <Route path = "/" element={<RedirectOnRoot/>}/>
       </Routes>
     </UserContextProvider>

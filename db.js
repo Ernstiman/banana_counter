@@ -186,7 +186,7 @@ const dbConfig = {
   database: process.env.MYSQL_DATABASE || "my_data",
 };
 
-const pool = mysql.createPool(dbConfig);
+const pool = mysql.createPool(process.env.DATABASE_URL);
 
 module.exports = {
   pool,
