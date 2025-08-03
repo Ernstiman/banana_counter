@@ -28,10 +28,11 @@ exports.subscribe = async (req, res) => {
 
 
 exports.sendBananaNotification = async (req, res) => {
-    let {followers, username, amount} = req.body;
+    let {followers, username, amount, caption} = req.body;
     followers = followers.map(user => user.username);
     let bananaTense = amount === 1 ? "banana" : "bananas"
-    let message = `${username} just ate ${amount} ${bananaTense}!`
+    let message = `${username} just ate ${amount} ${bananaTense}!
+    ${caption ? `\n\n${caption}` : ""}`
     try{
     for (let follower of followers){
         let sub_array = await selectSubscriptions(follower);

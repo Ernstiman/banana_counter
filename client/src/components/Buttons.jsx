@@ -42,7 +42,7 @@ export function RemoveUserButton({targetUsername}){
 export function LogOut(){
     const navigate = useNavigate()
     async function logOut(){
-        
+
         const registration = await navigator.serviceWorker.ready;
         let subscription = await registration.pushManager.getSubscription();
         if(subscription){
@@ -122,7 +122,7 @@ export function SubmitBananasButton({addedCount, setAddedCount, caption, setSubm
             setSubmit(false);
         })
         .catch(err => console.log(err));
-        await postBananaNotification(username, addedCount, followers)
+        await postBananaNotification(username, addedCount, followers, caption)
     }       
     return ( 
         <>

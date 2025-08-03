@@ -203,13 +203,13 @@ export async function removeNotificationSubscription(endPoint){
   });
 }
 
-export async function postBananaNotification(username, amount, followers){
+export async function postBananaNotification(username, amount, followers, caption){
     await fetch(`${BASE_URL}/api/push-notifications/send`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, amount, followers }),
+        body: JSON.stringify({ username, amount, followers, caption }),
     });
 }
 
