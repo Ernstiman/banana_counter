@@ -27,6 +27,7 @@ export default function NotificationToggle(){
             setNotifications(false)
             }
         else{
+            
             const key = await getPublicVapidKey();
 
             const converted_key = urlBase64ToUint8Array(key)
@@ -40,7 +41,7 @@ export default function NotificationToggle(){
             setNotifications(true)
     }}
     return (
-        <span className="notification-checkbox" onClick={click}>Notifications</span>
+        <span className="notification-checkbox" onClick={click}>{notifications ? "Notifications on" : "Notifications of"}</span>
     )
 
 

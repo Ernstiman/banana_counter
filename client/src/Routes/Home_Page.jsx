@@ -19,7 +19,11 @@ export default function HomePage() {
     const [submit, setSubmit] = useState(false);
     
     useRegisterServiceWorker()
-    useAskNotificationPermission()
+    useEffect(() => {
+        if(Notification.permission === "default"){
+            Notification.requestPermission();
+        }
+    })
 
     return (
         <div className="app-container">
