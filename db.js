@@ -178,15 +178,20 @@ async function deleteNotificationSubscription(endPoint) {
 }
 
 const mysql = require("mysql2/promise");
+let dbConfig;
+if(process.env.DATABASE_URL){
+   dbConfig = process.env.DATABASE_URL;
+}
 
-const dbConfig = {
-  host: process.env.MYSQLHOST || "localhost",
-  user: process.env.MYSQLUSER|| "root",
-  password: process.env.MYSQLPASSWORD,
+else{
+   dbConfig = {
+    host: process.env.MYSQLHOST || "localhost",
+    user: process.env.MYSQLUSER|| "root",
+    password: process.env.MYSQLPASSWORD,
   database: process.env.MYSQL_DATABASE || "my_data",
-};
+}};
 
-const pool = mysql.createPool(process.env.DATABASE_URL);
+const pool = mysql.createPool(dbConfig);
 
 module.exports = {
   pool,
