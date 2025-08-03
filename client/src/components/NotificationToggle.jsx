@@ -27,7 +27,14 @@ export default function NotificationToggle(){
             setNotifications(false)
             }
         else{
-            
+
+            if(Notification.permission !== "granted"){
+               await Notification.requestPermission();
+                if(Notification.permission !== "granted"){
+                    console.log("user has disabled notifications")
+                    return 
+                }
+            }
             const key = await getPublicVapidKey();
 
             const converted_key = urlBase64ToUint8Array(key)

@@ -23,7 +23,7 @@ export default function HomePage() {
         if(Notification.permission === "default"){
             Notification.requestPermission();
         }
-    })
+    }, [])
 
     return (
         <div className="app-container">
