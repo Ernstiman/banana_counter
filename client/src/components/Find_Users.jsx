@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { UserNav } from "./Navs";
 import { fetch_all_users } from "../api/api";
+import "../style/Components/FindUsers.css";
 export default function FindUsers(){
  
    const [users, setUsers] = useState([]);

@@ -1,0 +1,67 @@
+
+.banana-history-container {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.banana-history-container h1 {
+    font-size: 1.5rem;
+    color: #ffb300;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.banana-history-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.banana-history-item {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+}
+
+.banana-history-item:last-child {
+    border-bottom: none;
+}
+
+.banana-history-username {
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 0.5rem;
+}
+
+.banana-history-action {
+    color: #444;
+    margin-bottom: 0.5rem;
+}
+
+.banana-history-caption {
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.banana-history-date {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.banana-history-item.no-history {
+    text-align: center;
+    color: #888;
+}
+
+/* Scroll list styles */
+.scroll-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Add more styles as needed */

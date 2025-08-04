@@ -4,6 +4,7 @@ import { fetch_followers, post_friend_requests, post_banana_count, post_banana_h
 import { useUser } from "../context/UserContextProvider";
 import { fetch_friend_requests, remove_friend_requests } from "../api/api";
 import useGetUserFollowers from "../hooks/useGetUserFollowers";
+import "../style/Components/Buttons.css";
 
 
 
@@ -121,7 +122,7 @@ export function SubmitBananasButton({addedCount, setAddedCount, caption, setSubm
             setTotalCount(totalCount);
             setSubmit(false);
         })
-        
+
         .catch(err => console.log(err));
         await postBananaNotification(username, addedCount, followers, caption)
     }       

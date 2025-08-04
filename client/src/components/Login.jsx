@@ -1,3 +1,4 @@
+import "../style/Components/Login.css";
 
 export default function Login({subPass, setSubPass, subUsername, setSubUsername}){
 

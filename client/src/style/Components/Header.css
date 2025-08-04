@@ -1,0 +1,73 @@
+/* ==========================================================================
+   1. Component-specific styles - Header
+   ========================================================================== */
+
+.header {
+    background: linear-gradient(to right, #fffde7, #fff8e1); /* Gradient background */
+    border-bottom: 2px solid #ffb300; /* Bottom border */
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 16px 16px 0;
+     /* Rounded bottom corners */
+}
+
+.header__logo {
+    display: flex;
+    align-items: center;
+}
+
+.header__title {
+    font-family: 'Banana-Font', 'Inter', 'Segoe UI', Arial, sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffb300;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.header__link {
+    text-decoration: none;
+}
+
+.header__right {
+    display: flex;
+    align-items: center;
+}
+
+.header__actions {
+    display: flex;
+    align-items: center;
+}
+
+.search__link,
+.friend-request-link {
+    display: inline-block;
+    margin-left: 1rem;
+    transition: transform 0.2s;
+}
+
+.search__link:hover,
+.friend-request-link:hover {
+    transform: scale(1.1);
+}
+
+.search-icon,
+.notification-img-icon,
+.friend-request-icon {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-left: 0.5rem;
+    transition: filter 0.2s, transform 0.2s;
+}
+
+@font-face {
+  font-family: 'Banana-Font';
+  src: url('/font/banaan-font/banana-font.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

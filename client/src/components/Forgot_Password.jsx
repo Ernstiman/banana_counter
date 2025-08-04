@@ -1,5 +1,6 @@
 import { postResetPasswordLink } from "../api/api"
 import { useState } from "react";
+import "../style/Components/ForgotPassword.css";
 
 export default function ForgotPassword({setForgotPassword}) {
     const [subEmail, setSubEmail] = useState("");
@@ -23,8 +24,8 @@ export default function ForgotPassword({setForgotPassword}) {
                 </form>
                 </>
             )}
-            
-            <button onClick={() => setForgotPassword(false)}>Exit</button>
+
+            <button className="exit-button" onClick={() => setForgotPassword(false)}>Exit</button>
             {sent && <p>Password reset link sent to {subEmail}</p>}
         </div>
         

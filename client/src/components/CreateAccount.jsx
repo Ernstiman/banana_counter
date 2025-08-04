@@ -1,3 +1,4 @@
+import "../style/Components/CreateAccount.css";
 
 export default function CreateAccount({subPass, setSubPass, subEmail, setSubEmail, subUsername, setSubUsername}){
 

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { SubtractBananaButton, AddBananaButton, SubmitBananasButton } from "./Buttons";
+import "../style/Components/SubmitBananas.css";
 
 export default function SubmitBananas({ setSubmit }) {
     const [addedCount, setAddedCount] = useState(0);

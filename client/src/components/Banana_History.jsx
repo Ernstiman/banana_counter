@@ -3,6 +3,7 @@ import useBananaHistory from "../hooks/useBananaHistory";
 import { useUser } from "../context/UserContextProvider";
 import useGetBananaHistory from "../hooks/useBananaHistory";
 import { NormalLoader } from "./Loaders";
+import "../style/Components/BananaHistory.css";
 
 function setTime(timestamp){
     return new Date(timestamp).toLocaleTimeString("en-US", {

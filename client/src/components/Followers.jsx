@@ -3,6 +3,7 @@ import { useUser } from "../context/UserContextProvider"
 import { UserNav } from "./Navs";
 import useGetUserFollowers from "../hooks/useGetUserFollowers";
 import { NormalLoader } from "./Loaders";
+import "../style/Components/Followers.css"; 
 
 
 export default function Followers() {

@@ -13,6 +13,7 @@ import useRegisterServiceWorker from "../hooks/useRegisterServiceWorker.jsx";
 import useAskNotificationPermission from "../hooks/useAskNotificationPermission.jsx";
 import SubmitBananas from "../components/SubmitBananas.jsx";
 import useGetUserFollowers from "../hooks/useGetUserFollowers.jsx";
+import "../style/Routes/HomePage.css"; // Assuming you have a CSS file for styles
 
 
 export default function HomePage() {
@@ -33,16 +34,14 @@ export default function HomePage() {
 
     return (
         <div className="app-container">
-            <div className="user-data-container">
-                <BananaCount />
-            </div>
+            <BananaCount />
             <BananaHistory users={following}>Banana Activity: </BananaHistory>  
+
             {!submit && (<span className="post-banan-activity" onClick={ () => setSubmit(true)}>Post Banana Activity</span>)}
             <div className="submit-bananas-container">
                 {submit && (<SubmitBananas setSubmit={setSubmit}/>)}
             </div>
 
-            
         </div>
     )
 }

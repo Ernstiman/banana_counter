@@ -1,0 +1,97 @@
+/* ==========================================================================
+   1. Component-specific styles - Submit Bananas
+   ========================================================================== */
+
+/* Overlay Styles */
+.submit-bananas-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it's on top of everything */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.submit-bananas-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Container Styles */
+.change-count-container {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+    padding: 2rem;
+    text-align: center;
+    width: 80%; /* Adjust width as needed */
+    max-width: 500px; /* Maximum width */
+}
+
+/* Banana Buttons Group */
+.banana-buttons-group {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+/* Added Bananas Text */
+.added-bananas-text h2 {
+    font-size: 1.2rem;
+    color: var(--secondary-color); /* Use variable */
+}
+
+/* Caption Container */
+.caption-container {
+    margin-bottom: 1rem;
+}
+
+.caption-container label {
+    font-size: 1rem;
+    color: var(--secondary-color); /* Use variable */
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.caption-container input {
+    width: 100%;
+    padding: 0.75em 1em;
+    border: 1px solid var(--light-gray); /* Use variable */
+    border-radius: 8px;
+    font-size: 1rem;
+    background: var(--lighter-gray); /* Use variable */
+    transition: border 0.2s;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.04);
+    box-sizing: border-box;
+}
+
+.caption-container input:focus {
+    border: 1.5px solid var(--primary-color); /* Use variable */
+    outline: none;
+    box-shadow: inset 0 1px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Close Button */
+.close-submit-button {
+    background: var(--secondary-color); /* Use variable */
+    color: #000000;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75em 1.5em;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.close-submit-button:hover {
+    background: var(--secondary-color-darker); /* Define a darker shade if needed */
+}

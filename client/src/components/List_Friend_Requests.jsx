@@ -2,6 +2,7 @@
 import { useUser } from "../context/UserContextProvider";
 import useGetFriendRequests from "../hooks/useGetFriendRequests";
 import FriendRequest from "./Friend_Request";
+import "../style/Components/ListFriendRequests.css"; 
 
 export default function ListFriendRequests() {
     const { username } = useUser();

@@ -1,0 +1,23 @@
+
+/* ==========================================================================
+   1. Component-specific styles - Friend Request
+   ========================================================================== */
+
+.friend-request-container {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.friend-request-container p {
+    font-size: 1rem;
+    color: var(--secondary-color); /* Use variable */
+    margin-bottom: 1rem;
+}
+
+.friend-request-container button {
+    margin: 0 0.5rem; /* Add spacing between buttons */
+}

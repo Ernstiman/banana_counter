@@ -1,0 +1,91 @@
+/* ==========================================================================
+   1. Component-specific styles - Login Page
+   ========================================================================== */
+
+.login-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #fffde7, #fff8e1); /* Soft gradient */
+}
+
+.login-form-container {
+    background: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 2rem;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-form-container h1 {
+    font-size: 2rem;
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.login-form-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.login-form-container label {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+    text-align: left;
+}
+
+.login-form-container input {
+    width: 100%;
+    padding: 0.8em 1.1em;
+    border: 1px solid var(--light-gray);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    background: var(--lighter-gray);
+    transition: border 0.2s, box-shadow 0.2s;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03);
+    margin-bottom: 1.2rem;
+    box-sizing: border-box;
+}
+
+.login-form-container input:focus {
+    border: 1.5px solid var(--primary-color);
+    outline: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.login-form-container button {
+    background: var(--primary-color);
+    color: #444;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 0.8em 1.6em;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+    box-shadow: var(--box-shadow);
+    margin-bottom: 1.2rem;
+}
+
+.login-form-container button:hover {
+    background: var(--primary-color-darker);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.login-form-container .link {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.login-form-container .link:hover {
+    color: var(--secondary-color-darker);
+}

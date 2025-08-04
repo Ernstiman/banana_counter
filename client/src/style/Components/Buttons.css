@@ -1,0 +1,114 @@
+/* ==========================================================================
+   1. Component-specific styles - Buttons
+   ========================================================================== */
+
+/* General button styles */
+button {
+    border: none;
+    border-radius: 8px;
+    padding: 0.75em 1.5em;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    text-align: center;
+    /* Add more general button styles here */
+}
+
+/* Accept Friend Request Button */
+.accept-friend-request-button {
+    background-color: #28a745; /* Green */
+    color: #fff;
+}
+
+.accept-friend-request-button:hover {
+    background-color: #218838;
+}
+
+/* Remove User Button */
+.remove-user-button {
+    background-color: #dc3545; /* Red */
+    color: #fff;
+}
+
+.remove-user-button:hover {
+    background-color: #c82333;
+}
+
+/* Log Out Button */
+.log-out-button {
+    background: linear-gradient(90deg, #ffe259 0%, #ffa751 100%); /* Blue */
+    color: #000000;
+}
+
+.log-out-button:hover {
+    background: linear-gradient(90deg, #ffd000 0%, #ff8c00 100%);
+}
+
+/* Decline Friend Request Button */
+.decline-friend-request-button {
+    background-color: #6c757d; /* Gray */
+    color: #fff;
+}
+
+.decline-friend-request-button:hover {
+    background-color: #5a6268;
+}
+
+/* Send Friend Request Button */
+.send-friend-request-button {
+    background-color: #17a2b8; /* Cyan */
+    color: #fff;
+}
+
+.send-friend-request-button:hover {
+    background-color: #138496;
+}
+
+/* Add Banana Count Button */
+.add-banana-count-button {
+    background: linear-gradient(90deg, #ffe259 0%, #ffa751 100%);
+    color: #222;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(255, 202, 40, 0.08);
+}
+
+.add-banana-count-button:hover {
+    background: linear-gradient(90deg, #ffd000 0%, #ff8c00 100%);
+}
+
+/* Subtract Banana Button */
+.subtract-banana-button {
+    background: linear-gradient(90deg, #ffe259 0%, #ffa751 100%);
+    color: #222;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(255, 202, 40, 0.08);
+}
+
+.subtract-banana-button:hover {
+    background: linear-gradient(90deg, #ffd000 0%, #ff8c00 100%);
+}
+
+/* Submit Bananas Button */
+.submit-banana-button {
+    background: linear-gradient(90deg, #ffe259 0%, #ffa751 100%);
+    color: #222;
+}
+
+.submit-banana-button:hover {
+    background: linear-gradient(90deg, #ffd000 0%, #ff8c00 100%);
+}

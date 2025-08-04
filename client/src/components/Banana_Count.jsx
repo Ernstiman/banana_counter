@@ -2,16 +2,12 @@ import { useEffect } from "react";
 import { useUser } from "../context/UserContextProvider";
 import useGetBananaCount from "../hooks/useGetBananaCount"
 import { useState } from "react";
+import "../style/Components/Banana_Count.css"
 
 export default function BananaCount(){
+    const {totalCount, count, username} = useUser();
 
-    const {loadingCount} = useGetBananaCount();
-
-    const {totalCount, count} = useUser()
-
-
-   
-
+    const {loadingCount} = useGetBananaCount({username});
     if(loadingCount) return <p>Loading Banana Count...</p>
     
     return (

@@ -1,0 +1,15 @@
+
+/* ==========================================================================
+   1. Component-specific styles - Notification Toggle
+   ========================================================================== */
+
+.notification-checkbox {
+    cursor: pointer;
+    display: inline-block; /* Allows setting width/height */
+}
+
+.notification-img-icon {
+    width: 24px; /* Adjust size as needed */
+    height: 24px;
+    vertical-align: middle; /* Align with surrounding text */
+}

@@ -1,0 +1,35 @@
+/* ==========================================================================
+   1. Component-specific styles - Home Page
+   ========================================================================== */
+
+.app-container {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.post-banan-activity {
+    display: block; /* Change from inline-block to block */
+    margin: 2rem auto; /* Set left and right margins to auto */
+    width: fit-content; /* Adjust width to content size */
+    padding: 0.75em 1.5em;
+    background: linear-gradient(90deg, #ffe259 0%, #ffa751 100%);
+    color: #222;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(255, 202, 40, 0.08);
+    transition: background 0.2s, transform 0.1s;
+    text-align: center; /* Center the text inside the span */
+}
+
+.post-banan-activity:hover {
+    background: var(--primary-color-darker);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.submit-bananas-container {
+    /* Add styles if needed */
+}

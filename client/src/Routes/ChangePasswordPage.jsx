@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { fetchPasswordReset, putNewPassword} from "../api/api";
 import { useParams } from "react-router-dom";
+import "../style/Routes/ChangePassword.css";
 
 export default function ChangePassWord(){
     const [newPassword, setNewPassword] = useState("");

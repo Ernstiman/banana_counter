@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import urlBase64ToUint8Array from "../../public/utils/urlBase64ToUnit8Array";
 import { postNotificationSubscription, removeNotificationSubscription, getPublicVapidKey } from "../api/api";
 import { useUser } from "../context/UserContextProvider";
+import "../style/Components/NotificationToggle.css";
 
 export default function NotificationToggle(){
 

@@ -1,0 +1,25 @@
+
+.banana-count-container {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    text-align: center; /* Center the content */
+}
+
+.banana-count-container h2 {
+    font-size: 1.5rem;
+    color: #444;
+    margin-bottom: 1rem;
+}
+
+.banana-count-container h2:last-child {
+    margin-bottom: 0; /* Remove margin from the last h2 */
+}
+
+.count {
+    font-size: 1.2rem;
+    color: #222;
+    font-weight: 600;
+}

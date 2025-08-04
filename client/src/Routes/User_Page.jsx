@@ -7,6 +7,9 @@ import BananaHistory from "../components/Banana_History";
 import useGetFriendRequests from "../hooks/useGetFriendRequests";
 import useGetUserFollowers from "../hooks/useGetUserFollowers";
 import { useMemo } from "react";
+import ProfilePageHead from "../components/ProfilePageHead";
+import "../style/Routes/UserPage.css"; // Assuming you have a CSS file for styles
+
 
 export default function UserPage(){
     const {userUsername} = useParams()
@@ -24,7 +27,6 @@ export default function UserPage(){
     
     useEffect(()=>{
         if(following){
-            console.log(following, "following in UserPage")
             setFollows(following.map(user => user.username).includes(userUsername))
         }
     }
@@ -35,15 +37,10 @@ export default function UserPage(){
                     setPendingFriendRequest(friendRequests.includes(username))
     }, [friendRequests])
 
-    useEffect(() => {
-         fetch_banana_count([userUsername]).then(({count}) => {
-            setCount(count)})
-    }, [userUsername])
 
     return (
         <div className="user-container">
-            <h1>{userUsername}</h1>
-            <h2>Banana count: {count}</h2>
+            <ProfilePageHead username={userUsername} />
 
             {follows ? 
             <RemoveUserButton targetUsername={userUsername}/>

@@ -1,3 +1,4 @@
+import "../style/Components/Loaders.css";
 
 export function BananaLoader(){
 

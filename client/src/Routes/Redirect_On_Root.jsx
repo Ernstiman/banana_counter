@@ -14,6 +14,7 @@ export default function RedirectOnRoot(){
 }, [username])
 
     if(!page) return null
+    
     return (
         <Navigate to={page}/>
     )

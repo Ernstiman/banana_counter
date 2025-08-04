@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useUser } from "../context/UserContextProvider";
+import "../style/Components/Navs.css";
 
 export function UserNav({targetUsername}){
 
@@ -18,7 +19,7 @@ export function CurrentUserNav(){
         <div className="current-user-container">
         <nav>
             <Link to={`/current-user`}>
-                <p>{username}</p>
+                <p className="current-user-name">{username}</p>
             </Link>
 
         </nav>
