@@ -22,8 +22,12 @@ export default function HomePage() {
     const {loadingUserFollowers} = useGetUserFollowers()
     useRegisterServiceWorker()
     useEffect(() => {
-        if(Notification.permission === "default"){
-            Notification.requestPermission();
+        try {
+            if(Notification.permission === "default"){
+                Notification.requestPermission();
+            }
+        } catch (error) {
+            console.error("Error requesting notification permission:", error);
         }
     }, [])
 
