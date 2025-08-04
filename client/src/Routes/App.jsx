@@ -10,9 +10,11 @@ import Search from './Search.jsx';
 import FriendRequestPage from './Friend_Request_Page.jsx';
 import ChangePassWord from './ChangePasswordPage.jsx';
 import CurrentUserPage from './CurrentUserPage.jsx';
+import InstallPwa from '../hooks/useInstallPwa.jsx';
 
 export default function App(){
   return (
+<InstallPwa>
 <Router>  
    <UserContextProvider>
       <Header/>
@@ -28,4 +30,5 @@ export default function App(){
       </Routes>
     </UserContextProvider>
     </Router>
+</InstallPwa>
 )}
