@@ -5,9 +5,14 @@ import { useState } from "react";
 import "../style/Components/Banana_Count.css"
 
 export default function BananaCount(){
-    const {totalCount, count, username} = useUser();
+    const {totalCount, count, username, setCount} = useUser();
 
-    const {loadingCount} = useGetBananaCount({username});
+    const {loadingCount, bananaCount} = useGetBananaCount({username});
+
+    useEffect(() => {
+        setCount(bananaCount);
+    }, [bananaCount])
+
     if(loadingCount) return <p>Loading Banana Count...</p>
     
     return (
