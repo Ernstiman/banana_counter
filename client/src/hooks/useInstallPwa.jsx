@@ -5,13 +5,20 @@ export default function InstallPwa({children}){
     const [defferedPrompt, setDefferedPrompt] = useState(null);
     const [showPrompt, setShowPrompt] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const [isInstalled, setIsInstalled] = useState(false);
     useEffect(() => {
 
     setIsMobile(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
 
+    if(window.matchMedia("(display-mode: standalone)").matches){
+        setIsInstalled(true);
+    }
+
     const handleBeforeInstallPrompt = (e) => {
+      console.log("Before install prompt event fired");
       e.preventDefault();
       setDefferedPrompt(e);
+
       setShowPrompt(true);
     }
 
@@ -23,12 +30,15 @@ export default function InstallPwa({children}){
   }, []);
 
     const handleInstall = async () => {
+      console.log(defferedPrompt)
         if(defferedPrompt){
             defferedPrompt.prompt();
-            setShowPrompt(false)        }
+            await defferedPrompt.userChoice;
+            console.log("Prompt shown");
+        }
     }
 
-    if(!isMobile) return children;
+    if(!isMobile || isInstalled) return children;
 
     return(
         <div className="install-banner">
