@@ -2,7 +2,7 @@ import { Children, useEffect, useState } from "react"
 
 export default function InstallPwa({children}){
 
-    const [defferedPrompt, setDefferedPrompt] = useState(null);
+    const [deferredPrompt, setDeferredPrompt] = useState(null);
     const [showPrompt, setShowPrompt] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const [isInstalled, setIsInstalled] = useState(false);
@@ -17,7 +17,7 @@ export default function InstallPwa({children}){
     const handleBeforeInstallPrompt = (e) => {
       console.log("Before install prompt event fired");
       e.preventDefault();
-      setDefferedPrompt(e);
+      setDeferredPrompt(e);
 
       setShowPrompt(true);
     }
@@ -30,15 +30,23 @@ export default function InstallPwa({children}){
   }, []);
 
     const handleInstall = async () => {
-      console.log(defferedPrompt)
-        if(defferedPrompt){
-            defferedPrompt.prompt();
-            await defferedPrompt.userChoice;
+      console.log(deferredPrompt)
+        if(deferredPrompt){
+            deferredPrompt.prompt();
+            await deferredPrompt.userChoice;
             console.log("Prompt shown");
         }
     }
 
     if(!isMobile || isInstalled) return children;
+
+    if(isMobile && deferredPrompt === null) {
+        return (
+            <div className="install-banner">
+                <p>To use banana counter on your phone you need to use your app!</p>
+            </div>
+        )
+    }
 
     return(
         <div className="install-banner">
