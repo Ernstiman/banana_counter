@@ -4,9 +4,11 @@ export default function InstallPwa({children}){
 
     const [defferedPrompt, setDefferedPrompt] = useState(null);
     const [showPrompt, setShowPrompt] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
     useEffect(() => {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    if(!isMobile) return;
+
+    setIsMobile(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
+
     const handleBeforeInstallPrompt = (e) => {
       e.preventDefault();
       setDefferedPrompt(e);
@@ -26,13 +28,12 @@ export default function InstallPwa({children}){
             setShowPrompt(false)        }
     }
 
-    if(!showPrompt) return children;
+    if(!isMobile) return children;
 
     return(
         <div className="install-banner">
             <p>Please install our app for a better experience!</p>
             <button onClick={handleInstall}>Install</button>
-            <button onClick={() => setShowPrompt(false)}>Dismiss</button>
         </div>
     )
 
