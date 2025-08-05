@@ -15,12 +15,9 @@ services:
       - "4747:4747"
     depends_on:
       - mysql
-    environment:
-      - DB_HOST=localhost
-      - DB_PORT=3306
-      - DB_USER=viktor
-      - DB_PASSWORD=MY_sql_pass!123
-      - DB_NAME=my_data
+    
+    env_file:
+      - ./server/.env.dev
 
   mysql:
     image: mysql:8.0
