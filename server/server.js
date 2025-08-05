@@ -65,6 +65,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: ["https://banana-counter.vercel.app",
+      "http://server:5173",
       "http://localhost:5173",
     ],
     credentials: true,
