@@ -57,10 +57,10 @@ async function main() {
 }
 
 const sessionStore = new MySQLStore({
-  host: process.env.MYSQLHOST || "localhost",
-  user: process.env.MYSQLUSER || "viktor",
-  password: process.env.MYSQLPASSWORD || process.env.MYSQL_PASS,
-  database: process.env.MYSQL_DATABASE || "my_data",
+  host: process.env.MYSQLHOST || process.env.DB_HOST,
+  user: process.env.MYSQLUSER || process.env.DB_USER,
+  password: process.env.MYSQLPASSWORD || process.env.DB_PASSWORD,
+  database: process.env.MYSQL_DATABASE || process.env.DB_NAME,
 })
 
 app.use(express.json());

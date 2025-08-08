@@ -2,30 +2,29 @@
    1. Component-specific styles - Header
    ========================================================================== */
 
+
+
 .header {
     background: linear-gradient(to right, #fffde7, #fff8e1); /* Gradient background */
     border-bottom: 2px solid #ffb300; /* Bottom border */
-    padding: 1.5rem 2rem;
+    padding: 1rem;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    gap: 1rem;
+    align-items: flex-end;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-radius: 0 0 16px 16px 0;
      /* Rounded bottom corners */
 }
 
-.header__logo {
-    display: flex;
-    align-items: center;
-}
+
 
 .header__title {
     font-family: 'Banana-Font', 'Inter', 'Segoe UI', Arial, sans-serif;
+    text-align: left;
     font-size: 2rem;
     font-weight: 700;
     color: #ffb300;
     letter-spacing: 1px;
-    margin: 0;
 }
 
 .header__link {
@@ -35,11 +34,23 @@
 .header__right {
     display: flex;
     align-items: center;
+    
 }
 
 .header__actions {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
+}
+
+.header-top {
+    flex-wrap: wrap;
+    width: 100%;
+    flex-direction: row;
+}
+
+.header__user-nav {
+    display: flex;
+    align-items: flex-end;
 }
 
 .search__link,
@@ -70,4 +81,54 @@
   src: url('/font/banaan-font/banana-font.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+}
+
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .header__user-nav {
+    display: flex;
+    align-items: flex-end
+  }
+  .header-top {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .header__title {
+    font-size: 1.5rem;
+    text-align: left;
+  }
+
+
+  .header__actions {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .search-icon,
+  .notification-img-icon,
+  .friend-request-icon {
+    width: 36px;
+    height: 36px;
+    margin-left: 0;
+  }
+
+  .search__link,
+  .friend-request-link {
+    margin-left: 0;
+  }
 }

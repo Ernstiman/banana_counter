@@ -9,15 +9,18 @@ export default function Header(){
     const {username} = useUser()
     return (
         <header className="header">
-            <div className="header__logo">
-                <Link to="/home-page" className="header__link">
-                    <h1 className="header__title">🍌 Banana Chat</h1>
-                </Link>
+            <div className="header-top">
+                <div className="header__logo">
+                    <Link to="/home-page" className="header__link">
+                        <h1 className="header__title">🍌 Banana Chat</h1>
+                    </Link>
+                </div>
+                <div className="header__user-nav">
+                    <CurrentUserNav/>
+                </div>
             </div>
-            {username && (<div className="header__right">
-                <CurrentUserNav/>
+
                 <div className="header__actions">
-                    
                     <Link to="/search" className="search__link">
                        <img src="/img/search-icon.png" alt="search" className="search-icon"/>
                     </Link>
@@ -27,7 +30,6 @@ export default function Header(){
                     <NotificationToggle/>
                     <LogOut/>
                 </div>
-            </div>)}
         </header>
     );
 }
