@@ -46,6 +46,7 @@
 .banana-history-caption {
     color: #666;
     margin-bottom: 0.5rem;
+    max-width: 300px;
 }
 
 .banana-history-date {
