@@ -7,13 +7,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
+    min-height: 100vh;
 }
 
 .banana-loader-image {
-    width: 50px; /* Adjust size as needed */
-    height: auto;
-    animation: rotate 2s linear infinite; /* Add a rotation animation */
+    width: 100px; /* Adjust size as needed */
+    height: 100px;
+    animation: rotate 1s linear infinite; /* Add a rotation animation */
 }
 
 /* Normal Loader (Spinner) */

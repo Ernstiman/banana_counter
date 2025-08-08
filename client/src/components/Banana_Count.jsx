@@ -3,6 +3,7 @@ import { useUser } from "../context/UserContextProvider";
 import useGetBananaCount from "../hooks/useGetBananaCount"
 import { useState } from "react";
 import "../style/Components/Banana_Count.css"
+import { NormalLoader } from "./Loaders";
 
 export default function BananaCount(){
     const {totalCount, count, username, setCount} = useUser();
@@ -13,8 +14,12 @@ export default function BananaCount(){
         setCount(bananaCount);
     }, [bananaCount])
 
-    if(loadingCount) return <p>Loading Banana Count...</p>
-    
+    if(loadingCount) return( 
+    <div className="banana-count-container">
+    <NormalLoader />
+    </div>
+    )
+
     return (
         <div className="banana-count-container">
         <h2 className="count">The total banana count is: {totalCount}</h2>

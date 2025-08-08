@@ -31,6 +31,7 @@ export default function NotificationToggle(){
 
             if(Notification.permission !== "granted"){
                await Notification.requestPermission();
+               console.log("requesting permission");
                 if(Notification.permission !== "granted"){
                     console.log("user has disabled notifications")
                     return 
@@ -51,9 +52,9 @@ export default function NotificationToggle(){
     return (
         <span className="notification-checkbox" onClick={click}>{
             notifications ?
-            <img src="/img/notification-on.png" alt="notification-on" className="notification-img-icon" />
+            <img src="/img/notification-on.png" loading="lazy" alt="notification-on" className="notification-img-icon" />
             :
-            <img src="/img/notification-off.png" alt="notification-off" className="notification-img-icon " />
+            <img src="/img/notification-off.png" loading="lazy" alt="notification-off" className="notification-img-icon " />
         }</span>
     )
 
