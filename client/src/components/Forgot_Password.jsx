@@ -18,7 +18,7 @@ export default function ForgotPassword({setForgotPassword}) {
                 <>
                 <p>Do you want to reset your password?</p>
                 <form onSubmit={e => click(e)}>
-                    <input type="email" value={subEmail} onChange={(e) => setSubEmail(e.target.value)} />
+                    <input type="email" placeholder="Enter your email"value={subEmail} onChange={(e) => setSubEmail(e.target.value)} />
                     <button type="submit">Send Reset Link</button>
                     
                 </form>
