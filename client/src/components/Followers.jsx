@@ -4,7 +4,7 @@ import { UserNav } from "./Navs";
 import useGetUserFollowers from "../hooks/useGetUserFollowers";
 import { NormalLoader } from "./Loaders";
 import "../style/Components/Followers.css"; 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 
 export default function Followers() {
