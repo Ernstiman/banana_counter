@@ -1,7 +1,7 @@
 const URL = require("url");
 const { client } = require("./redisInit");
 
-const exTime = 10;
+const exTime = 3600;
 
 async function insert_login(username, password, email) {
     await pool.query(
