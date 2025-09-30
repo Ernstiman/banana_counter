@@ -32,11 +32,11 @@ exports.getFollowers = async (req, res) => {
 
     try {
         const {followers} = await get_followers(userId);
-        const userData = await getUserData(followers);
+        const userData = await getUserData(followers, req.session.username);
 
         res.json({ userData });
     } catch (err) {
-        error(err, res);
+        console.log(err);
     }
 }
 
@@ -45,7 +45,7 @@ exports.getFollowing = async (req, res) => {
 
     try {
         const {following} = await get_following(userId);
-        const userData = await getUserData(following);
+        const userData = await getUserData(following, req.session.username);
         res.json({ userData });
     } catch (err) {
         error(err, res);

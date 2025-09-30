@@ -1,5 +1,7 @@
 require("dotenv").config({path: "./.env.dev"});
 
+const {client} = require("./redisInit");
+
 const {
   pool
 } = require("./db.js");
@@ -9,7 +11,6 @@ var express = require("express");
 var path = require("path");
 var fs = require("fs");
 var cors = require("cors");
-
 
 
 const authRoutes = require("./routes/auth.js");
@@ -40,7 +41,10 @@ friend_requests_init = fs.readFileSync(FRIEND_REQUESTS_SQL_PATH, "utf-8");
 password_resets_init = fs.readFileSync(PASSWORD_RESETS_SQL_PATH, "utf-8");
 notification_subscriptions_init = fs.readFileSync(NOTIFICATION_SUBSCRIPTIONS_SQL_PATH, "utf-8");
 
+
+
 async function main() {
+  // Connect the sql queries
   await pool.query(banana_data_init);
 
   await pool.query(followers_init);
@@ -53,6 +57,8 @@ async function main() {
 
   await pool.query(notification_subscriptions_init);
 
+  //Connect the redis client
+  await client.connect();
   server.listen(PORT);
 }
 
@@ -102,4 +108,4 @@ app.use("/api/push-notifications", pushNotificationRoutes)
 
 main();
 
-module.exports = { pool };
+module.exports = {client};

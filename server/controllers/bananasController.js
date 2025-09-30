@@ -7,7 +7,7 @@ exports.getBananaCount = async (req, res) => {
     const {users} = req.body
 
     try{
-        let userData = await getUserData(users);
+        let userData = await getUserData(users, req.session.username);
         let totalCount = await getTotalCount();
         return res.json({
             count: userData[0].count ? userData[0].count : 0,

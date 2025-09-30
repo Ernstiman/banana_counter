@@ -34,32 +34,40 @@ exports.sendBananaNotification = async (req, res) => {
     let message = `${username} just ate ${amount} ${bananaTense}!
     ${caption ? `\n\n${caption}` : ""}`
     try{
-    for (let follower of followers){
-        let sub_array = await selectSubscriptions(follower);
-        for (let sub of sub_array){
-        if(sub){
-            try{
-            webPush.sendNotification(sub, JSON.stringify({
-                title: "Banana Alert! ",
-                body: message,
-                url: `https://banana-counter.vercel.app/user/${username}`
-            }))
-        }
-
-        catch(err){
-            if(err.statusCode === 410){
-                await deleteNotificationSubscription(sub.endpoint);
+        // Go through all the followers
+        for (let follower of followers){
+            let sub_array = await selectSubscriptions(follower);
+            //Go through all the subscription tokens for that follower
+            for (let sub of sub_array){
+                //Check if the subscription token is valid
+                if(sub){
+                    try{
+                        await webPush.sendNotification(sub, JSON.stringify({
+                        title: "Banana Alert! ",
+                        body: message,
+                        url: `https://banana-counter.vercel.app/user/${username}`
+                        }))
+                    }
+                    //Delete invalid subscription tokens
+                    catch(err){
+                        if(err.statusCode === 410){
+                            await deleteNotificationSubscription(sub.endpoint);
+                        }
+                        else{
+                            console.log("Push notification error:", err);
+                        }
+                        // res.json({success: false, message: "Notifications sending failed! "});
+                    }
+                }
             }
         }
-    }
-    }
-}
 
     res.json({success: true, message: "Notifications has been sent!"})
-}
+    }
     catch(err){
-        error(err, res)
-}
+        console.log("Notification error: ", err);
+        res.json({success: false, message: "Notification expired! "});
+    }
 }
 
 exports.sendFriendRequestNotification = async (req, res) => {
@@ -69,18 +77,28 @@ exports.sendFriendRequestNotification = async (req, res) => {
     try{
         let sub_array = await selectSubscriptions(targetUsername);
         for (let sub of sub_array){
-            webPush.sendNotification(sub, JSON.stringify({
-                title: "Banana Alert! ",
-                body: message,
-                url: "https://banana-counter.vercel.app/friend-requests"
+            if(sub){
+                try{
+                    await webPush.sendNotification(sub, JSON.stringify({
+                        title: "Banana Alert! ",
+                        body: message,
+                        url: "https://banana-counter.vercel.app/friend-requests"
 
-            }))
+                    }))
+                }
+                catch(err){
+                    if(err.statusCode === 410){
+                        await deleteNotificationSubscription(sub.endpoint);
+                    }
+                }
+            }
         }
 
         res.json({success: true, message: "Notifications has been sent! "})
     }
     catch(err){
-        error(err, res);
+        console.log("Friend-Request-Notification error: ", err);
+        res.json({success: false, message: "Notification expired! "});
     }
 
 }

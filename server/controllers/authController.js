@@ -11,6 +11,7 @@ exports.postLogin = async (req, res) => {
     }
     
     try {
+        // Check if login was succesfull
         if(await check_login(username, password)){
         
         req.session.username = username;
