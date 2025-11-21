@@ -10,7 +10,7 @@
 
 .login-label {
     font-size: 1rem;
-    color: var(--secondary-color); /* Use variable */
+    color: var(--main-color); /* Use variable */
     margin-bottom: 0.5rem;
     font-weight: 600;
 }
@@ -19,10 +19,10 @@
 .email-input {
     width: 100%;
     padding: 0.75em 1em;
-    border: 1px solid var(--light-gray); /* Use variable */
+    border: 1px solid var(--gray); /* Use variable */
     border-radius: 8px;
     font-size: 1rem;
-    background: var(--lighter-gray); /* Use variable */
+    background: var(--gray); /* Use variable */
     transition: border 0.2s;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.04);
     margin-bottom: 1rem; /* Add space between inputs */
@@ -31,7 +31,7 @@
 
 .login-input:focus,
 .email-input:focus {
-    border: 1.5px solid var(--primary-color); /* Use variable */
+    border: 1.5px solid var(--main-color); /* Use variable */
     outline: none;
     box-shadow: inset 0 1px 6px rgba(0, 0, 0, 0.08);
 }

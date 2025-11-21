@@ -1,17 +1,17 @@
 
 .banana-history-container {
-    background: #fff;
+    background: var(--bg);
     border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    box-shadow: var(--shadow);
     padding: 2rem;
     margin-bottom: 2rem;
 }
 
 .banana-history-container h1 {
     font-size: 1.5rem;
-    color: #ffb300;
+    color: var(cold-yellow);
     margin-bottom: 1.5rem;
-    border-bottom: 2px solid #eee;
+    border-bottom: 2px solid var(--darker-white);
     padding-bottom: 0.5rem;
 }
 
@@ -23,7 +23,7 @@
 
 .banana-history-item {
     padding: 1rem;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid  var(--darker-white);
     display: flex;
     flex-direction: column;
 }
@@ -44,19 +44,19 @@
 }
 
 .banana-history-caption {
-    color: #666;
+    color: var(--caption-text-color);
     margin-bottom: 0.5rem;
     max-width: 300px;
 }
 
 .banana-history-date {
     font-size: 0.8rem;
-    color: #888;
+    color: (--date-text-color);
 }
 
 .banana-history-item.no-history {
     text-align: center;
-    color: #888;
+    color: (--date-text-color);
 }
 
 /* Scroll list styles */

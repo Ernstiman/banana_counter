@@ -7,7 +7,7 @@
 }
 
 .followed-container, .followers-container {
-    background: #fff;
+    background: var(--bg);
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     padding: 1.5rem 1rem;
@@ -32,20 +32,19 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #f9fafb;
+    background: var(--darker-white);
     border-radius: 8px;
     padding: 0.5rem 1rem;
     margin-bottom: 0.5rem;
     font-size: 1rem;
-    transition: background 0.2s;
 }
 
 .follow-list-item:hover {
-    background: #ffe59e;
+    background: var(--cold-yellow);
 }
 
 .follow-count {
     font-weight: 600;
-    color: #ffb300;
+    color: var(--cold-yellow);
     margin-left: 1rem;
 }

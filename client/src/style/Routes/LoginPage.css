@@ -11,9 +11,8 @@
 }
 
 .login-form-container {
-    background: #fff;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
+    background: var(--bg);
+    box-shadow: var(--shadow);
     padding: 2rem;
     width: 90%;
     max-width: 400px;
@@ -44,10 +43,9 @@
 .login-form-container input {
     width: 100%;
     padding: 0.8em 1.1em;
-    border: 1px solid var(--light-gray);
-    border-radius: var(--border-radius);
+    border: 1px solid var(--gray);
     font-size: 1rem;
-    background: var(--lighter-gray);
+    background: var(--gray);
     transition: border 0.2s, box-shadow 0.2s;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03);
     margin-bottom: 1.2rem;
@@ -55,13 +53,13 @@
 }
 
 .login-form-container input:focus {
-    border: 1.5px solid var(--primary-color);
+    border: 1.5px solid var(--main-color);
     outline: none;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .login-form-container button {
-    background: var(--primary-color);
+    background: var(--main-color);
     color: #444;
     border: none;
     border-radius: var(--border-radius);
@@ -69,13 +67,13 @@
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
-    box-shadow: var(--box-shadow);
+    transition:transform 0.1s, box-shadow 0.2s;
+    box-shadow: var(--shadow);
     margin-bottom: 1.2rem;
 }
 
 .login-form-container button:hover {
-    background: var(--primary-color-darker);
+    background: var(--darker-white);
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
 }
@@ -87,5 +85,5 @@
 }
 
 .login-form-container .link:hover {
-    color: var(--secondary-color-darker);
+    color: var(--darker-white);
 }

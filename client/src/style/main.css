@@ -1,0 +1,24 @@
+
+:root{
+    --bg: white;
+    --secondary-color: #f7fafc;
+    --text: black;
+    --caption-text-color: #666;
+    --date-text-color: #888;
+    --grey: gray;
+    --main-color: linear-gradient(90deg, #ffe259 0%, #ffa751 100%);
+    --cold-yellow: #ffb300;
+    --shadow: 0 2px 8px rgb(0 0 0 / 13%);
+    --darker-white: #eee;
+    background-color: var(--secondary-color);
+}
+
+:root[data-theme="dark"]{
+    background-color: black;
+    --bg: #ffe259
+}
+
+h2,h3,h4,h5,h6{
+    color: var(--text);
+}
+

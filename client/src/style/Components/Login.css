@@ -3,11 +3,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f7fafc;
 }
 
 .login-form {
-    background: #fff;
+    background: var(--bg);
     border-radius: 16px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.07);
     padding: 2.5rem 2rem;
@@ -20,7 +19,7 @@
 
 .login-title {
     font-size: 2rem;
-    color: #ffb300;
+    color: var(--cold-yellow);
     font-weight: 700;
     margin-bottom: 1.5rem;
 }
@@ -43,14 +42,14 @@
     width: 100%;
     padding: 0.5em 1em;
     border-radius: 8px;
-    border: 1px solid #eee;
+    border: 1px solid var(--darker-white);
     font-size: 1rem;
-    background: #f7fafc;
+    background: var(--secondary-color);
     transition: border 0.2s;
 }
 
 .login-input:focus {
-    border: 1.5px solid #ffb300;
+    border: 1.5px solid var(--cold-yellow);
     outline: none;
 }
 
@@ -69,7 +68,7 @@
 
 .login-button {
     width: 100%;
-    background: linear-gradient(90deg, #ffe259 0%, #ffa751 100%);
+    background: var(--main-color);
     color: #222;
     border: none;
     border-radius: 8px;
@@ -78,7 +77,7 @@
     font-weight: 600;
     cursor: pointer;
     box-shadow: 0 2px 8px rgba(255, 202, 40, 0.08);
-    transition: background 0.2s, transform 0.1s;
+    transition: transform 0.1s;
 }
 
 .login-button:hover {

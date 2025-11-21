@@ -20,6 +20,7 @@ const friendRequestsRoutes = require("./routes/friendRequests.js");
 const bananaHistoryRoutes = require("./routes/bananaHistory.js");
 const usersRoutes = require("./routes/users.js");
 const pushNotificationRoutes = require("./routes/pushNotifications.js")
+const settingsRoutes = require("./routes/settings.js");
 const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
 
@@ -31,6 +32,7 @@ const BANANA_HISTORY_SQL_PATH = path.join(__dirname, "./sql/Banana_history.sql")
 const FRIEND_REQUESTS_SQL_PATH = path.join(__dirname, "./sql/Friend_requests.sql")
 const PASSWORD_RESETS_SQL_PATH = path.join(__dirname, "./sql/Password_resets.sql");
 const NOTIFICATION_SUBSCRIPTIONS_SQL_PATH = path.join(__dirname, "./sql/Notification_subscriptions.sql");
+const SETTINGS_SQL_PATH = path.join(__dirname, "./sql/Settings.sql");
 const PORT = 4747;
 
 var server = http.createServer(app);
@@ -40,8 +42,7 @@ banana_history_init = fs.readFileSync(BANANA_HISTORY_SQL_PATH, "utf-8");
 friend_requests_init = fs.readFileSync(FRIEND_REQUESTS_SQL_PATH, "utf-8");
 password_resets_init = fs.readFileSync(PASSWORD_RESETS_SQL_PATH, "utf-8");
 notification_subscriptions_init = fs.readFileSync(NOTIFICATION_SUBSCRIPTIONS_SQL_PATH, "utf-8");
-
-
+settings_init = fs.readFileSync(SETTINGS_SQL_PATH, 'utf-8');
 
 async function main() {
   // Connect the sql queries
@@ -56,6 +57,8 @@ async function main() {
   await pool.query(password_resets_init);
 
   await pool.query(notification_subscriptions_init);
+
+  await pool.query(settings_init);
 
   //Connect the redis client
   await client.connect();
@@ -104,7 +107,8 @@ app.use("/api/followers", followersRoutes);
 app.use("/api/friend-requests", friendRequestsRoutes);
 app.use("/api/banana-history", bananaHistoryRoutes);
 app.use("/api/users", usersRoutes); 
-app.use("/api/push-notifications", pushNotificationRoutes)
+app.use("/api/push-notifications", pushNotificationRoutes);
+app.use("/api/settings", settingsRoutes);
 
 main();
 

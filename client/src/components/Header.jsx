@@ -4,6 +4,7 @@ import { LogOut } from "./Buttons"
 import { CurrentUserNav } from "./Navs"
 import NotificationToggle from "./NotificationToggle"
 import "../style/Components/Header.css"
+import Settings from "./Settings"
 
 export default function Header(){
     const {username} = useUser()
@@ -28,6 +29,7 @@ export default function Header(){
                         <img src="/img/friend-request-icon.png" alt="friend-request" className="friend-request-icon" />
                     </Link>
                     <NotificationToggle/>
+                    <Settings/>
                     <LogOut/>
                 </div>
         </header>

@@ -11,6 +11,7 @@ import FriendRequestPage from './Friend_Request_Page.jsx';
 import ChangePassWord from './ChangePasswordPage.jsx';
 import CurrentUserPage from './CurrentUserPage.jsx';
 import InstallPwa from '../hooks/useInstallPwa.jsx';
+import '../style/main.css';
 
 export default function App(){
   return (
