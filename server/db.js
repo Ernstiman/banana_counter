@@ -261,6 +261,14 @@ async function deleteNotificationSubscription(endPoint) {
   );
 }
 
+async function getSettings(username){
+
+}
+
+async function postSettings(settings, username){
+
+}
+
 const mysql = require("mysql2/promise");
 
 
@@ -298,6 +306,8 @@ module.exports = {
   deletePasswordReset,
   insertNotificationSubscription,
   selectSubscriptions,
-  deleteNotificationSubscription
+  deleteNotificationSubscription,
+  getSettings,
+  postSettings
 };
 
