@@ -14,6 +14,7 @@ import useAskNotificationPermission from "../hooks/useAskNotificationPermission.
 import SubmitBananas from "../components/SubmitBananas.jsx";
 import useGetUserFollowers from "../hooks/useGetUserFollowers.jsx";
 import "../style/Routes/HomePage.css"; // Assuming you have a CSS file for styles
+import useApplySettings from "../hooks/useApplySettings.jsx";
 
 
 export default function HomePage() {
@@ -22,6 +23,7 @@ export default function HomePage() {
 
     const {loadingUserFollowers} = useGetUserFollowers()
     useRegisterServiceWorker()
+    useApplySettings();
     useEffect(() => {
         try {
             if(Notification.permission === "default"){

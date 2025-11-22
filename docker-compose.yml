@@ -35,6 +35,7 @@ services:
       retries: 10
       interval: 5s
       start_period: 30s
+
   redis:
     image: redis:7
     ports: 

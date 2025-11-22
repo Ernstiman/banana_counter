@@ -263,10 +263,39 @@ async function deleteNotificationSubscription(endPoint) {
 
 async function getSettings(username){
 
+    const cacheKey = `settings:${username}`;
+    const cacheData = await client.get(cacheKey);
+
+    if(cacheData){
+      return JSON.parse(cacheData);
+    }
+
+    let [result] = await pool.query(
+      "SELECT * FROM Settings WHERE username = ?",
+      [username]
+    )
+
+    if(result[0]){
+      await client.set(cacheKey, JSON.stringify(result[0]), {EX: exTime});
+    }
+
+    result[0].darkMode = result[0].darkMode ? true : false;
+
+    return result[0];
 }
 
 async function postSettings(settings, username){
+  const cacheKey = `settings:${username}`;
+  await pool.query(
+    "REPLACE INTO Settings (username, darkMode) VALUES (?, ?)",
+  [username, settings.darkMode]);
+  client.del(cacheKey);
+}
 
+async function clearSettings(){
+  await pool.query(
+    "DELETE FROM Settings"
+  );
 }
 
 const mysql = require("mysql2/promise");
@@ -308,6 +337,7 @@ module.exports = {
   selectSubscriptions,
   deleteNotificationSubscription,
   getSettings,
-  postSettings
+  postSettings,
+  clearSettings
 };
 

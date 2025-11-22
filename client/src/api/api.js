@@ -222,3 +222,21 @@ export async function postFriendRequestNotification(targetUsername) {
         body: JSON.stringify({ targetUsername }),
     });
 }
+
+export async function postSettings(username, settings){
+  console.log(settings, "api");
+  const res = await fetch('api/settings/post', {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({settings, username})
+  })
+}
+
+export async function getSettings(username){
+  const res = await fetch('/api/settings/get')
+  const settings = res.json();
+  return settings;
+
+}
