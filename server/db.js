@@ -162,7 +162,7 @@ async function select_banana_history(users) {
   const VALUES = users.map(() => "?").join(",");
   if (users.length > 0) {
     const [result] = await pool.query(
-      `SELECT timestamp, amount, username, caption FROM Banana_history WHERE username IN (${VALUES}) ORDER BY timestamp DESC;`,
+      `SELECT timestamp, amount, username, caption FROM Banana_history WHERE username IN (${VALUES}) ORDER BY timestamp DESC LIMIT 10;`,
       users
     );
     await client.set(cacheKey, JSON.stringify(result), {EX: exTime});

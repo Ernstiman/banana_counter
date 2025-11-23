@@ -4,6 +4,7 @@ import { useUser } from "../context/UserContextProvider";
 import useGetBananaHistory from "../hooks/useBananaHistory";
 import { NormalLoader } from "./Loaders";
 import "../style/Components/BananaHistory.css";
+import { useInView } from "react-intersection-observer";
 
 function setTime(timestamp){
     return new Date(timestamp).toLocaleTimeString("en-US", {
@@ -25,6 +26,11 @@ function setDate(timestamp){
 
 export default function BananaHistory({users, children}) {
     const { bananaHistory, loadingBananaHistory } = useGetBananaHistory(users);
+    const {ref, inView, entry} = useInView();
+
+    useEffect(() => {
+        console.log("Loader in view " + inView)
+    }, [inView]);
 
     if (loadingBananaHistory) return (
     <div className="banana-history-container">
@@ -48,10 +54,14 @@ export default function BananaHistory({users, children}) {
                             
 
                         </li>
+                        
                     ))
                 ) : (
                     <li className="banana-history-item no-history">No banana history found.</li>
                 )}
+                <div ref = {ref}>
+                    <NormalLoader/>
+                </div>
             </ul>
         </div>
     );
