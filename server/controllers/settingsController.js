@@ -21,7 +21,6 @@ exports.post = async(req, res) => {
     const {settings, username} = req.body;
 
     try{
-        await clearSettings();
         await postSettings(settings, username);
         res.json({message: "Settings posted successfully"});
     }

@@ -277,11 +277,11 @@ async function getSettings(username){
 
     if(result[0]){
       await client.set(cacheKey, JSON.stringify(result[0]), {EX: exTime});
+       result[0].darkMode = result[0].darkMode ? true : false;
+       return result[0];
     }
 
-    result[0].darkMode = result[0].darkMode ? true : false;
-
-    return result[0];
+    return {darkMode: false};
 }
 
 async function postSettings(settings, username){
@@ -289,7 +289,7 @@ async function postSettings(settings, username){
   await pool.query(
     "REPLACE INTO Settings (username, darkMode) VALUES (?, ?)",
   [username, settings.darkMode]);
-  client.del(cacheKey);
+  await client.del(cacheKey);
 }
 
 async function clearSettings(){
