@@ -156,19 +156,20 @@ async function select_banana_history(users, offset) {
   else{
     cacheKey = `banana_history:${users[0]}`;
   }
+  const offsetCacheKey = `offset:${users[0]}`
   const cacheData = await client.get(cacheKey);
-  const prevOffset = await client.get("offset");
-  if(cacheData && JSON.parse(offset) == prevOffset){
-    return JSON.parse(cacheData);
-  }
+  const prevOffset = await client.get(offsetCacheKey);
+  // if(cacheData && offset <= JSON.parse(prevOffset)){
+  //   return JSON.parse(cacheData);
+  // }
   const VALUES = users.map(() => "?").join(",");
   if (users.length > 0) {
     const [result] = await pool.query(
-      `SELECT timestamp, amount, username, caption FROM Banana_history WHERE username IN (${VALUES}) ORDER BY timestamp DESC LIMIT ${LIMIT};`,
+      `SELECT timestamp, amount, username, caption FROM Banana_history WHERE username IN (${VALUES}) ORDER BY timestamp DESC LIMIT ${LIMIT} OFFSET ${offset};`,
       users
     );
     await client.set(cacheKey, JSON.stringify(result), {EX: exTime});
-    await client.set("offset", JSON.stringify(offset));
+    await client.set(offsetCacheKey, JSON.stringify(offset));
     return result;
   }
   return;
