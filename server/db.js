@@ -147,7 +147,8 @@ async function insert_banana_history(amount, username, caption) {
     await client.del(`banana_history:${username}`);
   }
 
-async function select_banana_history(users) {
+async function select_banana_history(users, offset) {
+  const LIMIT = 10;
   let cacheKey;
   if(users && users.length > 1){
     cacheKey = `banana_history`;
@@ -156,16 +157,18 @@ async function select_banana_history(users) {
     cacheKey = `banana_history:${users[0]}`;
   }
   const cacheData = await client.get(cacheKey);
-  if(cacheData){
+  const prevOffset = await client.get("offset");
+  if(cacheData && JSON.parse(offset) == prevOffset){
     return JSON.parse(cacheData);
   }
   const VALUES = users.map(() => "?").join(",");
   if (users.length > 0) {
     const [result] = await pool.query(
-      `SELECT timestamp, amount, username, caption FROM Banana_history WHERE username IN (${VALUES}) ORDER BY timestamp DESC LIMIT 10;`,
+      `SELECT timestamp, amount, username, caption FROM Banana_history WHERE username IN (${VALUES}) ORDER BY timestamp DESC LIMIT ${LIMIT};`,
       users
     );
     await client.set(cacheKey, JSON.stringify(result), {EX: exTime});
+    await client.set("offset", JSON.stringify(offset));
     return result;
   }
   return;

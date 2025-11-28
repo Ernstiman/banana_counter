@@ -19,9 +19,10 @@ exports.postBananaHistory = async (req, res) => {
 
 exports.getBananaHistory = async (req, res) => {
     const users = req.body.users;
+    const offset = req.body.offset;
     
     try {
-        let banana_history = await select_banana_history(users, req.session.username);
+        let banana_history = await select_banana_history(users, offset);
         res.json({ banana_history });
     } catch (err) {
         error(err, res);

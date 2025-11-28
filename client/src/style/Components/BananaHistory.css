@@ -65,4 +65,8 @@
     overflow-y: auto;
 }
 
+.loader-container{
+    display: flex;
+    justify-content: center;
+}
 /* Add more styles as needed */

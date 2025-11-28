@@ -71,12 +71,12 @@ export async function post_banana_history(amount, caption) {
   });
 }
 
-export async function fetch_banana_history(following) {
+export async function fetch_banana_history(following, offset = 0) {
   let response = await fetch(`${BASE_URL}/api/banana-history/get-history`, {
     method: "POST",
     credentials: "include",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ users: following.map((user) => user.username) }),
+    body: JSON.stringify({ users: following.map((user) => user.username), offset}),
   });
   let { banana_history } = await response.json();
 
