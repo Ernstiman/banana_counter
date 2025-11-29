@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useUser } from "../context/UserContextProvider";
 import { fetch_banana_history } from "../api/api";
 import BananaHistory from "../components/Banana_History";
@@ -10,23 +10,30 @@ export default function useGetBananaHistory(users, state = null){
     const currentlyLoading = useRef(false);
     const [offset , setOffset] = useState(0);
     const [pageSize] = useState(10);
+    const [hasMore, setHasMore] = useState(false);
+
+    const fetch = useCallback(async () => {
+            if(!currentlyLoading.current){
+                currentlyLoading.current = true;
+                let history = await fetch_banana_history(users, offset);
+                setBananaHistory((prev) => [...prev, ...history]);
+                setOffset((prev) => prev + history.length);
+                console.log(history.length);
+                setHasMore(history.length >= pageSize);
+                currentlyLoading.current = false;
+            }
+    }, [users, offset, pageSize])
 
     useEffect(() => {
-        setLoadingBananaHistory(true)
-        if(users && users.length > 0 && !currentlyLoading.current){
-            currentlyLoading.current = true;
-             fetch_banana_history(users, offset)
-             .then((banana_history) => {
-                setBananaHistory((prev) => [...prev, ...banana_history]);
-                setOffset((prev) => prev += pageSize);
-            })
-            .finally(() => {
-                currentlyLoading.current = false;
-                setLoadingBananaHistory(false)
-            })
+        if(users && users.length > 0){
+            fetch();
             }
-               
-    }, [users, state])
+        return;   
+    }, [users])
 
-    return {bananaHistory, loadingBananaHistory}
+    const getMore = useCallback(async () => {
+            await fetch();
+    }, [fetch])
+
+    return {bananaHistory, loadingBananaHistory, getMore, hasMore}
 }

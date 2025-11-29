@@ -26,16 +26,14 @@ function setDate(timestamp){
 
 export default function BananaHistory({users, children}) {
     const {ref, inView, entry} = useInView();
-    const { bananaHistory, loadingBananaHistory } = useGetBananaHistory(users, inView);
+    const { bananaHistory, loadingBananaHistory, getMore, hasMore} = useGetBananaHistory(users, inView);
 
-    useEffect(() => {
-        console.log("Loader in view " + inView)
+    useEffect( ()=> {
+        if(inView){
+            getMore();
+        }
     }, [inView]);
 
-    if (loadingBananaHistory) return (
-    <div className="banana-history-container">
-        <NormalLoader />
-    </div>)
     return (
         <div className="banana-history-container">
             <h1>{children}</h1>
@@ -59,9 +57,10 @@ export default function BananaHistory({users, children}) {
                 ) : (
                     <li className="banana-history-item no-history">No banana history found.</li>
                 )}
-                <div className="loader-container" ref = {ref}>
+                {hasMore && (<div className="loader-container" ref = {ref}>
                     <NormalLoader/>
-                </div>
+                </div>)}
+                
             </ul>
         </div>
     );
