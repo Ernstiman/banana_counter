@@ -107,7 +107,6 @@ async function getUserData(users, userID) {
     return JSON.parse(cacheData);
   }
   const placeholders = users.map(() => "?").join(",");
-  console.log("Nu läste jag från minnet!!!!!! ");
     let [userData] = await pool.query(
     `SELECT username, count FROM Banana_data WHERE username IN (${placeholders})`,
     users
@@ -156,20 +155,19 @@ async function select_banana_history(users, offset) {
   else{
     cacheKey = `banana_history:${users[0]}`;
   }
-  const offsetCacheKey = `offset:${users[0]}`
   const cacheData = await client.get(cacheKey);
-  const prevOffset = await client.get(offsetCacheKey);
-  // if(cacheData && offset <= JSON.parse(prevOffset)){
-  //   return JSON.parse(cacheData);
-  // }
+  if(cacheData && offset == 0){
+    return JSON.parse(cacheData);
+  }
   const VALUES = users.map(() => "?").join(",");
   if (users.length > 0) {
     const [result] = await pool.query(
       `SELECT timestamp, amount, username, caption FROM Banana_history WHERE username IN (${VALUES}) ORDER BY timestamp DESC LIMIT ${LIMIT} OFFSET ${offset};`,
       users
     );
-    await client.set(cacheKey, JSON.stringify(result), {EX: exTime});
-    await client.set(offsetCacheKey, JSON.stringify(offset));
+    if(offset == 0){
+      await client.set(cacheKey, JSON.stringify(result), {EX: exTime});
+    }
     return result;
   }
   return;
@@ -280,8 +278,9 @@ async function getSettings(username){
     )
 
     if(result[0]){
-      await client.set(cacheKey, JSON.stringify(result[0]), {EX: exTime});
-       result[0].darkMode = result[0].darkMode ? true : false;
+      console.log(result[0].darkMode, "getSettings");
+       result[0].darkMode = result[0].darkMode? true : false;
+       await client.set(cacheKey, JSON.stringify(result[0]), {EX: exTime});
        return result[0];
     }
 
@@ -289,11 +288,20 @@ async function getSettings(username){
 }
 
 async function postSettings(settings, username){
+  console.log(settings.darkMode, "settings in post");
   const cacheKey = `settings:${username}`;
-  await pool.query(
-    "REPLACE INTO Settings (username, darkMode) VALUES (?, ?)",
-  [username, settings.darkMode]);
   await client.del(cacheKey);
+
+  await pool.query(
+    "DELETE FROM Settings where username = ?",
+    [username]
+  )
+  
+  await pool.query(
+    `INSERT INTO Settings (username, darkMode) VALUES (?, ?) 
+   ON DUPLICATE KEY UPDATE darkMode = VALUES(darkMode)`,
+  [username, settings.darkMode])
+  
 }
 
 async function clearSettings(){

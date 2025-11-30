@@ -235,8 +235,10 @@ export async function postSettings(username, settings){
 }
 
 export async function getSettings(username){
-  const res = await fetch('/api/settings/get')
-  const settings = res.json();
+  const res = await fetch('/api/settings/get',
+    {credentials: "include"}
+  )
+  const settings = await res.json();
   return settings;
 
 }

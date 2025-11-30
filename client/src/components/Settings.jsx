@@ -18,7 +18,7 @@ export default function Settings(){
         else{
             document.documentElement.setAttribute('data-theme', "light");
         }
-        setSettings(newSettings)
+        setSettings(newSettings);
         await postSettings(username, newSettings);
     }
 

@@ -7,7 +7,6 @@ exports.get = async(req, res) => {
 
     try{
         const settings = await getSettings(username);
-        console.log(settings, "settingsController");
         res.json(settings);
     }
     catch(err){
